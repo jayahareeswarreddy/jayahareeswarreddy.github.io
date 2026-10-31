@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jaya Hareeswar Reddy</title>
+<meta name="description" content="Jaya Hareeswar Reddy, Generative AI Engineer. LLM apps, RAG pipelines and tool-calling agents in Python and FastAPI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap">
+<noscript><style>#boot{display:none}</style></noscript>
+<style>
+/* Layout: a side-scroller. Sticky HUD on top, then each section is a "world" band
+   alternating sky / parchment, content capped at 1120px, hard 8-bit offset shadows throughout. */
+:root{
+  --bg:#e8f5fb; --bg-alt:#fff8e8; --card:#ffffff; --fg:#1d2733; --muted:#4a5868;
+  --line:#1d2733; --shadow:#1d2733; --primary:#0f7aa6; --primary-fg:#ffffff;
+  --coin:#f6c22e; --coin-dark:#b98300; --green:#1f9d6b; --pink:#d9467c;
+  --grass:#5cbf4a; --grass-2:#47a637; --dirt:#8a5a2b; --stage:#bfe6f6; --cloud:#ffffff; --hill:#9ad49a;
+  --footer:#1d2733; --footer-fg:#e7eef6;
+  /* label bands keep dark ink in both themes, so they stay fixed */
+  --band-ink:#1d2733; --band-1:#8fd3f0; --band-2:#f6a8c3; --band-3:#93e2b8; --band-4:#ffd86b; --band-5:#d5dce4;
+  --f-display:"Press Start 2P", ui-monospace, "Courier New", monospace;
+  --f-hud:"VT323", ui-monospace, "Courier New", monospace;
+  --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter:max(16px, 4vw);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e1520; --bg-alt:#131c2a; --card:#18222f; --fg:#e7eef6; --muted:#a8b7c7;
+  --line:#9db3c8; --shadow:#2c4058; --primary:#41b4e2; --primary-fg:#08131c;
+  --coin:#ffd34d; --coin-dark:#c89400; --green:#4fd39a; --pink:#ff7aa8;
+  --grass:#2f7a3a; --grass-2:#276a31; --dirt:#4b3420; --stage:#1c3149; --cloud:#5b7591; --hill:#1f4a33;
+  --footer:#070b11; --footer-fg:#e7eef6; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1520; --bg-alt:#131c2a; --card:#18222f; --fg:#e7eef6; --muted:#a8b7c7;
+  --line:#9db3c8; --shadow:#2c4058; --primary:#41b4e2; --primary-fg:#08131c;
+  --coin:#ffd34d; --coin-dark:#c89400; --green:#4fd39a; --pink:#ff7aa8;
+  --grass:#2f7a3a; --grass-2:#276a31; --dirt:#4b3420; --stage:#1c3149; --cloud:#5b7591; --hill:#1f4a33;
+  --footer:#070b11; --footer-fg:#e7eef6; color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:84px}
+body{margin:0; background:var(--bg); color:var(--fg); font:400 17px/1.6 var(--f-body); -webkit-font-smoothing:antialiased}
+img,canvas{max-width:100%}
+canvas{image-rendering:pixelated; image-rendering:crisp-edges}
+a{color:inherit}
+:focus-visible{outline:3px dashed var(--primary); outline-offset:3px}
+[hidden]{display:none!important}
+.wrap{max-width:1120px; margin:0 auto; padding-left:var(--gutter); padding-right:var(--gutter)}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+/* ---------- shared pieces ---------- */
+.box{background:var(--card); border:3px solid var(--line); box-shadow:6px 6px 0 var(--shadow)}
+.btn{display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:12px 18px;
+  font:400 12px/1.4 var(--f-display); letter-spacing:.04em; text-decoration:none; text-transform:uppercase;
+  background:var(--card); color:var(--fg); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow);
+  cursor:pointer; transition:transform .12s steps(2), box-shadow .12s steps(2)}
+.btn:hover{transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--shadow)}
+.btn:active{transform:translate(5px,5px); box-shadow:0 0 0 var(--shadow)}
+.btn.primary{background:var(--primary); color:var(--primary-fg)}
+.btn.coin{background:var(--coin); color:var(--band-ink)}
+.chips{display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0}
+.chips li{font:400 20px/1 var(--f-hud); padding:5px 10px 4px; border:2px solid var(--line); background:var(--bg)}
+.tag{display:inline-block; font:400 9px/1 var(--f-display); letter-spacing:.06em; padding:6px 8px; color:var(--band-ink); border:2px solid var(--band-ink)}
+
+section{padding-block:88px}
+section:nth-of-type(odd){background:var(--bg-alt)}
+.sec-head{display:grid; gap:14px; margin-bottom:48px}
+.eyebrow{font:400 22px/1 var(--f-hud); letter-spacing:.08em; color:var(--primary); margin:0; text-transform:uppercase}
+h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:balance; text-shadow:3px 3px 0 var(--coin)}
+.sec-head p:last-child{margin:0; max-width:60ch; color:var(--muted)}
+
+/* ---------- boot screen ---------- */
+#boot{position:fixed; inset:0; z-index:100; display:grid; place-content:center; gap:28px; text-align:center;
+  background:#0a0f16; color:#e7eef6; cursor:pointer; transition:opacity .35s steps(4)}
+#boot.off{opacity:0; pointer-events:none}
+#boot .logo{font:400 clamp(22px,5vw,44px)/1.2 var(--f-display); color:#41b4e2; text-shadow:4px 4px 0 #f6c22e}
+#boot .press{font:400 14px/1 var(--f-display); animation:blink 1s steps(1) infinite}
+#boot small{font:400 20px/1 var(--f-hud); color:#a8b7c7}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky; top:0; z-index:50; background:var(--card); border-bottom:3px solid var(--line)}
+.hud .wrap{display:flex; align-items:center; gap:20px; min-height:72px}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; font:400 13px/1 var(--f-display)}
+.brand i{display:grid; place-items:center; width:40px; height:40px; background:var(--primary); color:var(--primary-fg);
+  border:3px solid var(--line); font:400 12px/1 var(--f-display); font-style:normal}
+.nav{display:flex; gap:4px; margin:0 auto; list-style:none; padding:0}
+.nav a{display:block; padding:10px 12px; font:400 10px/1 var(--f-display); text-decoration:none; text-transform:uppercase}
+.nav a:hover{background:var(--coin); color:var(--band-ink)}
+.hud-tools{display:flex; align-items:center; gap:8px}
+.toggle{min-height:40px; padding:6px 10px; font:400 20px/1 var(--f-hud); background:var(--bg); color:var(--fg);
+  border:2px solid var(--line); cursor:pointer}
+.toggle[aria-pressed="true"]{background:var(--fg); color:var(--bg)}
+.coins{position:relative; display:flex; align-items:center; gap:8px; min-height:44px; padding:6px 12px;
+  font:400 13px/1 var(--f-display); border:3px solid var(--line); box-shadow:4px 4px 0 var(--shadow); background:var(--card)}
+.coins .c{width:18px; height:18px; background:var(--coin); border:3px solid var(--coin-dark); border-radius:50%}
+.coins.bump{animation:bump .3s steps(3)}
+@keyframes bump{50%{transform:translateY(-5px)}}
+.coins .goal{font:400 18px/1 var(--f-hud); color:var(--muted)}
+.pop{position:absolute; right:6px; top:-4px; font:400 11px/1 var(--f-display); color:var(--coin-dark); pointer-events:none;
+  animation:pop .8s steps(6) forwards}
+@keyframes pop{to{transform:translateY(-26px); opacity:0}}
+
+/* ---------- hero ---------- */
+.hero{position:relative; padding-block:64px 0; background:var(--bg); overflow:hidden}
+.hero-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:56px; align-items:center; padding-bottom:72px}
+.char{display:grid}
+.stage{position:relative; height:280px; background:var(--stage); border-bottom:3px solid var(--line); overflow:hidden}
+.cloud{position:absolute; width:96px; color:var(--cloud)}
+.cloud.c1{top:28px; left:-10%; animation:drift 38s linear infinite}
+.cloud.c2{top:86px; left:-30%; width:64px; animation:drift 52s linear infinite; animation-delay:-20s}
+@keyframes drift{to{transform:translateX(560px)}}
+.ground{position:absolute; left:0; right:0; bottom:0; height:44px;
+  background:linear-gradient(var(--grass) 0 12px, var(--grass-2) 12px 16px, var(--dirt) 16px);
+}
+.ground::before{content:""; position:absolute; inset:-8px 0 auto; height:8px;
+  background:repeating-linear-gradient(90deg, var(--grass) 0 8px, transparent 8px 24px)}
+.avatar{position:absolute; left:50%; bottom:40px; translate:-50% 0; padding:0; border:0; background:none; cursor:pointer}
+.avatar canvas{display:block; width:160px; height:180px}
+.avatar:not(.jump) canvas{animation:idle 1.6s steps(2) infinite}
+@keyframes idle{50%{transform:translateY(-4px)}}
+.avatar.jump canvas{animation:jump .5s steps(5)}
+@keyframes jump{40%{transform:translateY(-40px)}}
+.bubble{position:absolute; top:16px; left:16px; right:16px; padding:10px 12px; background:var(--card); color:var(--fg);
+  border:3px solid var(--line); font:500 15px/1.4 var(--f-body); z-index:2}
+.bubble::after{content:""; position:absolute; left:50%; bottom:-12px; width:12px; height:12px; background:var(--card);
+  border-right:3px solid var(--line); border-bottom:3px solid var(--line); transform:translateX(-50%) rotate(45deg)}
+.sheet{margin:0; padding:20px 22px 6px; display:grid; gap:2px}
+.sheet div{display:grid; grid-template-columns:96px 1fr; gap:12px; align-items:baseline; padding:6px 0; border-bottom:2px dotted var(--band-5)}
+.sheet dt{font:400 20px/1 var(--f-hud); color:var(--muted)}
+.sheet dd{margin:0; font-weight:600}
+.status{display:inline-flex; align-items:center; gap:8px}
+.status::before{content:""; width:10px; height:10px; background:var(--green); animation:blink 1.4s steps(1) infinite}
+.bars{display:grid; gap:10px; padding:14px 22px 22px}
+.bar{display:grid; grid-template-columns:96px 1fr 52px; gap:12px; align-items:center; font:400 20px/1 var(--f-hud)}
+.bar .track{height:16px; border:2px solid var(--line); background:var(--bg)}
+.bar .fill{height:100%; background:repeating-linear-gradient(90deg, var(--f) 0 10px, transparent 10px 13px)}
+.bar span:last-child{text-align:right; color:var(--muted)}
+
+.hero h1{font:400 clamp(22px,3.6vw,40px)/1.35 var(--f-display); margin:14px 0 12px; text-wrap:balance}
+.role{font:400 clamp(12px,1.5vw,16px)/1.4 var(--f-display); color:var(--primary); margin:0 0 28px; text-transform:uppercase}
+.dialogue{position:relative; padding:28px 22px 22px; margin-bottom:32px; min-height:132px}
+.dialogue .speaker{position:absolute; top:-15px; left:18px; padding:6px 10px; font:400 10px/1 var(--f-display);
+  background:var(--coin); color:var(--band-ink); border:3px solid var(--line)}
+.dialogue p{margin:0; font-size:18px; line-height:1.55; max-width:52ch}
+.next{position:absolute; right:10px; bottom:6px; width:44px; height:44px; padding:0; border:0; background:none; color:var(--primary);
+  font:400 14px/1 var(--f-display); cursor:pointer; animation:nudge 1s steps(2) infinite}
+@keyframes nudge{50%{transform:translateY(3px)}}
+.ctas{display:flex; flex-wrap:wrap; gap:16px}
+.hint{margin:24px 0 0; font:400 20px/1.2 var(--f-hud); color:var(--muted)}
+.hint b{color:var(--coin-dark); font-weight:400}
+
+/* ---------- inventory ---------- */
+.inv{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px}
+.slot{display:grid; align-content:start; gap:14px; padding:22px; transition:transform .12s steps(2), box-shadow .12s steps(2)}
+.slot:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--shadow)}
+.slot.wide{grid-column:span 2}
+.slot header{display:flex; align-items:center; gap:14px}
+.slot canvas{width:40px; height:40px; flex:none}
+.slot h3{margin:0; font:400 12px/1.5 var(--f-display)}
+.slot p{margin:0; color:var(--muted); font-size:15px}
+.r-legendary{background:var(--band-4)} .r-epic{background:var(--band-2)} .r-rare{background:var(--band-1)} .r-common{background:var(--band-5)}
+
+/* ---------- quest log ---------- */
+.quests{list-style:none; margin:0; padding:0 0 0 40px; display:grid; gap:40px; position:relative}
+.quests::before{content:""; position:absolute; left:11px; top:8px; bottom:8px; width:4px;
+  background:repeating-linear-gradient(var(--line) 0 8px, transparent 8px 16px)}
+.quest{position:relative; padding:24px 26px}
+.quest::before{content:""; position:absolute; left:-40px; top:28px; width:26px; height:26px; background:var(--coin); border:3px solid var(--line)}
+.quest.done::before{background:var(--green)}
+.quest.train::before{background:var(--band-1)}
+.q-top{display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; margin-bottom:10px}
+.q-when{font:400 22px/1 var(--f-hud); color:var(--muted); margin-left:auto}
+.quest h3{margin:0 0 4px; font:400 clamp(12px,1.6vw,15px)/1.6 var(--f-display)}
+.quest .org{margin:0 0 14px; font-weight:600; color:var(--primary)}
+.objectives{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+.objectives li{display:grid; grid-template-columns:22px 1fr; gap:10px}
+.objectives li::before{content:""; width:14px; height:14px; margin-top:6px; border:2px solid var(--line); background:var(--green);
+  box-shadow:inset 0 0 0 2px var(--card)}
+.crit{display:inline-block; margin-top:14px; padding:8px 12px; font:400 10px/1.4 var(--f-display); background:var(--pink); color:#fff; border:3px solid var(--line)}
+
+/* ---------- game library (projects) ---------- */
+.carts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px}
+.cart{display:grid; grid-template-rows:auto 1fr}
+.cart-top{display:flex; justify-content:space-between; align-items:center; padding:12px 18px; background:var(--band);
+  color:var(--band-ink); border-bottom:3px solid var(--line); font:400 10px/1 var(--f-display); letter-spacing:.06em}
+.cart-body{display:grid; align-content:start; gap:18px; padding:24px 24px 0; min-width:0}
+.cart h3{margin:0; font:400 clamp(13px,1.6vw,16px)/1.5 var(--f-display)}
+.cart-body > p{margin:0; color:var(--muted)}
+.loot{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:12px}
+.loot li{display:grid; padding:10px 14px; border:2px solid var(--line); background:var(--bg); min-width:120px}
+.loot b{font:400 15px/1.3 var(--f-display); color:var(--primary)}
+.loot span{font:400 19px/1.1 var(--f-hud); color:var(--muted)}
+details{border-top:3px dotted var(--band-5); padding-top:12px}
+summary{display:inline-flex; align-items:center; min-height:44px; cursor:pointer; list-style:none; font:400 10px/1 var(--f-display); text-transform:uppercase; color:var(--primary)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"\25B6"; margin-right:10px; transition:transform .12s steps(2)}
+details[open] summary::before{transform:rotate(90deg)}
+details ul{margin:6px 0 4px; padding-left:20px; display:grid; gap:8px}
+.ridges{height:22px; margin-top:22px; border-top:3px solid var(--line);
+  background:repeating-linear-gradient(90deg, var(--band-5) 0 6px, var(--card) 6px 14px)}
+
+/* ---------- achievements ---------- */
+.achs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px}
+.ach{display:grid; grid-template-columns:48px 1fr; gap:16px; align-items:start; padding:20px}
+.ach canvas{width:48px; height:48px; color:var(--coin-dark)}
+.ach h3{margin:0 0 6px; font:400 11px/1.6 var(--f-display)}
+.ach p{margin:0; font-size:15px; color:var(--muted)}
+.ach .kind{display:block; margin-bottom:6px; font:400 18px/1 var(--f-hud); color:var(--primary); text-transform:uppercase}
+.ach.locked{background:var(--bg); border-style:dashed; box-shadow:none}
+.ach.locked canvas{color:var(--muted)}
+.ach.locked h3{filter:blur(5px); user-select:none}
+.ach.unlocked{animation:shine .6s steps(3) 2}
+@keyframes shine{50%{background:var(--band-4)}}
+
+/* ---------- contact ---------- */
+.contact-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:40px; align-items:start}
+.reach{display:grid; gap:20px}
+.reach p{margin:0}
+.mail{display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding:16px; min-width:0}
+.mail code{font:400 22px/1.2 var(--f-hud); user-select:all; overflow-wrap:anywhere; min-width:0; flex:1 1 220px}
+.links{display:flex; flex-wrap:wrap; gap:14px}
+form{display:grid; gap:18px; padding:28px}
+label{display:grid; gap:8px; font:400 10px/1 var(--f-display); text-transform:uppercase}
+input,textarea{width:100%; padding:12px 14px; font:400 16px/1.5 var(--f-body); color:var(--fg); background:var(--bg); border:3px solid var(--line); border-radius:0}
+input:focus,textarea:focus{outline:none; box-shadow:4px 4px 0 var(--primary)}
+textarea{min-height:140px; resize:vertical}
+.form-status{margin:0; min-height:1.6em; font-size:15px; color:var(--green)}
+.form-status.err{color:var(--pink); font-weight:600}
+.btn:disabled{opacity:.6; cursor:progress}
+
+a.toggle{display:inline-flex; align-items:center; text-decoration:none}
+
+/* ---------- bonus stage ---------- */
+.arcade{max-width:960px; margin:0 auto}
+#game{display:block; width:100%; height:auto; aspect-ratio:8/3; cursor:pointer; touch-action:manipulation; border-bottom:3px solid var(--line)}
+.arcade-foot{display:flex; flex-wrap:wrap; gap:14px 32px; align-items:center; justify-content:space-between; padding:16px 20px}
+.arcade-foot p{margin:0; font:400 20px/1.4 var(--f-hud); color:var(--muted)}
+.arcade-foot kbd{color:var(--fg)}
+.got{display:flex; flex-wrap:wrap; gap:10px; align-items:center; min-width:0}
+.got > span{font:400 20px/1 var(--f-hud); color:var(--muted)}
+.got .chips li{font-size:18px; background:var(--band-1); color:var(--band-ink)}
+
+/* ---------- footer ---------- */
+footer{background:var(--footer); color:var(--footer-fg); padding-block:56px; text-align:center}
+footer .wrap{display:grid; gap:16px; justify-items:center}
+footer .end{font:400 clamp(14px,2.4vw,22px)/1.4 var(--f-display); color:var(--coin)}
+footer p{margin:0; font:400 22px/1.3 var(--f-hud); opacity:.85}
+kbd{font:inherit; padding:0 6px; border:2px solid currentColor}
+
+/* ---------- overlays ---------- */
+#toasts{position:fixed; top:88px; right:max(16px, env(safe-area-inset-right, 0px)); z-index:60; display:grid; gap:12px; width:min(340px, calc(100vw - 32px))}
+.toast{padding:14px 16px; background:var(--card); color:var(--fg); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow);
+  font-size:15px; animation:slide .25s steps(3)}
+.toast b{display:block; margin-bottom:4px; font:400 10px/1.5 var(--f-display); color:var(--primary)}
+@keyframes slide{from{transform:translateX(30px); opacity:0}}
+#rain{position:fixed; inset:0; z-index:70; pointer-events:none; width:100vw; height:100vh}
+dialog{width:min(720px, calc(100vw - 32px)); max-height:calc(100vh - 48px); padding:0; color:var(--fg); background:var(--card);
+  border:3px solid var(--line); box-shadow:8px 8px 0 var(--shadow)}
+dialog::backdrop{background:rgb(10 15 22 / .6)}
+.dlg-head{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 20px; background:var(--coin); color:var(--band-ink); border-bottom:3px solid var(--line)}
+.dlg-head h2{font-size:13px; text-shadow:none}
+.dlg-head .toggle{background:var(--card); color:var(--fg)}
+.tldr{margin:0; padding:8px 24px 4px}
+.tldr div{display:grid; grid-template-columns:120px 1fr; gap:16px; padding:14px 0; border-bottom:2px dotted var(--band-5)}
+.tldr dt{font:400 20px/1.2 var(--f-hud); color:var(--muted); text-transform:uppercase}
+.tldr dd{margin:0}
+.dlg-foot{display:flex; flex-wrap:wrap; gap:14px; padding:20px 24px 24px}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero-grid,.contact-grid{grid-template-columns:minmax(0,1fr)}
+  .hero-grid{gap:40px}
+  .inv{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .achs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .hud .wrap{flex-wrap:wrap; gap:8px 12px; padding-block:10px}
+  .nav{order:3; width:100%; margin:0; overflow-x:auto}
+  .hud-tools{margin-left:auto}
+  html{scroll-padding-top:128px}
+  #toasts{top:136px}
+}
+@media (max-width:640px){
+  section{padding-block:64px}
+  .carts,.achs,.inv{grid-template-columns:minmax(0,1fr)}
+  .slot.wide{grid-column:auto}
+  .tldr div{grid-template-columns:1fr; gap:4px}
+  .q-when{margin-left:0; width:100%}
+  .coins .goal{display:none}
+  .brand span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important; transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div id="boot" role="presentation">
+  <div class="logo">JHR.EXE</div>
+  <div class="press">PRESS START</div>
+  <small>1 PLAYER &middot; &copy; 2026 &middot; tap or press any key</small>
+</div>
+
+<header class="hud">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Back to top"><i>&lt;&gt;</i><span>JHR</span></a>
+    <ul class="nav">
+      <li><a href="#play">Play</a></li>
+      <li><a href="#inventory">Skills</a></li>
+      <li><a href="#quests">Experience</a></li>
+      <li><a href="#games">Projects</a></li>
+      <li><a href="#trophies">Awards</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hud-tools">
+      <button class="toggle" id="sfx" aria-pressed="false" title="Sound effects">SFX</button>
+      <button class="toggle" id="theme" aria-label="Switch day or night theme">NIGHT</button>
+      <div class="coins" id="coins" title="Coins come from playing Ship It! Collect 100 to unlock a secret achievement">
+        <span class="c" aria-hidden="true"></span><span id="coinCount">0</span><span class="goal">/100</span>
+        <span class="sr">coins collected</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- ===== WORLD 1-1 : CHARACTER ===== -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div class="char box">
+      <div class="stage">
+        <canvas class="cloud c1" data-sprite="cloud" aria-hidden="true"></canvas>
+        <canvas class="cloud c2" data-sprite="cloud" aria-hidden="true"></canvas>
+        <div class="bubble" id="bubble" role="status" hidden></div>
+        <button class="avatar" id="avatar" aria-label="Poke Jaya's pixel avatar"><canvas id="heroSprite" data-sprite="hero"></canvas></button>
+        <div class="ground"></div>
+      </div>
+      <dl class="sheet">
+        <div><dt>Class</dt><dd>Generative AI Engineer</dd></div>
+        <div><dt>Guild</dt><dd>Taskwin GmbH</dd></div>
+        <div><dt>Spawn</dt><dd>Guntur, India</dd></div>
+        <div><dt>Status</dt><dd class="status">Open to new quests</dd></div>
+      </dl>
+      <div class="bars" aria-hidden="true">
+        <div class="bar"><span>Curiosity</span><div class="track"><div class="fill" style="width:100%;--f:var(--primary)"></div></div><span>MAX</span></div>
+        <div class="bar"><span>Coffee</span><div class="track"><div class="fill" style="width:68%;--f:var(--coin-dark)"></div></div><span>68%</span></div>
+      </div>
+    </div>
+
+    <div>
+      <p class="eyebrow">Player 1 &middot; Ready</p>
+      <h1>JAYA HAREESWAR<br>REDDY</h1>
+      <p class="role">Generative AI Engineer</p>
+      <div class="dialogue box">
+        <span class="speaker">JAYA</span>
+        <p id="dlgText" aria-hidden="true">Hey there, traveler! I'm Jaya, an AI Engineer at Taskwin GmbH.</p>
+        <p class="sr" id="dlgLive" aria-live="polite">Hey there, traveler! I'm Jaya, an AI Engineer at Taskwin GmbH.</p>
+        <button class="next" id="dlgNext" aria-label="Next line of dialogue">&#9660;</button>
+      </div>
+      <div class="ctas">
+        <a class="btn primary" href="#play" id="playLink">&#9654; Play the game</a>
+        <button class="btn coin" id="openTldr">10-sec summary</button>
+        <a class="btn" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Resume.pdf">Resume PDF</a>
+      </div>
+      <p class="hint">Win <b>100 coins</b> in Ship It! to unlock a secret achievement.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BONUS STAGE : PLAYABLE RUNNER ===== -->
+<section id="play">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Bonus stage &middot; Playable</p>
+      <h2>SHIP IT!</h2>
+      <p>Help Jaya get to production. Jump the bugs, stay on the ground under the hallucinations, and grab the blue gems to collect skills. This is the only place to earn coins: gold coins are worth 1, gems are worth 5.</p>
+    </div>
+    <div class="arcade box">
+      <canvas id="game" tabindex="0" aria-label="Ship It runner game. Press Space, the Up arrow or tap to start and to jump."></canvas>
+      <div class="arcade-foot">
+        <p><kbd>Space</kbd> / <kbd>&uarr;</kbd> / tap to jump</p>
+        <div class="got"><span>Skills this run <b id="skillCount">0/12</b></span><ul class="chips" id="gotSkills"></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORLD 1-2 : INVENTORY ===== -->
+<section id="inventory">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">World 1-2 &middot; Inventory</p>
+      <h2>EQUIPPED SKILLS</h2>
+      <p>Everything in the bag, sorted by how often I reach for it.</p>
+    </div>
+    <div class="inv">
+      <article class="slot box wide">
+        <header><canvas data-sprite="spark" style="color:var(--coin-dark)" aria-hidden="true"></canvas><h3>AI &amp; LLM Engineering</h3></header>
+        <span class="tag r-legendary">LEGENDARY</span>
+        <p>The main weapon. Used daily to ship LLM features, agents and tool-calling workflows that hold up in production.</p>
+        <ul class="chips"><li>Python</li><li>OpenAI</li><li>RAG</li><li>AI Agents</li><li>Tool Calling</li><li>Prompt Engineering</li><li>Structured Outputs</li><li>Embeddings</li><li>Vector Search</li><li>LoRA</li><li>QLoRA</li></ul>
+      </article>
+      <article class="slot box">
+        <header><canvas data-sprite="db" style="color:var(--green)" aria-hidden="true"></canvas><h3>Vector DBs &amp; Retrieval</h3></header>
+        <span class="tag r-epic">EPIC</span>
+        <ul class="chips"><li>Milvus</li><li>Supabase</li><li>MongoDB</li><li>Chunking Strategies</li><li>Embeddings</li><li>Semantic Search</li><li>Vector Search</li></ul>
+      </article>
+      <article class="slot box">
+        <header><canvas data-sprite="chip" style="color:var(--pink)" aria-hidden="true"></canvas><h3>Machine Learning &amp; NLP</h3></header>
+        <span class="tag r-epic">EPIC</span>
+        <ul class="chips"><li>TensorFlow</li><li>Keras</li><li>Scikit-learn</li><li>spaCy</li><li>NumPy</li><li>CNN</li><li>VGG16</li><li>NER</li><li>Semantic Matching</li></ul>
+      </article>
+      <article class="slot box">
+        <header><canvas data-sprite="code" style="color:var(--primary)" aria-hidden="true"></canvas><h3>Backend &amp; Full Stack</h3></header>
+        <span class="tag r-rare">RARE</span>
+        <ul class="chips"><li>FastAPI</li><li>React</li><li>JavaScript</li><li>REST APIs</li><li>MySQL</li></ul>
+      </article>
+      <article class="slot box">
+        <header><canvas data-sprite="bars" style="color:var(--primary)" aria-hidden="true"></canvas><h3>Data Engineering</h3></header>
+        <span class="tag r-rare">RARE</span>
+        <ul class="chips"><li>Pandas</li><li>NumPy</li><li>Apache Kafka</li><li>Apache Airflow</li></ul>
+      </article>
+      <article class="slot box wide">
+        <header><canvas data-sprite="hammer" style="color:var(--muted)" aria-hidden="true"></canvas><h3>Programming &amp; Tools</h3></header>
+        <span class="tag r-common">TRUSTY</span>
+        <p>The crafting bench. Languages, containers, and the everyday kit for testing and shipping.</p>
+        <ul class="chips"><li>Java</li><li>C++</li><li>SQL</li><li>Git</li><li>GitHub</li><li>Postman</li><li>Selenium</li><li>Docker</li><li>Kubernetes</li><li>VS Code</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORLD 1-3 : QUEST LOG ===== -->
+<section id="quests">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">World 1-3 &middot; Quest log</p>
+      <h2>EXPERIENCE</h2>
+      <p>Newest first. Yellow means in progress, green means cleared, blue means training grounds.</p>
+    </div>
+    <ol class="quests">
+      <li class="quest box">
+        <div class="q-top"><span class="tag r-legendary">MAIN QUEST &middot; IN PROGRESS</span><span class="q-when">Apr 2026 &ndash; Present</span></div>
+        <h3>AI Engineer</h3>
+        <p class="org">Taskwin GmbH</p>
+        <ul class="objectives">
+          <li>Develop LLM-powered backend services with prompt engineering, structured outputs and robust error handling.</li>
+          <li>Build RAG pipelines: document chunking, embeddings and vector search for context-aware retrieval.</li>
+          <li>Implement tool-calling and multi-step agent workflows wired into backend tools and services.</li>
+          <li>Validate model outputs and handle failures, with latency monitoring and token-usage tracking.</li>
+        </ul>
+      </li>
+      <li class="quest box done">
+        <div class="q-top"><span class="tag r-rare">SIDE QUEST &middot; CLEARED</span><span class="q-when">Jan &ndash; May 2025</span></div>
+        <h3>Brain Tumor Detection Research</h3>
+        <p class="org">CNN&ndash;VGG16 hybrid &middot; Python, TensorFlow, Pandas, Scikit-learn</p>
+        <ul class="objectives">
+          <li>Built a hybrid CNN&ndash;VGG16 model that classifies brain MRI images across 8 classes.</li>
+          <li>Prepared the image datasets with Pandas and implemented the training workflow in TensorFlow.</li>
+          <li>Evaluated with accuracy, precision, recall, F1-score and a confusion matrix per class.</li>
+        </ul>
+        <span class="crit">CRITICAL HIT: 99% ACCURACY</span>
+      </li>
+      <li class="quest box train">
+        <div class="q-top"><span class="tag r-common">TRAINING GROUNDS</span><span class="q-when">2022 &ndash; 2026</span></div>
+        <h3>B.Tech, Computer Science &amp; Engineering</h3>
+        <p class="org">SRM University&ndash;AP &middot; CGPA 8.1 / 10</p>
+        <ul class="chips"><li>Machine Learning</li><li>Deep Learning</li><li>Probability &amp; Statistics</li><li>Linear Algebra</li></ul>
+      </li>
+      <li class="quest box train">
+        <div class="q-top"><span class="tag r-common">TUTORIAL LEVEL</span><span class="q-when">2020 &ndash; 2022</span></div>
+        <h3>Intermediate, MPC</h3>
+        <p class="org">ARKA Junior College &middot; 91%</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== WORLD 1-4 : GAME LIBRARY ===== -->
+<section id="games">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">World 1-4 &middot; Game library</p>
+      <h2>PROJECTS</h2>
+      <p>Four cartridges. Open any one for the build notes.</p>
+    </div>
+    <div class="carts">
+      <article class="cart box" style="--band:var(--band-1)">
+        <div class="cart-top"><span>LLM APP</span></div>
+        <div class="cart-body">
+          <h3>Prompt-to-UI Generator</h3>
+          <p>Describe an interface in plain English and get a working React UI back, with a live preview.</p>
+          <ul class="loot"><li><b>Live</b><span>previews</span></li><li><b>Streamed</b><span>generation</span></li><li><b>Iterative</b><span>refinement</span></li></ul>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>OpenAI API</li><li>React.js</li><li>Tailwind CSS</li></ul>
+          <details><summary>Build notes</summary><ul>
+            <li>Generates React interfaces from natural-language prompts, with live previews, streaming, syntax-error handling and iterative refinement.</li>
+            <li>FastAPI backend delivers generated components to the React frontend for instant preview.</li>
+          </ul></details>
+        </div>
+        <div class="ridges"></div>
+      </article>
+      <article class="cart box" style="--band:var(--band-2)">
+        <div class="cart-top"><span>NLP &middot; MATCHING</span></div>
+        <div class="cart-body">
+          <h3>AI Resume Analyzer &amp; Job Matcher</h3>
+          <p>Reads a resume, scrapes the job market, and ranks the roles that actually fit.</p>
+          <ul class="loot"><li><b>1,000+</b><span>LinkedIn listings ranked</span></li><li><b>spaCy</b><span>resume extraction</span></li></ul>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>spaCy</li><li>Selenium</li><li>MongoDB</li></ul>
+          <details><summary>Build notes</summary><ul>
+            <li>NLP-based resume extraction and job matching; scraped and ranked 1,000+ LinkedIn listings by role and skill relevance.</li>
+            <li>Automated resume and job data processing to surface relevant skills and improve candidate-job matching.</li>
+          </ul></details>
+        </div>
+        <div class="ridges"></div>
+      </article>
+      <article class="cart box" style="--band:var(--band-3)">
+        <div class="cart-top"><span>LLM &middot; CAREER</span></div>
+        <div class="cart-body">
+          <h3>FutureTrackAI</h3>
+          <p>An LLM career advisor whose answers are schema-checked before anyone sees them.</p>
+          <ul class="loot"><li><b>12</b><span>FastAPI endpoints</span></li><li><b>JSON&nbsp;Schema</b><span>validated, with retries</span></li></ul>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>OpenAI API</li><li>MongoDB</li><li>React.js</li></ul>
+          <details><summary>Build notes</summary><ul>
+            <li>LLM-powered career recommendations with structured outputs, JSON-schema validation, retries and 12 FastAPI endpoints.</li>
+            <li>Recommendations persisted in MongoDB and served over REST for personalised guidance.</li>
+          </ul></details>
+        </div>
+        <div class="ridges"></div>
+      </article>
+      <article class="cart box" style="--band:var(--band-4)">
+        <div class="cart-top"><span>DEEP LEARNING</span></div>
+        <div class="cart-body">
+          <h3>Brain Tumor Detection</h3>
+          <p>A CNN&ndash;VGG16 hybrid that sorts brain MRI scans into eight classes.</p>
+          <ul class="loot"><li><b>99%</b><span>accuracy</span></li><li><b>8</b><span>MRI classes</span></li></ul>
+          <ul class="chips"><li>Python</li><li>TensorFlow</li><li>Pandas</li><li>Scikit-learn</li><li>CNN</li><li>VGG16</li></ul>
+          <details><summary>Build notes</summary><ul>
+            <li>Hybrid CNN&ndash;VGG16 image classifier trained on brain MRI images across 8 classes.</li>
+            <li>Measured with accuracy, precision, recall, F1-score and a confusion matrix; reached 99% accuracy on the evaluated dataset.</li>
+          </ul></details>
+        </div>
+        <div class="ridges"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORLD 1-5 : TROPHY ROOM ===== -->
+<section id="trophies">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">World 1-5 &middot; Trophy room</p>
+      <h2>ACHIEVEMENTS</h2>
+      <p>Two are still locked. You can unlock both from this page.</p>
+    </div>
+    <div class="achs">
+      <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Certification</span><h3>Claude Code in Action</h3><p>Anthropic</p></div></article>
+      <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Certification</span><h3>MongoDB Associate Developer</h3><p>MongoDB</p></div></article>
+      <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Research</span><h3>Critical Hit</h3><p>99% accuracy across 8 MRI classes.</p></div></article>
+      <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Data</span><h3>Web Crawler</h3><p>1,000+ job listings scraped and ranked.</p></div></article>
+      <article class="ach box locked" data-ach="scout"><canvas data-sprite="lock" aria-hidden="true"></canvas><div><span class="kind">Locked</span><h3>Talent Scout</h3><p>Collect 100 coins in Ship It!</p></div></article>
+      <article class="ach box locked" data-ach="coop"><canvas data-sprite="lock" aria-hidden="true"></canvas><div><span class="kind">Locked</span><h3>Co-op Mode</h3><p>Send Jaya a message.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORLD 1-6 : CONTACT ===== -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">World 1-6 &middot; Player 2 has entered</p>
+      <h2>START A CO-OP QUEST</h2>
+      <p>Hiring for LLM, RAG or agent work? I reply to every message.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reach">
+        <div class="mail box"><code>jayahareeswar2004@gmail.com</code><button class="toggle" data-copy="jayahareeswar2004@gmail.com">COPY</button></div>
+        <div class="mail box"><code>+91 6303673727</code><a class="toggle" href="tel:+916303673727">CALL</a><button class="toggle" data-copy="+916303673727">COPY</button></div>
+        <div class="links">
+          <a class="btn" href="https://www.linkedin.com/in/jayahareeswarreddy" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/jayahareeswarreddy" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Resume.pdf">Resume PDF</a>
+        </div>
+        <p class="hint">Based in Guntur, India.</p>
+      </div>
+      <form class="box" id="questForm">
+        <label for="fName">Your name<input id="fName" name="fName" required autocomplete="name" placeholder="Ada Lovelace"></label>
+        <label for="fEmail">Your email<input id="fEmail" name="fEmail" type="email" required autocomplete="email" placeholder="you@company.com"></label>
+        <label for="fMsg">The quest<textarea id="fMsg" name="fMsg" required placeholder="Role, team, and what you'd like to build together"></textarea></label>
+        <input id="fHoney" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" hidden>
+        <button class="btn primary" type="submit">&#9654; Send quest invite</button>
+        <p class="form-status" id="formStatus" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="end">THANKS FOR PLAYING</div>
+    <p>Built by Jaya Hareeswar Reddy &middot; &copy; 2026 &middot; <a href="https://www.linkedin.com/in/jayahareeswarreddy" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://github.com/jayahareeswarreddy" target="_blank" rel="noopener">GitHub</a></p>
+    <p>Psst: <kbd>&uarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> <kbd>&darr;</kbd> <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>B</kbd> <kbd>A</kbd></p>
+  </div>
+</footer>
+
+<dialog id="tldr" aria-labelledby="tldrTitle">
+  <div class="dlg-head"><h2 id="tldrTitle">10-SECOND SUMMARY</h2><button class="toggle" id="closeTldr" aria-label="Close summary">X</button></div>
+  <dl class="tldr">
+    <div><dt>Who</dt><dd><strong>Jaya Hareeswar Reddy</strong>, Generative AI Engineer, Guntur, India</dd></div>
+    <div><dt>Now</dt><dd>AI Engineer at <strong>Taskwin GmbH</strong> since Apr 2026: LLM backend services, RAG pipelines, tool-calling agents, output validation, latency and token tracking.</dd></div>
+    <div><dt>Core stack</dt><dd>Python, OpenAI, FastAPI, RAG, AI agents and tool calling, embeddings and vector search (Milvus, Supabase), structured outputs, React, TensorFlow, Kafka, Docker</dd></div>
+    <div><dt>Highlights</dt><dd>99% accuracy on 8-class MRI classification &middot; 1,000+ job listings ranked &middot; 12-endpoint LLM career recommender</dd></div>
+    <div><dt>Education</dt><dd>B.Tech CSE, SRM University&ndash;AP, 2022&ndash;2026, CGPA 8.1/10</dd></div>
+    <div><dt>Certified</dt><dd>Claude Code in Action (Anthropic) &middot; MongoDB Associate Developer</dd></div>
+    <div><dt>Email</dt><dd>jayahareeswar2004@gmail.com</dd></div>
+    <div><dt>Phone</dt><dd>+91 6303673727</dd></div>
+  </dl>
+  <div class="dlg-foot">
+    <a class="btn primary" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Resume.pdf">Resume PDF</a>
+    <a class="btn" href="https://www.linkedin.com/in/jayahareeswarreddy" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/jayahareeswarreddy" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn" href="#contact" id="tldrContact">Get in touch</a>
+  </div>
+</dialog>
+
+<div id="toasts" aria-live="polite"></div>
+<canvas id="rain" hidden aria-hidden="true"></canvas>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EMAIL = 'jayahareeswar2004@gmail.com';
+const ls = { get: k => { try { return localStorage.getItem(k) } catch { return null } },
+             set: (k, v) => { try { localStorage.setItem(k, v) } catch {} } };
+
+/* ---------- pixel sprites: one char per pixel, X = the canvas's CSS color ---------- */
+const SPRITES = {
+  hero: [
+    '.....KKKKKK.....','....KHHHHHHK....','...KHHHHHHHHK...','...KHHSSSSHHK...','...KHSSSSSSHK...',
+    '...KSEWSSEWSK...','...KSSSSSSSSK...','...KSSSKKSSSK...','....KSSSSSSK....','.....KKSSKK.....',
+    '...KKBBBBBBKK...','..KBBBBYYBBBBK..','..KBBBBBBBBBBK..','.KGGGGGGGGGGGGK.','.KGGGGCCGGGGGGK.',
+    '.KKKKKKKKKKKKKK.','...KPPPKKPPPK...','...KKKK..KKKK...'],
+  cloud: ['....XXX.....','..XXXXXXX...','.XXXXXXXXXX.','XXXXXXXXXXXX'],
+  code:  ['........','....X...','.X..X.X.','X..X...X','.X.X..X.','...X....','........','........'],
+  spark: ['...X..X.','...X.XXX','..XXX.X.','XXXXXXX.','..XXX...','...X....','...X....','........'],
+  chip:  ['..X..X..','.XXXXXX.','XX....XX','.X.XX.X.','.X.XX.X.','XX....XX','.XXXXXX.','..X..X..'],
+  db:    ['.XXXXXX.','X......X','XXXXXXXX','X......X','XXXXXXXX','X......X','.XXXXXX.','........'],
+  bars:  ['......X.','......X.','...X..X.','...X..X.','X..X..X.','X..X..X.','XXXXXXXX','........'],
+  hammer:['.XXXXX..','.XXXXXX.','.XXXXX..','...X....','...X....','...X....','...X....','........'],
+  trophy:['.XXXXX..','XXXXXXX.','X.XXX.X.','.XXXXX..','..XXX...','...X....','..XXX...','.XXXXX..'],
+  lock:  ['..XXX...','.X...X..','.X...X..','XXXXXXX.','XXX.XXX.','XXX.XXX.','XXXXXXX.','........'],
+};
+SPRITES.blink = SPRITES.hero.map((r, i) => i === 5 ? r.replace(/[EW]/g, 'S') : r);
+SPRITES.run = SPRITES.hero.slice(0, 16).concat(['..KPPPK..KPPPK..', '..KKKK....KKKK..']);
+Object.assign(SPRITES, {
+  bug:   ['.K....K.','..KrrK..','.KrrrrK.','KrWrrWrK','.KrrrrK.','K.KrrK.K','.K....K.'],
+  ghost: ['..gggg..','.gggggg.','gWKggWKg','gggggggg','gggggggg','g.gg.gg.'],
+  coin:  ['.yyyy.','yyyoyy','yyyoyy','yyyoyy','yyyoyy','.yyyy.'],
+  gem:   ['...bb...','..bWbb..','.bWbbbb.','bbbbbbbd','.bbbbbd.','..bbdd..','...dd...'],
+});
+const PAL = { K:'#1b2633', H:'#241710', S:'#c68642', E:'#1b2633', W:'#ffffff', B:'#1288b8', Y:'#f6c22e', G:'#9aa9b8', C:'#5ef0ff', P:'#2c3e50',
+              r:'#e0483e', g:'#9b6bff', y:'#f6c22e', o:'#b98300', b:'#41b4e2', d:'#0f6f93' };
+
+function draw(cv, name = cv.dataset.sprite, cur = getComputedStyle(cv).color) {
+  const rows = SPRITES[name], ctx = cv.getContext('2d');
+  cv.width = rows[0].length; cv.height = rows.length;
+  rows.forEach((row, y) => [...row].forEach((ch, x) => {
+    if (ch === '.') return;
+    ctx.fillStyle = ch === 'X' ? cur : PAL[ch];
+    ctx.fillRect(x, y, 1, 1);
+  }));
+}
+const drawAll = () => $$('canvas[data-sprite]').forEach(c => draw(c));
+drawAll();
+
+const hero = $('#heroSprite');
+if (!reduce) setInterval(() => { draw(hero, 'blink'); setTimeout(() => draw(hero), 140); }, 3400);
+
+/* ---------- theme (day / night) ---------- */
+const root = document.documentElement, themeBtn = $('#theme');
+const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+const syncTheme = () => { themeBtn.textContent = isDark() ? 'DAY' : 'NIGHT'; drawAll(); };
+if (ls.get('theme')) root.dataset.theme = ls.get('theme');
+syncTheme();
+themeBtn.onclick = () => { root.dataset.theme = isDark() ? 'light' : 'dark'; ls.set('theme', root.dataset.theme); syncTheme(); };
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
+
+/* ---------- sound: off until the visitor turns it on ---------- */
+let sfx = false, ac;
+$('#sfx').onclick = e => { sfx = !sfx; e.currentTarget.setAttribute('aria-pressed', sfx); if (sfx) beep(); };
+function beep(f = 988, d = .12) {
+  if (!sfx) return;
+  try {
+    ac ||= new AudioContext();
+    const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime;
+    o.type = 'square'; g.gain.value = .035;
+    o.frequency.setValueAtTime(f, t); o.frequency.setValueAtTime(f * 1.335, t + d / 3);
+    o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d);
+  } catch {}
+}
+
+/* ---------- toasts ---------- */
+function toast(title, body) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.innerHTML = `<b></b><span></span>`;
+  t.firstChild.textContent = title; t.lastChild.textContent = body;
+  $('#toasts').append(t); setTimeout(() => t.remove(), 4200);
+}
+
+/* ---------- coins: each source pays once ---------- */
+let coins = 0; const paid = new Set();
+const counter = $('#coins');
+function earn(key, n) {
+  if (paid.has(key)) return;
+  paid.add(key); addCoins(n);
+}
+function addCoins(n) {
+  coins += n;
+  $('#coinCount').textContent = coins;
+  counter.classList.remove('bump'); void counter.offsetWidth; counter.classList.add('bump');
+  const p = document.createElement('span'); p.className = 'pop'; p.textContent = '+' + n;
+  counter.append(p); setTimeout(() => p.remove(), 800);
+  beep();
+  if (coins >= 100) unlock('scout', 'Talent Scout', 'You won 100 coins in Ship It! Jaya would love to hear from you.');
+}
+function unlock(id, title, body) {
+  const card = $(`[data-ach="${id}"]`);
+  if (!card.classList.contains('locked')) return;
+  card.classList.replace('locked', 'unlocked');
+  const cv = $('canvas', card); cv.dataset.sprite = 'trophy'; draw(cv);
+  $('.kind', card).textContent = 'Unlocked';
+  toast('ACHIEVEMENT UNLOCKED: ' + title.toUpperCase(), body);
+  beep(1319, .3); rain();
+}
+
+// Coins are earned only by playing Ship It!; clicking or tapping around the page pays nothing.
+
+/* ---------- coin rain ---------- */
+function rain() {
+  if (reduce) return;
+  const cv = $('#rain'), ctx = cv.getContext('2d');
+  cv.hidden = false; cv.width = innerWidth; cv.height = innerHeight;
+  const drops = Array.from({ length: 70 }, () => ({ x: Math.random() * cv.width, y: -Math.random() * cv.height, v: 3 + Math.random() * 5, s: 4 * (3 + (Math.random() * 3 | 0)) }));
+  const t0 = performance.now();
+  (function frame(t) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    for (const d of drops) {
+      d.y += d.v;
+      ctx.fillStyle = '#f6c22e'; ctx.fillRect(d.x, d.y, d.s, d.s * 1.25);
+      ctx.fillStyle = '#b98300'; ctx.fillRect(d.x + d.s * .4, d.y + d.s * .25, d.s * .2, d.s * .75);
+    }
+    if (t - t0 < 2800) requestAnimationFrame(frame); else { ctx.clearRect(0, 0, cv.width, cv.height); cv.hidden = true; }
+  })(t0);
+}
+
+/* ---------- boot screen ---------- */
+const boot = $('#boot');
+let seen = false; try { seen = sessionStorage.getItem('booted') } catch {}
+if (reduce || seen) boot.remove();
+else {
+  const end = () => {
+    if (!boot.isConnected || boot.classList.contains('off')) return;
+    boot.classList.add('off'); setTimeout(() => boot.remove(), 400);
+    try { sessionStorage.setItem('booted', '1') } catch {}
+    say(0);
+  };
+  boot.onclick = end; addEventListener('keydown', end, { once: true }); setTimeout(end, 2200);
+}
+
+/* ---------- RPG dialogue ---------- */
+const LINES = [
+  "Hey there, traveler! I'm Jaya, an AI Engineer at Taskwin GmbH.",
+  "I build LLM apps, RAG pipelines and tool-calling agents, mostly in Python and FastAPI.",
+  "My favourite boss fight: getting a model to return valid JSON on the first try. Every time.",
+  "Short on time? Hit the 10-second summary. Got a minute? Play Ship It! below and grab some coins.",
+];
+let line = 0, typer;
+function say(i) {
+  const el = $('#dlgText'); clearInterval(typer);
+  $('#dlgLive').textContent = LINES[i];
+  if (reduce) { el.textContent = LINES[i]; return; }
+  let n = 0; el.textContent = '';
+  typer = setInterval(() => { el.textContent = LINES[i].slice(0, ++n); if (n >= LINES[i].length) clearInterval(typer); }, 24);
+}
+$('#dlgNext').onclick = () => { line = (line + 1) % LINES.length; say(line); beep(660, .06); };
+
+/* ---------- poke the avatar ---------- */
+const QUIPS = [
+  "Ouch! Poking me pays nothing. The coins are in Ship It!",
+  "I don't hallucinate. My retrieval step makes sure of it.",
+  "Favourite data structure? A well-chunked document.",
+  "tool_call: hire_jaya(). Status: waiting for your approval.",
+  "Fun fact: this avatar is 16 by 18 pixels of pure ambition.",
+];
+let pokes = 0, bubbleTimer;
+$('#avatar').onclick = e => {
+  const a = e.currentTarget, b = $('#bubble');
+  a.classList.remove('jump'); void a.offsetWidth; a.classList.add('jump');
+  setTimeout(() => a.classList.remove('jump'), 500);
+  b.textContent = QUIPS[pokes % QUIPS.length]; b.hidden = false;
+  clearTimeout(bubbleTimer); bubbleTimer = setTimeout(() => b.hidden = true, 3000);
+  pokes++;
+  beep(523, .1);
+};
+
+/* ---------- 10-second summary ---------- */
+const dlg = $('#tldr');
+$('#openTldr').onclick = () => dlg.showModal();
+$('#closeTldr').onclick = () => dlg.close();
+$('#tldrContact').onclick = () => dlg.close();
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+/* ---------- contact ---------- */
+$$('[data-copy]').forEach(b => b.onclick = async () => {
+  const text = b.dataset.copy;
+  try { await navigator.clipboard.writeText(text); toast('COPIED', text + ' is on your clipboard.'); }
+  catch { getSelection().selectAllChildren($('code', b.parentElement)); toast('SELECTED', 'Press Ctrl+C to copy it.'); }
+});
+
+// Delivered server-side by FormSubmit straight to the Gmail inbox, so the visitor's own mail app
+// (e.g. an Outlook/Microsoft account) is never involved. The very first submission makes FormSubmit
+// email an "Activate form" link to that inbox; nothing is delivered until it is clicked.
+// ponytail: after activating, swap EMAIL in this URL for the random alias FormSubmit gives you to keep the address out of the source.
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
+$('#questForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target, btn = $('button[type="submit"]', form), status = $('#formStatus');
+  const name = $('#fName').value.trim(), from = $('#fEmail').value.trim(), message = $('#fMsg').value.trim();
+  btn.disabled = true; status.classList.remove('err'); status.textContent = 'Sending...';
+  try {
+    const r = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ name, email: from, message, _subject: `Portfolio: quest invite from ${name}`, _replyto: from, _template: 'table', _honey: $('#fHoney').value }),
+    });
+    const res = await r.json().catch(() => ({}));
+    if (!r.ok || String(res.success) !== 'true') throw new Error(res.message || `HTTP ${r.status}`);
+    form.reset();
+    status.textContent = 'Quest invite delivered. Jaya will reply to your email soon.';
+    unlock('coop', 'Co-op Mode', 'Player 2 joined the party. Jaya will reply soon.');
+  } catch (err) {
+    status.classList.add('err');
+    status.textContent = `Couldn't send (${err.message}). Please email ${EMAIL} directly.`;
+  } finally { btn.disabled = false; }
+});
+
+/* ---------- bonus stage: Ship It! (endless runner, 320x120 logical pixels) ---------- */
+{
+  const cv = $('#game'), ctx = cv.getContext('2d'), W = 320, H = 120, GROUND = 100, STAND = GROUND - 18;
+  cv.width = W; cv.height = H;
+  const SKILLS = ['Python', 'OpenAI', 'RAG', 'AI Agents', 'Tool Calling', 'Embeddings', 'Vector Search', 'Milvus', 'FastAPI', 'React', 'TensorFlow', 'Docker'];
+  const DEATHS = ['SEGFAULT!', 'NULL POINTER!', 'RATE LIMITED!', 'MERGE CONFLICT!', 'FLAKY TEST!', 'TOKEN LIMIT!'];
+  const GC = {}, img = {};
+  let S, state = 'ready', last = 0, raf = 0, jumpAt = -1, overAt = 0, best = +ls.get('best') || 0;
+
+  // canvas can't read CSS vars per pixel, so theme colours + baked sprites are cached and rebuilt on theme change
+  function refresh() {
+    const cs = getComputedStyle(root);
+    for (const k of ['stage', 'cloud', 'hill', 'grass', 'grass-2', 'dirt', 'fg']) GC[k] = cs.getPropertyValue('--' + k).trim();
+    for (const k of ['hero', 'run', 'bug', 'ghost', 'coin', 'gem', 'cloud']) { img[k] = document.createElement('canvas'); draw(img[k], k, GC.cloud); }
+    if (state !== 'run') render();
+  }
+  function reset() {
+    S = { y: STAND, vy: 0, speed: 2.2, dist: 0, next: 140, spawned: 0, things: [], coins: 0, skills: [], frame: 0, msg: null, death: '' };
+    renderSkills();
+  }
+  const score = () => Math.floor(S.dist / 5) + S.coins * 5 + S.skills.length * 20;
+  const hit = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+
+  function spawn() {
+    const x = W + 8;
+    // bugs sit on the ground (jump them); hallucinations float at head height (stay grounded)
+    S.things.push(Math.random() < .62 ? { t: 'bug', x, y: GROUND - 7, w: 8, h: 7 } : { t: 'ghost', x, y: 62, w: 8, h: 6 });
+    if (S.spawned % 5 === 4) S.things.push({ t: 'gem', x: x + 44, y: GROUND - 46, w: 8, h: 7 });
+    else if (Math.random() < .6) {
+      const y = Math.random() < .5 ? GROUND - 34 : GROUND - 14;
+      for (let i = 0; i < 3; i++) S.things.push({ t: 'coin', x: x + 34 + i * 10, y, w: 6, h: 6 });
+    }
+    S.spawned++;
+    // ponytail: gap grows with speed so every pattern stays clearable; tune 42/40/120 if it feels too easy or hard
+    S.next = S.dist + S.speed * 42 + 40 + Math.random() * 120;
+  }
+  function jump() {
+    if (S.y >= STAND && S.vy === 0) { S.vy = -4.6; beep(392, .06); }
+    else jumpAt = performance.now(); // buffered: fires on landing if pressed slightly early
+  }
+  function die() {
+    state = 'over'; overAt = performance.now();
+    S.death = DEATHS[Math.random() * DEATHS.length | 0];
+    if (score() > best) { best = score(); ls.set('best', best); }
+    beep(196, .25);
+  }
+  function step(k) {
+    S.frame += k;
+    S.speed = Math.min(5, S.speed + .0008 * k);
+    S.dist += S.speed * k;
+    S.vy += .25 * k; S.y += S.vy * k;
+    if (S.y >= STAND) { S.y = STAND; S.vy = 0; if (performance.now() - jumpAt < 140) { jumpAt = -1; jump(); } }
+    if (S.dist >= S.next) spawn();
+    const p = { x: 43, y: S.y + 2, w: 10, h: 16 };
+    for (const o of S.things) {
+      o.x -= S.speed * k;
+      if (o.t === 'ghost') o.y = 62 + Math.sin(S.frame / 8) * 2;
+      if (o.taken || !hit(p, o)) continue;
+      if (o.t === 'bug' || o.t === 'ghost') return die();
+      o.taken = true;
+      if (o.t === 'coin') { S.coins++; addCoins(1); continue; }
+      addCoins(5);
+      if (S.skills.length < SKILLS.length) {
+        const s = SKILLS[S.skills.length];
+        S.skills.push(s); renderSkills();
+        S.msg = { text: '+' + s.toUpperCase(), until: S.frame + 70 };
+        if (S.skills.length === SKILLS.length) { earn('allskills', 25); toast('FULL STACK!', 'Every skill collected in one run. Jaya would like a word.'); }
+      }
+    }
+    S.things = S.things.filter(o => !o.taken && o.x > -16);
+    if (S.msg && S.frame > S.msg.until) S.msg = null;
+  }
+  function text(t, x, y, size = 8, color = GC.fg, align = 'left') {
+    ctx.font = `${size}px "Press Start 2P", monospace`; ctx.textAlign = align; ctx.textBaseline = 'top'; ctx.fillStyle = color;
+    ctx.fillText(t, x, y);
+  }
+  function render() {
+    const d = S.dist;
+    ctx.fillStyle = GC.stage; ctx.fillRect(0, 0, W, H);
+    for (let i = 0; i < 4; i++) ctx.drawImage(img.cloud, ((i * 110 - d * .15) % 440 + 440) % 440 - 40, 12 + (i % 2) * 16);
+    ctx.fillStyle = GC.hill;
+    for (let i = 0; i < 6; i++) {
+      const x = ((i * 80 - d * .4) % 480 + 480) % 480 - 80, layers = 3 + (i * 7) % 3;
+      for (let j = 0; j < layers; j++) ctx.fillRect(Math.round(x) + j * 6, GROUND - (j + 1) * 6, 60 - j * 12, 6);
+    }
+    ctx.fillStyle = GC.dirt; ctx.fillRect(0, GROUND, W, H - GROUND);
+    ctx.fillStyle = GC.grass; ctx.fillRect(0, GROUND, W, 4);
+    ctx.fillStyle = GC['grass-2'];
+    for (let x = -Math.round(d % 16); x < W; x += 16) ctx.fillRect(x, GROUND + 4, 8, 2);
+    for (const o of S.things) ctx.drawImage(img[o.t], Math.round(o.x), Math.round(o.y));
+    const stride = state === 'run' && S.y >= STAND && (S.frame / 6 | 0) % 2;
+    ctx.drawImage(stride ? img.run : img.hero, 40, Math.round(S.y));
+    text('SCORE ' + String(score()).padStart(5, '0'), 6, 6);
+    text('BEST ' + String(best).padStart(5, '0'), W - 6, 6, 8, GC.fg, 'right');
+    if (S.msg) text(S.msg.text, W / 2, 22, 8, GC.fg, 'center');
+    if (state !== 'run') {
+      const [big, small] = state === 'ready' ? ['SHIP IT!', 'SPACE / TAP TO RUN']
+        : state === 'paused' ? ['PAUSED', 'SPACE / TAP TO RESUME']
+        : [S.death, `SCORE ${score()}  -  SPACE / TAP TO RETRY`];
+      ctx.fillStyle = 'rgba(15,22,32,.82)'; ctx.fillRect(0, 34, W, 48);
+      text(big, W / 2, 42, 16, '#f6c22e', 'center');
+      text(small, W / 2, 66, 8, '#ffffff', 'center');
+    }
+  }
+  function renderSkills() {
+    $('#gotSkills').replaceChildren(...(S.skills.length ? S.skills : ['None yet']).map(s => Object.assign(document.createElement('li'), { textContent: s })));
+    $('#skillCount').textContent = `${S.skills.length}/${SKILLS.length}`;
+  }
+  function loop(t) {
+    const k = Math.max(0, Math.min(2, (t - last) / 16.67)); last = t;
+    if (state === 'run') step(k);
+    render();
+    if (state === 'run') raf = requestAnimationFrame(loop);
+  }
+  function start() {
+    if (state === 'over') { if (performance.now() - overAt < 400) return; reset(); }
+    state = 'run';
+    cancelAnimationFrame(raf); last = performance.now(); raf = requestAnimationFrame(loop);
+  }
+  const press = () => state === 'run' ? jump() : start();
+  const pause = () => { if (state === 'run') state = 'paused'; };
+
+  addEventListener('keydown', e => {
+    if (![' ', 'ArrowUp', 'w', 'W'].includes(e.key)) return;
+    if (state !== 'run' && document.activeElement !== cv) return; // only steal Space from the page while playing
+    if (e.target.closest?.('input, textarea')) return;
+    e.preventDefault();
+    if (!e.repeat) press();
+  });
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); cv.focus({ preventScroll: true }); press(); });
+  document.addEventListener('visibilitychange', () => document.hidden && pause());
+  new IntersectionObserver(([e]) => e.isIntersecting || pause(), { threshold: .4 }).observe(cv);
+  $('#playLink').addEventListener('click', () => setTimeout(() => cv.focus({ preventScroll: true }), 400));
+  themeBtn.addEventListener('click', refresh);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', refresh);
+
+  reset(); refresh();
+  document.fonts.ready.then(() => state !== 'run' && render());
+}
+
+/* ---------- cheat code ---------- */
+const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let kp = 0;
+addEventListener('keydown', e => {
+  const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  kp = k === KONAMI[kp] ? kp + 1 : (k === KONAMI[0] ? 1 : 0);
+  if (kp === KONAMI.length) {
+    kp = 0;
+    toast('CHEAT CODE ACCEPTED', 'Nice try. Coins only come from playing Ship It! Jaya is still available for hire, though.');
+    rain();
+  }
+});
+</script>
+</body>
+</html>
