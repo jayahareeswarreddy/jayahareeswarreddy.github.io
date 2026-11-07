@@ -875,30 +875,31 @@ $$('[data-copy]').forEach(b => b.onclick = async () => {
   catch { getSelection().selectAllChildren($('code', b.parentElement)); toast('SELECTED', 'Press Ctrl+C to copy it.'); }
 });
 
-// Delivered server-side by FormSubmit straight to the Gmail inbox, so the visitor's own mail app
-// (e.g. an Outlook/Microsoft account) is never involved. The very first submission makes FormSubmit
-// email an "Activate form" link to that inbox; nothing is delivered until it is clicked.
-// ponytail: after activating, swap EMAIL in this URL for the random alias FormSubmit gives you to keep the address out of the source.
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
+// Delivered by Web3Forms straight to the Gmail inbox, so the visitor's own mail app (e.g. an Outlook/Microsoft
+// account) is never involved. The key only names the inbox and is designed to sit in page source. Sent as FormData,
+// not JSON, because that needs no CORS preflight. Moved off FormSubmit when its origin went down (Cloudflare 522).
+const FORM_ENDPOINT = 'https://api.web3forms.com/submit', WEB3FORMS_KEY = '5b4c9284-f5f2-44e0-a1c8-d597527c5db7';
 $('#questForm').addEventListener('submit', async e => {
   e.preventDefault();
   const form = e.target, btn = $('button[type="submit"]', form), status = $('#formStatus');
   const name = $('#fName').value.trim(), from = $('#fEmail').value.trim(), message = $('#fMsg').value.trim();
   btn.disabled = true; status.classList.remove('err'); status.textContent = 'Sending...';
   try {
-    const r = await fetch(FORM_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ name, email: from, message, _subject: `Portfolio: quest invite from ${name}`, _replyto: from, _template: 'table', _honey: $('#fHoney').value }),
-    });
+    if (!WEB3FORMS_KEY) throw new Error('no form key set');
+    const data = new FormData();
+    data.append('access_key', WEB3FORMS_KEY); data.append('name', name); data.append('email', from); data.append('message', message);
+    data.append('subject', `Portfolio: quest invite from ${name}`);
+    if ($('#fHoney').value) data.append('botcheck', 'true'); // only a bot fills the hidden field
+    const r = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: data });
     const res = await r.json().catch(() => ({}));
-    if (!r.ok || String(res.success) !== 'true') throw new Error(res.message || `HTTP ${r.status}`);
+    if (!r.ok || res.success !== true) throw new Error(res.message || res.body?.message || `HTTP ${r.status}`);
     form.reset();
     status.textContent = 'Quest invite delivered. Jaya will reply to your email soon.';
     unlock('coop', 'Co-op Mode', 'Player 2 joined the party. Jaya will reply soon.');
   } catch (err) {
+    console.error('Contact form failed:', err.message); // the reason stays in the console, visitors get a way forward
     status.classList.add('err');
-    status.textContent = `Couldn't send (${err.message}). Please email ${EMAIL} directly.`;
+    status.textContent = `The form isn't working right now. Please email ${EMAIL}.`;
   } finally { btn.disabled = false; }
 });
 
