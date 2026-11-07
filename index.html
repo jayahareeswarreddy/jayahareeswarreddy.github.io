@@ -3,12 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jaya Hareeswar Reddy</title>
-<meta name="description" content="Jaya Hareeswar Reddy, Generative AI Engineer. LLM apps, RAG pipelines and tool-calling agents in Python and FastAPI.">
+<title>Jaya Hareeswar Reddy Gudisa</title>
+<meta name="description" content="Jaya Hareeswar Reddy Gudisa, Generative AI Engineer. LLM apps, RAG pipelines and tool-calling agents in Python and FastAPI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap">
-<noscript><style>#boot{display:none}</style></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap">
 <style>
 /* Layout: a side-scroller. Sticky HUD on top, then each section is a "world" band
    alternating sky / parchment, content capped at 1120px, hard 8-bit offset shadows throughout. */
@@ -23,6 +22,7 @@
   --f-display:"Press Start 2P", ui-monospace, "Courier New", monospace;
   --f-hud:"VT323", ui-monospace, "Courier New", monospace;
   --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-poster:"Anton", Impact, "Arial Narrow", sans-serif;
   --gutter:max(16px, 4vw);
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
@@ -72,13 +72,6 @@ section:nth-of-type(odd){background:var(--bg-alt)}
 h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:balance; text-shadow:3px 3px 0 var(--coin)}
 .sec-head p:last-child{margin:0; max-width:60ch; color:var(--muted)}
 
-/* ---------- boot screen ---------- */
-#boot{position:fixed; inset:0; z-index:100; display:grid; place-content:center; gap:28px; text-align:center;
-  background:#0a0f16; color:#e7eef6; cursor:pointer; transition:opacity .35s steps(4)}
-#boot.off{opacity:0; pointer-events:none}
-#boot .logo{font:400 clamp(22px,5vw,44px)/1.2 var(--f-display); color:#41b4e2; text-shadow:4px 4px 0 #f6c22e}
-#boot .press{font:400 14px/1 var(--f-display); animation:blink 1s steps(1) infinite}
-#boot small{font:400 20px/1 var(--f-hud); color:#a8b7c7}
 @keyframes blink{50%{opacity:0}}
 
 /* ---------- HUD ---------- */
@@ -105,7 +98,7 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 @keyframes pop{to{transform:translateY(-26px); opacity:0}}
 
 /* ---------- hero ---------- */
-.hero{position:relative; padding-block:64px 0; background:var(--bg); overflow:hidden}
+.hero{position:relative; padding-block:64px 0; background:var(--bg); overflow:hidden; border-block:3px solid var(--line)}
 .hero-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:56px; align-items:center; padding-bottom:72px}
 .char{display:grid}
 .stage{position:relative; height:280px; background:var(--stage); border-bottom:3px solid var(--line); overflow:hidden}
@@ -140,7 +133,7 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .bar .fill{height:100%; background:repeating-linear-gradient(90deg, var(--f) 0 10px, transparent 10px 13px)}
 .bar span:last-child{text-align:right; color:var(--muted)}
 
-.hero h1{font:400 clamp(22px,3.6vw,40px)/1.35 var(--f-display); margin:14px 0 12px; text-wrap:balance}
+.hero h2{text-shadow:none; font:400 clamp(22px,3.6vw,40px)/1.35 var(--f-display); margin:14px 0 12px; text-wrap:balance}
 .role{font:400 clamp(12px,1.5vw,16px)/1.4 var(--f-display); color:var(--primary); margin:0 0 28px; text-transform:uppercase}
 .dialogue{position:relative; padding:28px 22px 22px; margin-bottom:32px; min-height:132px}
 .dialogue .speaker{position:absolute; top:-15px; left:18px; padding:6px 10px; font:400 10px/1 var(--f-display);
@@ -174,6 +167,7 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .quest.train::before{background:var(--band-1)}
 .q-top{display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; margin-bottom:10px}
 .q-when{font:400 22px/1 var(--f-hud); color:var(--muted); margin-left:auto}
+.quest .org + .q-top{margin-top:20px}
 .quest h3{margin:0 0 4px; font:400 clamp(12px,1.6vw,15px)/1.6 var(--f-display)}
 .quest .org{margin:0 0 14px; font-weight:600; color:var(--primary)}
 .objectives{list-style:none; margin:0; padding:0; display:grid; gap:8px}
@@ -233,6 +227,35 @@ textarea{min-height:140px; resize:vertical}
 .btn:disabled{opacity:.6; cursor:progress}
 
 a.toggle{display:inline-flex; align-items:center; text-decoration:none}
+
+/* ---------- story: "Jaya vs Everything" (one deliberate world in both themes) ---------- */
+#story{--st-bg:#0a0d14; --st-ink:#f3efe6; --st-gold:#f6c22e; position:relative; background:var(--st-bg); color:var(--st-ink)}
+.st-stage{display:none}
+#story.play{height:915vh; height:915svh}
+#story.play .st-stage{display:block; position:sticky; top:0; height:100vh; height:100svh; overflow:hidden}
+#stCanvas{display:block; width:100%; height:100%; max-width:none; image-rendering:auto}
+.st-bar span{padding:4px 8px; background:var(--st-bg)}
+.st-bar{position:absolute; inset:0 0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:8px var(--gutter);
+  font:400 22px/1 var(--f-hud); letter-spacing:.04em}
+.st-skip{display:inline-flex; align-items:center; min-height:44px; padding:0 14px; background:var(--st-bg); color:var(--st-ink); border:2px solid var(--st-ink); text-decoration:none}
+.st-skip:hover{background:var(--st-ink); color:var(--st-bg)}
+#story :focus-visible{outline-color:var(--st-gold)}
+.st-cap{position:absolute; left:var(--gutter); right:var(--gutter); bottom:max(24px,5vh); display:grid; gap:8px; opacity:0; pointer-events:none; transition:opacity .2s steps(3)}
+.st-cap.on{opacity:1}
+.st-cap small,.st-when{font:400 26px/1 var(--f-hud); color:var(--st-gold); letter-spacing:.04em}
+.st-cap p,.st-line{margin:0; font:400 clamp(22px,min(3.6vw,6.5vh),52px)/1.08 var(--f-poster); text-transform:uppercase; text-wrap:balance}
+.st-final{position:absolute; left:var(--gutter); right:var(--gutter); bottom:max(20px,4vh); display:grid; justify-items:start; gap:clamp(8px,2vh,18px)}
+.st-email{font:400 clamp(20px,min(6.4vw,11vh),110px)/1.05 var(--f-poster); color:var(--st-gold); text-decoration:none; overflow-wrap:anywhere}
+.st-email:hover{text-decoration:underline; text-decoration-thickness:4px}
+.st-final p{margin:0; font:400 clamp(20px,min(2.8vw,5vh),40px)/1.1 var(--f-poster); text-transform:uppercase}
+.st-final-btns{display:flex; flex-wrap:wrap; gap:14px}
+.st-final .btn.coin{color:var(--band-ink)}
+.st-board{padding:64px var(--gutter)}
+.st-board h1{margin:0 0 40px; font:400 clamp(44px,11vw,140px)/1 var(--f-poster); text-transform:uppercase}
+.st-board ol{list-style:none; margin:0; padding:0; display:grid; gap:40px; max-width:1120px}
+.st-board li{display:grid; gap:10px; min-width:0}
+.st-board canvas{display:block; width:100%; max-width:640px; height:auto; image-rendering:auto; border:3px solid var(--st-ink)}
+#story.play .st-board{position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0 0 0 0)}
 
 /* ---------- bonus stage ---------- */
 .arcade{max-width:960px; margin:0 auto}
@@ -301,16 +324,41 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 </head>
 <body>
 
-<div id="boot" role="presentation">
-  <div class="logo">JHR.EXE</div>
-  <div class="press">PRESS START</div>
-  <small>1 PLAYER &middot; &copy; 2026 &middot; tap or press any key</small>
+<!-- ===== STORY : JAYA VS EVERYTHING ===== -->
+<div id="story">
+  <div class="st-stage">
+    <canvas id="stCanvas" aria-hidden="true"></canvas>
+    <div class="st-bar"><span id="stRes" aria-hidden="true">SCROLL TO FIGHT</span><a class="st-skip" id="stSkip" href="#about">Skip story</a></div>
+    <div class="st-cap" id="stCap" aria-hidden="true"><small id="stWhen"></small><p id="stLine"></p></div>
+    <div class="st-final" id="stFinal" hidden>
+      <a class="st-email" href="#contact">jayahareeswar2004@gmail.com</a>
+      <p>Still training. Player 2, press Hire.</p>
+      <div class="st-final-btns"><a class="btn coin" href="#contact">&#9654; Hire</a><a class="btn" href="#play">Play the bonus level</a></div>
+    </div>
+  </div>
+  <div class="st-board">
+    <h1>Jaya Hareeswar Reddy Gudisa</h1>
+    <ol>
+      <li><span class="st-when">9 rounds. 1 fighter.</span><p class="st-line">Scroll to fight.</p></li>
+      <li><span class="st-when">2020 &middot; KKR Gowtham, Guntur</span><p class="st-line">Round 1: The Homework Monster. Scored 100%.</p></li>
+      <li><span class="st-when">2020&ndash;2022 &middot; ARKA Junior College</span><p class="st-line">Round 2: The M.P.C. Hydra. Intermediate, MPC, 91%.</p></li>
+      <li><span class="st-when">2022&ndash;2026 &middot; SRM University&ndash;AP</span><p class="st-line">Round 3: The 8 AM Lecture. B.Tech CSE, CGPA 8.1/10.</p></li>
+      <li><span class="st-when">Jan&ndash;May 2025 &middot; Brain tumor research</span><p class="st-line">Round 4: Overfit, the Mirror Demon. 8 MRI classes, 99% on the evaluated dataset.</p></li>
+      <li><span class="st-when">Project &middot; Prompt-to-UI Generator</span><p class="st-line">Round 5: The Syntax Error Swarm. Text prompts in, React components out.</p></li>
+      <li><span class="st-when">Project &middot; AI Resume Analyzer &amp; Job Matcher</span><p class="st-line">Round 6: The Job Listing Horde. 1,000+ LinkedIn listings ranked.</p></li>
+      <li><span class="st-when">Project &middot; FutureTrackAI</span><p class="st-line">Round 7: The Malformed JSON Ninja. 12 FastAPI endpoints, JSON-schema validation.</p></li>
+      <li><span class="st-when">Apr 2026 &ndash; Oct 2026 &middot; Freelance</span><p class="st-line">Round 8: The Hallucinator. Freelance AI Engineer, Taskwin GmbH.</p></li>
+      <li><span class="st-when">Oct 2026 &ndash; Present &middot; Full-time</span><p class="st-line">Round 9: Prod Bug, Friday 5 PM. Junior Software Developer, TaskWin India Private Limited.</p></li>
+      <li><span class="st-when">Final round</span><p class="st-line">The Recruiter. Still training. Player 2, press Hire.</p></li>
+    </ol>
+  </div>
 </div>
 
 <header class="hud">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Back to top"><i>&lt;&gt;</i><span>JHR</span></a>
     <ul class="nav">
+      <li><a href="#story">Story</a></li>
       <li><a href="#play">Play</a></li>
       <li><a href="#inventory">Skills</a></li>
       <li><a href="#quests">Experience</a></li>
@@ -330,49 +378,6 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 </header>
 
 <main id="top">
-<!-- ===== WORLD 1-1 : CHARACTER ===== -->
-<div class="hero">
-  <div class="wrap hero-grid">
-    <div class="char box">
-      <div class="stage">
-        <canvas class="cloud c1" data-sprite="cloud" aria-hidden="true"></canvas>
-        <canvas class="cloud c2" data-sprite="cloud" aria-hidden="true"></canvas>
-        <div class="bubble" id="bubble" role="status" hidden></div>
-        <button class="avatar" id="avatar" aria-label="Poke Jaya's pixel avatar"><canvas id="heroSprite" data-sprite="hero"></canvas></button>
-        <div class="ground"></div>
-      </div>
-      <dl class="sheet">
-        <div><dt>Class</dt><dd>Generative AI Engineer</dd></div>
-        <div><dt>Guild</dt><dd>Taskwin GmbH</dd></div>
-        <div><dt>Spawn</dt><dd>Guntur, India</dd></div>
-        <div><dt>Status</dt><dd class="status">Open to new quests</dd></div>
-      </dl>
-      <div class="bars" aria-hidden="true">
-        <div class="bar"><span>Curiosity</span><div class="track"><div class="fill" style="width:100%;--f:var(--primary)"></div></div><span>MAX</span></div>
-        <div class="bar"><span>Coffee</span><div class="track"><div class="fill" style="width:68%;--f:var(--coin-dark)"></div></div><span>68%</span></div>
-      </div>
-    </div>
-
-    <div>
-      <p class="eyebrow">Player 1 &middot; Ready</p>
-      <h1>JAYA HAREESWAR<br>REDDY</h1>
-      <p class="role">Generative AI Engineer</p>
-      <div class="dialogue box">
-        <span class="speaker">JAYA</span>
-        <p id="dlgText" aria-hidden="true">Hey there, traveler! I'm Jaya, an AI Engineer at Taskwin GmbH.</p>
-        <p class="sr" id="dlgLive" aria-live="polite">Hey there, traveler! I'm Jaya, an AI Engineer at Taskwin GmbH.</p>
-        <button class="next" id="dlgNext" aria-label="Next line of dialogue">&#9660;</button>
-      </div>
-      <div class="ctas">
-        <a class="btn primary" href="#play" id="playLink">&#9654; Play the game</a>
-        <button class="btn coin" id="openTldr">10-sec summary</button>
-        <a class="btn" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Resume.pdf">Resume PDF</a>
-      </div>
-      <p class="hint">Win <b>100 coins</b> in Ship It! to unlock a secret achievement.</p>
-    </div>
-  </div>
-</div>
-
 <!-- ===== BONUS STAGE : PLAYABLE RUNNER ===== -->
 <section id="play">
   <div class="wrap">
@@ -390,6 +395,49 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     </div>
   </div>
 </section>
+
+<!-- ===== WORLD 1-1 : CHARACTER ===== -->
+<div class="hero" id="about">
+  <div class="wrap hero-grid">
+    <div class="char box">
+      <div class="stage">
+        <canvas class="cloud c1" data-sprite="cloud" aria-hidden="true"></canvas>
+        <canvas class="cloud c2" data-sprite="cloud" aria-hidden="true"></canvas>
+        <div class="bubble" id="bubble" role="status" hidden></div>
+        <button class="avatar" id="avatar" aria-label="Poke Jaya's pixel avatar"><canvas id="heroSprite" data-sprite="hero"></canvas></button>
+        <div class="ground"></div>
+      </div>
+      <dl class="sheet">
+        <div><dt>Class</dt><dd>Generative AI Engineer</dd></div>
+        <div><dt>Guild</dt><dd>TaskWin India Private Limited</dd></div>
+        <div><dt>Spawn</dt><dd>Guntur, India</dd></div>
+        <div><dt>Status</dt><dd class="status">Open to new quests</dd></div>
+      </dl>
+      <div class="bars" aria-hidden="true">
+        <div class="bar"><span>Curiosity</span><div class="track"><div class="fill" style="width:100%;--f:var(--primary)"></div></div><span>MAX</span></div>
+        <div class="bar"><span>Coffee</span><div class="track"><div class="fill" style="width:68%;--f:var(--coin-dark)"></div></div><span>68%</span></div>
+      </div>
+    </div>
+
+    <div>
+      <p class="eyebrow">Player 1 &middot; Ready</p>
+      <h2>JAYA HAREESWAR<br>REDDY GUDISA</h2>
+      <p class="role">Generative AI Engineer</p>
+      <div class="dialogue box">
+        <span class="speaker">JAYA</span>
+        <p id="dlgText" aria-hidden="true">Hey there, traveler! I'm Jaya, a Junior Software Developer at TaskWin.</p>
+        <p class="sr" id="dlgLive" aria-live="polite">Hey there, traveler! I'm Jaya, a Junior Software Developer at TaskWin.</p>
+        <button class="next" id="dlgNext" aria-label="Next line of dialogue">&#9660;</button>
+      </div>
+      <div class="ctas">
+        <a class="btn primary" href="#play" id="playLink">&#9654; Play the game</a>
+        <button class="btn coin" id="openTldr">10-sec summary</button>
+        <a class="btn" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Gudisa_Resume.pdf">Resume PDF</a>
+      </div>
+      <p class="hint">Win <b>100 coins</b> in Ship It! to unlock a secret achievement.</p>
+    </div>
+  </div>
+</div>
 
 <!-- ===== WORLD 1-2 : INVENTORY ===== -->
 <section id="inventory">
@@ -446,14 +494,18 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     </div>
     <ol class="quests">
       <li class="quest box">
-        <div class="q-top"><span class="tag r-legendary">MAIN QUEST &middot; IN PROGRESS</span><span class="q-when">Apr 2026 &ndash; Present</span></div>
-        <h3>AI Engineer</h3>
+        <div class="q-top"><span class="tag r-legendary">MAIN QUEST &middot; FULL-TIME</span><span class="q-when">Oct 2026 &ndash; Present</span></div>
+        <h3>Junior Software Developer</h3>
+        <p class="org">TaskWin India Private Limited</p>
+        <div class="q-top"><span class="tag r-rare">FREELANCE &middot; CLEARED</span><span class="q-when">Apr 2026 &ndash; Oct 2026</span></div>
+        <h3>Freelance AI Engineer</h3>
         <p class="org">Taskwin GmbH</p>
         <ul class="objectives">
-          <li>Develop LLM-powered backend services with prompt engineering, structured outputs and robust error handling.</li>
-          <li>Build RAG pipelines: document chunking, embeddings and vector search for context-aware retrieval.</li>
-          <li>Implement tool-calling and multi-step agent workflows wired into backend tools and services.</li>
-          <li>Validate model outputs and handle failures, with latency monitoring and token-usage tracking.</li>
+          <li>Develop backend services using Python and FastAPI, implementing API validation, retries, and exception handling.</li>
+          <li>Build RAG pipelines using document chunking, embeddings, and vector search for internal document retrieval.</li>
+          <li>Implement tool-calling workflows and integrate REST APIs with backend services.</li>
+          <li>Debug application failures and monitor latency, token usage, and workflow execution.</li>
+          <li>Coordinate frontend and backend development and troubleshoot integration issues.</li>
         </ul>
       </li>
       <li class="quest box done">
@@ -478,6 +530,11 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
         <h3>Intermediate, MPC</h3>
         <p class="org">ARKA Junior College &middot; 91%</p>
       </li>
+      <li class="quest box train">
+        <div class="q-top"><span class="tag r-common">FIRST LEVEL</span><span class="q-when">2020</span></div>
+        <h3>10th Class</h3>
+        <p class="org">KKR Gowtham, Guntur &middot; 100%</p>
+      </li>
     </ol>
   </div>
 </section>
@@ -499,8 +556,10 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <ul class="loot"><li><b>Live</b><span>previews</span></li><li><b>Streamed</b><span>generation</span></li><li><b>Iterative</b><span>refinement</span></li></ul>
           <ul class="chips"><li>Python</li><li>FastAPI</li><li>OpenAI API</li><li>React.js</li><li>Tailwind CSS</li></ul>
           <details><summary>Build notes</summary><ul>
-            <li>Generates React interfaces from natural-language prompts, with live previews, streaming, syntax-error handling and iterative refinement.</li>
-            <li>FastAPI backend delivers generated components to the React frontend for instant preview.</li>
+            <li>Converts text prompts into React components with live previews and streaming responses.</li>
+            <li>Integrated the FastAPI backend with the React frontend to deliver generated UI components and live previews.</li>
+            <li>Implemented syntax validation, error handling, and iterative editing.</li>
+            <li>Added component-level validation and preview rendering for generated interfaces.</li>
           </ul></details>
         </div>
         <div class="ridges"></div>
@@ -513,8 +572,10 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <ul class="loot"><li><b>1,000+</b><span>LinkedIn listings ranked</span></li><li><b>spaCy</b><span>resume extraction</span></li></ul>
           <ul class="chips"><li>Python</li><li>FastAPI</li><li>spaCy</li><li>Selenium</li><li>MongoDB</li></ul>
           <details><summary>Build notes</summary><ul>
-            <li>NLP-based resume extraction and job matching; scraped and ranked 1,000+ LinkedIn listings by role and skill relevance.</li>
-            <li>Automated resume and job data processing to surface relevant skills and improve candidate-job matching.</li>
+            <li>Developed resume parsing and job-matching workflows.</li>
+            <li>Scraped and ranked 1,000+ LinkedIn job listings by skills and role relevance.</li>
+            <li>Used NLP techniques to extract skills, identify job requirements, and calculate candidate-job relevance.</li>
+            <li>Integrated Selenium and MongoDB for automated job collection and structured data storage.</li>
           </ul></details>
         </div>
         <div class="ridges"></div>
@@ -527,8 +588,10 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <ul class="loot"><li><b>12</b><span>FastAPI endpoints</span></li><li><b>JSON&nbsp;Schema</b><span>validated, with retries</span></li></ul>
           <ul class="chips"><li>Python</li><li>FastAPI</li><li>OpenAI API</li><li>MongoDB</li><li>React.js</li></ul>
           <details><summary>Build notes</summary><ul>
-            <li>LLM-powered career recommendations with structured outputs, JSON-schema validation, retries and 12 FastAPI endpoints.</li>
-            <li>Recommendations persisted in MongoDB and served over REST for personalised guidance.</li>
+            <li>Developed a career guidance platform with 12 FastAPI endpoints and structured JSON responses.</li>
+            <li>Integrated OpenAI API, MongoDB, and REST APIs to process user information and generate career recommendations.</li>
+            <li>Implemented JSON-schema validation, retry handling, and backend response processing.</li>
+            <li>Integrated AI-generated career recommendations with MongoDB and REST APIs to support personalized guidance.</li>
           </ul></details>
         </div>
         <div class="ridges"></div>
@@ -541,8 +604,10 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <ul class="loot"><li><b>99%</b><span>accuracy</span></li><li><b>8</b><span>MRI classes</span></li></ul>
           <ul class="chips"><li>Python</li><li>TensorFlow</li><li>Pandas</li><li>Scikit-learn</li><li>CNN</li><li>VGG16</li></ul>
           <details><summary>Build notes</summary><ul>
-            <li>Hybrid CNN&ndash;VGG16 image classifier trained on brain MRI images across 8 classes.</li>
-            <li>Measured with accuracy, precision, recall, F1-score and a confusion matrix; reached 99% accuracy on the evaluated dataset.</li>
+            <li>Developed a hybrid CNN&ndash;VGG16 image-classification model to categorize brain MRI images across 8 classes.</li>
+            <li>Prepared and processed image datasets using Pandas and implemented the deep-learning workflow with TensorFlow.</li>
+            <li>Evaluated model performance using accuracy, precision, recall, F1-score, and a confusion matrix.</li>
+            <li>Achieved 99% classification accuracy on the evaluated dataset.</li>
           </ul></details>
         </div>
         <div class="ridges"></div>
@@ -585,7 +650,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
         <div class="links">
           <a class="btn" href="https://www.linkedin.com/in/jayahareeswarreddy" target="_blank" rel="noopener">LinkedIn</a>
           <a class="btn" href="https://github.com/jayahareeswarreddy" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Resume.pdf">Resume PDF</a>
+          <a class="btn" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Gudisa_Resume.pdf">Resume PDF</a>
         </div>
         <p class="hint">Based in Guntur, India.</p>
       </div>
@@ -605,7 +670,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 <footer>
   <div class="wrap">
     <div class="end">THANKS FOR PLAYING</div>
-    <p>Built by Jaya Hareeswar Reddy &middot; &copy; 2026 &middot; <a href="https://www.linkedin.com/in/jayahareeswarreddy" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://github.com/jayahareeswarreddy" target="_blank" rel="noopener">GitHub</a></p>
+    <p>Built by Jaya Hareeswar Reddy Gudisa &middot; &copy; 2026 &middot; <a href="https://www.linkedin.com/in/jayahareeswarreddy" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://github.com/jayahareeswarreddy" target="_blank" rel="noopener">GitHub</a></p>
     <p>Psst: <kbd>&uarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> <kbd>&darr;</kbd> <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>B</kbd> <kbd>A</kbd></p>
   </div>
 </footer>
@@ -613,8 +678,8 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 <dialog id="tldr" aria-labelledby="tldrTitle">
   <div class="dlg-head"><h2 id="tldrTitle">10-SECOND SUMMARY</h2><button class="toggle" id="closeTldr" aria-label="Close summary">X</button></div>
   <dl class="tldr">
-    <div><dt>Who</dt><dd><strong>Jaya Hareeswar Reddy</strong>, Generative AI Engineer, Guntur, India</dd></div>
-    <div><dt>Now</dt><dd>AI Engineer at <strong>Taskwin GmbH</strong> since Apr 2026: LLM backend services, RAG pipelines, tool-calling agents, output validation, latency and token tracking.</dd></div>
+    <div><dt>Who</dt><dd><strong>Jaya Hareeswar Reddy Gudisa</strong>, Generative AI Engineer, Guntur, India</dd></div>
+    <div><dt>Now</dt><dd>Junior Software Developer at <strong>TaskWin India Private Limited</strong> since Oct 2026. Before that, Freelance AI Engineer at <strong>Taskwin GmbH</strong> (Apr 2026 &ndash; Oct 2026): backend services in Python and FastAPI, RAG pipelines, tool-calling workflows, REST API integration, latency, token usage and workflow monitoring.</dd></div>
     <div><dt>Core stack</dt><dd>Python, OpenAI, FastAPI, RAG, AI agents and tool calling, embeddings and vector search (Milvus, Supabase), structured outputs, React, TensorFlow, Kafka, Docker</dd></div>
     <div><dt>Highlights</dt><dd>99% accuracy on 8-class MRI classification &middot; 1,000+ job listings ranked &middot; 12-endpoint LLM career recommender</dd></div>
     <div><dt>Education</dt><dd>B.Tech CSE, SRM University&ndash;AP, 2022&ndash;2026, CGPA 8.1/10</dd></div>
@@ -623,7 +688,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     <div><dt>Phone</dt><dd>+91 6303673727</dd></div>
   </dl>
   <div class="dlg-foot">
-    <a class="btn primary" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Resume.pdf">Resume PDF</a>
+    <a class="btn primary" href="resume.pdf" download="Jaya_Hareeswar_Reddy_Gudisa_Resume.pdf">Resume PDF</a>
     <a class="btn" href="https://www.linkedin.com/in/jayahareeswarreddy" target="_blank" rel="noopener">LinkedIn</a>
     <a class="btn" href="https://github.com/jayahareeswarreddy" target="_blank" rel="noopener">GitHub</a>
     <a class="btn" href="#contact" id="tldrContact">Get in touch</a>
@@ -760,23 +825,9 @@ function rain() {
   })(t0);
 }
 
-/* ---------- boot screen ---------- */
-const boot = $('#boot');
-let seen = false; try { seen = sessionStorage.getItem('booted') } catch {}
-if (reduce || seen) boot.remove();
-else {
-  const end = () => {
-    if (!boot.isConnected || boot.classList.contains('off')) return;
-    boot.classList.add('off'); setTimeout(() => boot.remove(), 400);
-    try { sessionStorage.setItem('booted', '1') } catch {}
-    say(0);
-  };
-  boot.onclick = end; addEventListener('keydown', end, { once: true }); setTimeout(end, 2200);
-}
-
 /* ---------- RPG dialogue ---------- */
 const LINES = [
-  "Hey there, traveler! I'm Jaya, an AI Engineer at Taskwin GmbH.",
+  "Hey there, traveler! I'm Jaya, a Junior Software Developer at TaskWin.",
   "I build LLM apps, RAG pipelines and tool-calling agents, mostly in Python and FastAPI.",
   "My favourite boss fight: getting a model to return valid JSON on the first try. Every time.",
   "Short on time? Hit the 10-second summary. Got a minute? Play Ship It! below and grab some coins.",
@@ -989,6 +1040,514 @@ $('#questForm').addEventListener('submit', async e => {
 
   reset(); refresh();
   document.fonts.ready.then(() => state !== 'run' && render());
+}
+
+/* ---------- story: "Jaya vs Everything" ----------
+   Scroll scrubs a silhouette fight per life chapter on one sticky canvas. Every frame is a pure function of
+   (scene, t), so scrolling backwards replays correctly and no fight state has to be kept. Characters and plot
+   are original; each boss is beaten with a real skill or result from the résumé. */
+{
+  const story = $('#story'), stage = $('.st-stage'), cv = $('#stCanvas');
+  const INK = '#f3efe6', BLACK = '#05060a', GOLD = '#f6c22e', RED = '#e0483e', GREEN = '#4fd39a', DARK = '#0a0d14', RAD = Math.PI / 180;
+  const BEATS = $$('.st-board li').map(li => ({ when: $('.st-when', li).textContent, line: $('.st-line', li).textContent }));
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const seg = (t, a, b) => clamp((t - a) / (b - a));
+  const lerp = (a, b, q) => a + (b - a) * q;
+  const ease = q => q * q * (3 - 2 * q);
+  const rnd = k => ((k * 9301 + 49297) % 233280) / 233280; // stable, so nothing flickers between frames
+  const POSTER = s => `${s}px Anton, Impact, "Arial Narrow", sans-serif`;
+
+  /* ---- dot portrait: the photo sampled into a grid of cells, each cell becomes one dot ---- */
+  const photo = new Image(), CROP = { x: .16, y: .03, s: .68 }, fields = {}; // tight on head and collar, so the face gets most of the dots
+  let tiles = {};
+  photo.onload = () => { story.classList.contains('play') ? req() : paintBoard(); };
+  photo.src = 'jaya.jpg';
+  // Rough head + shoulders outline in photo coordinates (0-1). Tune here if a different photo is used.
+  const inFigure = (x, y) => ((x - .5) / .165) ** 2 + ((y - .285) / .225) ** 2 < 1
+    || (y > .46 && x > lerp(.40, .1, seg(y, .5, .72)) && x < lerp(.62, .93, seg(y, .5, .72)));
+  function field(res) {
+    if (fields[res]) return fields[res];
+    if (!photo.naturalWidth) return null;
+    const c = document.createElement('canvas'); c.width = c.height = res;
+    const g = c.getContext('2d', { willReadFrequently: true }), f = new Float32Array(res * res), n = photo.naturalWidth;
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(photo, CROP.x * n, CROP.y * n, CROP.s * n, CROP.s * n, 0, 0, res, res);
+    let px = null, soft = null;
+    try { // file:// taints the canvas; fall back to a flat silhouette
+      px = g.getImageData(0, 0, res, res).data;
+      // a blurred copy gives local contrast, which is what keeps eyes and glasses readable as dots
+      const tiny = document.createElement('canvas'); tiny.width = tiny.height = Math.max(8, res >> 1);
+      const tg = tiny.getContext('2d'); tg.imageSmoothingQuality = 'high'; tg.drawImage(c, 0, 0, tiny.width, tiny.height);
+      g.imageSmoothingEnabled = true; g.drawImage(tiny, 0, 0, res, res);
+      soft = g.getImageData(0, 0, res, res).data;
+    } catch {}
+    for (let y = 0; y < res; y++) for (let x = 0; x < res; x++) {
+      const i = y * res + x;
+      if (!inFigure(CROP.x + (x + .5) / res * CROP.s, CROP.y + (y + .5) / res * CROP.s)) continue;
+      if (!px) { f[i] = .55; continue; }
+      const r = px[i * 4], gr = px[i * 4 + 1], b = px[i * 4 + 2], lum = (.3 * r + .59 * gr + .11 * b) / 255;
+      // Cool and not dark is the office background. The low threshold also drops hair-edge cells the downsample
+      // blended with the bright background (they drew a halo). Glasses glare looks the same, so the lens band is exempt.
+      const fx = CROP.x + (x + .5) / res * CROP.s, fy = CROP.y + (y + .5) / res * CROP.s, warm = r - b >= 18, lens = fx > .4 && fx < .64 && fy > .26 && fy < .36;
+      if (!warm && !lens && lum > .36) continue;
+      const softLum = (.3 * soft[i * 4] + .59 * soft[i * 4 + 1] + .11 * soft[i * 4 + 2]) / 255;
+      // Dot AREA carries brightness, as in print halftone, so the radius follows the square root of tone.
+      // Making the radius itself follow tone is what blew the skin out into a flat patch.
+      let tone = seg(clamp(lum + .9 * (lum - softLum)), .05, .88) ** 1.15;
+      if (!warm && !lens) tone = Math.min(tone, .28); // hair and shirt stay in shadow, behind the face
+      f[i] = Math.sqrt(tone) * 1.05 * seg(1 - (y + .5) / res, 0, .16); // bottom edge fades out
+    }
+    return fields[res] = f;
+  }
+  function tile(res, S) {
+    const key = res + '/' + S;
+    if (tiles[key]) return tiles[key];
+    const f = field(res);
+    if (!f) return null;
+    const c = document.createElement('canvas'); c.width = c.height = S;
+    const g = c.getContext('2d'), cell = S / res;
+    g.fillStyle = INK; g.beginPath();
+    f.forEach((v, i) => {
+      if (!v) return;
+      const x = (i % res + .5) * cell, y = (Math.floor(i / res) + .5) * cell, r = v * cell * .5;
+      g.moveTo(x + r, y); g.arc(x, y, r, 0, 7);
+    });
+    g.fill();
+    return tiles[key] = c;
+  }
+
+  /* ---- fighters: a jointed skeleton drawn as thick round strokes. Angles are degrees from straight down, + is forward ---- */
+  const POSE = {
+    idle:  { torso: 6,   fu: 55,  fl: 130, bu: 25,  bl: 110, ft: 22, fs: -6,  bt: -20, bs: -28 },
+    walkA: { torso: 8,   fu: 30,  fl: 80,  bu: -30, bl: 10,  ft: 28, fs: 10,  bt: -24, bs: -50 },
+    walkB: { torso: 8,   fu: -25, fl: 15,  bu: 30,  bl: 80,  ft: -22, fs: -48, bt: 26, bs: 8 },
+    punch: { torso: 18,  fu: 88,  fl: 90,  bu: -20, bl: 80,  ft: 38, fs: -4,  bt: -30, bs: -40 },
+    kick:  { torso: -14, fu: 40,  fl: 110, bu: -30, bl: 40,  ft: 95, fs: 90,  bt: -6,  bs: -14 },
+    upper: { torso: 4,   fu: 130, fl: 165, bu: -25, bl: 60,  ft: 30, fs: -10, bt: -24, bs: -34 },
+    hit:   { torso: -22, fu: -35, fl: -5,  bu: -55, bl: -20, ft: 14, fs: -12, bt: -26, bs: -42 },
+    win:   { torso: 0,   fu: 165, fl: 172, bu: -18, bl: 50,  ft: 10, fs: -2,  bt: -10, bs: -10 },
+    stand: { torso: 0,   fu: 12,  fl: 30,  bu: -8,  bl: 8,   ft: 7,  fs: -2,  bt: -7,  bs: -7 },
+  };
+  const mixPose = (a, b, q) => { const o = {}; for (const k in a) o[k] = lerp(a[k], b[k], q); return o; };
+  const rr = (c, x, y, w, h, r) => { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); };
+  function fighter(c, x, gy, h, p, dir, o = {}) {
+    const T = .31 * h, A = .155 * h, L = .225 * h, r = .072 * h, color = o.color || BLACK;
+    const reach = (t, s) => Math.cos(t * RAD) * L + Math.cos(s * RAD) * L;
+    const hipY = gy - Math.max(reach(p.ft, p.fs), reach(p.bt, p.bs)), tr = p.torso * RAD;
+    const sx = x + Math.sin(tr) * T * dir, sy = hipY - Math.cos(tr) * T;
+    c.strokeStyle = c.fillStyle = color; c.lineCap = c.lineJoin = 'round';
+    const chain = (x0, y0, a, b, len, w) => {
+      const x1 = x0 + Math.sin(a * RAD) * len * dir, y1 = y0 + Math.cos(a * RAD) * len, x2 = x1 + Math.sin(b * RAD) * len * dir, y2 = y1 + Math.cos(b * RAD) * len;
+      c.lineWidth = w; c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.lineTo(x2, y2); c.stroke();
+      return [x2, y2];
+    };
+    chain(x, hipY, p.bt, p.bs, L, .07 * h); chain(sx, sy, p.bu, p.bl, A, .048 * h);
+    c.lineWidth = .125 * h; c.beginPath(); c.moveTo(x, hipY); c.lineTo(sx, sy); c.stroke();
+    chain(x, hipY, p.ft, p.fs, L, .075 * h);
+    const hand = chain(sx, sy, p.fu, p.fl, A, .052 * h);
+    const hx = sx + Math.sin(tr) * r * 1.35 * dir, hy = sy - Math.cos(tr) * r * 1.35;
+    c.beginPath(); c.arc(hx, hy, r, 0, 7); c.fill();
+    if (o.hero) { // swept hair and round glasses, so the shadow still reads as Jaya
+      c.beginPath(); c.moveTo(hx - r * 1.05 * dir, hy + r * .1); c.quadraticCurveTo(hx - r * 1.2 * dir, hy - r * 1.5, hx + r * .5 * dir, hy - r * 1.35);
+      c.quadraticCurveTo(hx + r * 1.1 * dir, hy - r * 1.25, hx + r * .95 * dir, hy - r * .5); c.closePath(); c.fill();
+      c.strokeStyle = INK; c.lineWidth = Math.max(1.5, .009 * h);
+      c.beginPath(); c.arc(hx + r * .45 * dir, hy - r * .05, r * .3, 0, 7); c.stroke();
+      c.beginPath(); c.moveTo(hx + r * .15 * dir, hy - r * .05); c.lineTo(hx - r * .5 * dir, hy - r * .15); c.stroke();
+    }
+    if (o.tie) { c.fillStyle = INK; c.beginPath(); c.moveTo(sx - .012 * h, sy + .02 * h); c.lineTo(sx + .012 * h, sy + .02 * h); c.lineTo(sx, sy + .14 * h); c.fill(); }
+    if (o.clipboard) { c.fillStyle = INK; c.fillRect(hand[0] - .03 * h, hand[1] - .1 * h, .07 * h, .1 * h); }
+    if (o.braces) { c.fillStyle = INK; c.font = POSTER(r * 1.5); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('{ }', hx, hy); c.textBaseline = 'alphabetic'; }
+  }
+
+  /* ---- bosses: drawn with their feet at (0,0), facing left. s = { time, hit, ko } ---- */
+  const eyes = (c, x, y, gap, r, color = INK) => { c.fillStyle = color; [x - gap, x + gap].forEach(e => { c.beginPath(); c.arc(e, y, r, 0, 7); c.fill(); }); };
+  const BOSS = {
+    homework(c, h) {
+      const w = .62 * h;
+      c.strokeStyle = c.fillStyle = BLACK; c.lineCap = 'round';
+      c.lineWidth = .09 * h; c.beginPath(); c.moveTo(-w * .25, -.1 * h); c.lineTo(-w * .25, 0); c.moveTo(w * .25, -.1 * h); c.lineTo(w * .25, 0); c.stroke();
+      c.lineWidth = .06 * h; c.beginPath(); c.moveTo(-w * .45, -.55 * h); c.lineTo(-w * .85, -.75 * h); c.moveTo(w * .45, -.55 * h); c.lineTo(w * .85, -.4 * h); c.stroke();
+      rr(c, -w / 2, -h * .86, w, h * .78, h * .07); c.fill();
+      for (let i = 0; i < 5; i++) { // loose sheets sticking out of the pile
+        c.save(); c.translate(-w * .4 + i * w * .2, -h * .86 - (i % 2) * h * .02); c.rotate(-.3 + i * .15);
+        c.fillStyle = INK; c.fillRect(-.055 * h, -.11 * h, .11 * h, .14 * h);
+        c.fillStyle = BLACK; for (let l = 0; l < 3; l++) c.fillRect(-.04 * h, -.09 * h + l * .035 * h, .08 * h, .008 * h);
+        c.restore();
+      }
+      eyes(c, -w * .12, -.62 * h, .09 * h, .035 * h);
+      c.strokeStyle = INK; c.lineWidth = .012 * h; c.beginPath();
+      for (let i = 0; i <= 6; i++) c[i ? 'lineTo' : 'moveTo'](-w * .3 + i * w * .08, -.42 * h + (i % 2) * .035 * h);
+      c.stroke();
+    },
+    hydra(c, h, s) {
+      c.strokeStyle = c.fillStyle = BLACK; c.lineCap = 'round';
+      c.beginPath(); c.ellipse(0, -.2 * h, .32 * h, .2 * h, 0, 0, 7); c.fill();
+      c.lineWidth = .07 * h; c.beginPath(); c.moveTo(-.18 * h, -.1 * h); c.lineTo(-.2 * h, 0); c.moveTo(.18 * h, -.1 * h); c.lineTo(.2 * h, 0); c.stroke();
+      ['M', 'P', 'C'].forEach((m, i) => {
+        const k = i - 1, x = k * .3 * h + Math.sin(s.time + k) * .025 * h, y = -h * (.92 - Math.abs(k) * .13) + Math.cos(s.time * 1.3 + k) * .02 * h;
+        c.strokeStyle = c.fillStyle = BLACK; c.lineWidth = .07 * h; c.beginPath(); c.moveTo(k * .1 * h, -.28 * h); c.quadraticCurveTo(k * .3 * h, -.5 * h, x, y); c.stroke();
+        c.beginPath(); c.arc(x, y, .095 * h, 0, 7); c.fill();
+        c.fillStyle = INK; c.font = POSTER(.13 * h); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(m, x, y + .005 * h); c.textBaseline = 'alphabetic';
+      });
+    },
+    clock(c, h) {
+      const r = .34 * h, y = -.52 * h;
+      c.strokeStyle = c.fillStyle = BLACK; c.lineCap = 'round';
+      c.lineWidth = .06 * h; c.beginPath(); c.moveTo(-r * .4, y + r); c.lineTo(-r * .5, 0); c.moveTo(r * .4, y + r); c.lineTo(r * .5, 0);
+      c.moveTo(-r, y); c.lineTo(-r * 1.45, y + r * .55); c.moveTo(r, y); c.lineTo(r * 1.45, y - r * .3); c.stroke();
+      [-1, 1].forEach(k => { c.beginPath(); c.arc(k * r * .62, y - r * .98, r * .32, 0, 7); c.fill(); });
+      c.beginPath(); c.arc(0, y, r, 0, 7); c.fill();
+      c.fillStyle = INK; c.beginPath(); c.arc(0, y, r * .8, 0, 7); c.fill();
+      c.strokeStyle = BLACK; c.lineWidth = .025 * h;
+      c.beginPath(); c.moveTo(0, y); c.lineTo(0, y - r * .62); c.moveTo(0, y); c.lineTo(Math.sin(240 * RAD) * r * .42, y - Math.cos(240 * RAD) * r * .42); c.stroke(); // 8:00
+      c.fillStyle = BLACK; c.font = POSTER(.075 * h); c.textAlign = 'center'; c.fillText('8 AM', 0, y + r * .55);
+    },
+    mirror(c, h, s) {
+      if (s.ko > 0) { // the mirror shatters instead of falling over
+        for (let i = 0; i < 14; i++) {
+          const a = rnd(i * 5 + 1) * 7, d = s.ko * h * (.3 + rnd(i * 3 + 2) * .7), x = Math.cos(a) * d, y = -.5 * h + Math.sin(a) * d + s.ko * s.ko * h * .5, z = .05 * h;
+          c.fillStyle = i % 2 ? '#2a1c45' : INK; c.beginPath(); c.moveTo(x, y - z); c.lineTo(x + z, y + z); c.lineTo(x - z * .7, y + z * .4); c.fill();
+        }
+        return;
+      }
+      c.fillStyle = '#c9d8ea'; c.strokeStyle = BLACK; c.lineWidth = .045 * h;
+      c.beginPath(); c.ellipse(0, -.54 * h, .3 * h, .52 * h, 0, 0, 7); c.fill(); c.stroke();
+      fighter(c, 0, -.05 * h, .9 * h, s.atk > .3 ? POSE.punch : POSE.idle, -1, { color: '#2a1c45', hero: true });
+      c.strokeStyle = INK; c.lineWidth = .012 * h; c.beginPath(); c.moveTo(-.18 * h, -.85 * h); c.lineTo(-.08 * h, -.95 * h); c.stroke();
+    },
+    swarm(c, h, s) {
+      for (let i = 0; i < 16; i++) {
+        const a = i * 2.4 + s.time * .6, d = (.12 + rnd(i + 1) * .34) * h * (1 + s.ko * 1.4), x = Math.cos(a) * d, y = -.5 * h + Math.sin(a) * d * .85 + s.ko * s.ko * h * .6, r = (.035 + rnd(i * 2 + 3) * .03) * h;
+        c.fillStyle = BLACK; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill();
+        c.fillStyle = INK; c.font = POSTER(r * 1.7); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(';', x, y); c.textBaseline = 'alphabetic';
+      }
+    },
+    horde(c, h, s) {
+      [-.42, -.1, .22, .5].forEach((x, i) => {
+        const z = .78 - (i % 2) * .08, bob = Math.sin(s.time * 1.6 + i) * .012 * h;
+        c.save(); c.translate(x * h, 0); c.rotate(s.ko * 1.35);
+        c.strokeStyle = c.fillStyle = BLACK; c.lineCap = 'round'; c.lineWidth = .04 * h;
+        c.beginPath(); c.moveTo(-.05 * h, -.14 * h); c.lineTo(-.06 * h, 0); c.moveTo(.05 * h, -.14 * h); c.lineTo(.06 * h, 0); c.stroke();
+        c.fillRect(-.13 * h, -z * h + bob, .26 * h, (z - .12) * h);
+        c.fillStyle = INK; c.fillRect(-.1 * h, (.05 - z) * h + bob, .2 * h, .15 * h);
+        c.fillStyle = BLACK; c.font = POSTER(.058 * h); c.textAlign = 'center'; c.fillText('10 YRS', 0, (.115 - z) * h + bob); c.fillText('FASTAPI', 0, (.18 - z) * h + bob);
+        c.restore();
+      });
+    },
+    ninja(c, h, s) { fighter(c, 0, 0, h, s.atk > .3 ? POSE.kick : s.hit > .1 ? POSE.hit : POSE.idle, -1, { braces: true }); },
+    ghost(c, h, s) {
+      const y = -.62 * h + Math.sin(s.time) * .025 * h, w = .34 * h;
+      c.fillStyle = BLACK; c.beginPath(); c.arc(0, y, w, Math.PI, 0); c.lineTo(w, y + .42 * h);
+      for (let i = 0; i <= 6; i++) c.quadraticCurveTo(w - (i + .5) * w / 3.5, y + .42 * h + (i % 2 ? -.1 : .1) * h + Math.sin(s.time + i) * .012 * h, w - (i + 1) * w / 3.5, y + .42 * h);
+      c.closePath(); c.fill();
+      eyes(c, 0, y - .07 * h, .1 * h, .035 * h, GREEN);
+      c.fillStyle = INK; c.beginPath(); c.arc(0, y + .05 * h, .15 * h, 0, Math.PI); c.closePath(); c.fill();
+      c.fillStyle = BLACK; for (let i = -2; i <= 2; i++) c.fillRect(i * .05 * h - .004 * h, y + .05 * h, .008 * h, .16 * h);
+      c.fillStyle = BLACK; c.font = POSTER(.16 * h); c.textAlign = 'center';
+      [[-.45, -.85], [.45, -.95], [-.52, -.45]].forEach(([x, q], i) => c.fillText('?', x * h, (q + Math.sin(s.time + i) * .02) * h));
+    },
+    bug(c, h) {
+      const y = -.34 * h;
+      c.strokeStyle = c.fillStyle = BLACK; c.lineCap = 'round'; c.lineWidth = .035 * h;
+      for (let i = 0; i < 3; i++) { const x = (-.28 + i * .28) * h; c.beginPath(); c.moveTo(x, y); c.lineTo(x - .1 * h, y - .02 * h); c.lineTo(x - .14 * h, 0); c.moveTo(x, y); c.lineTo(x + .1 * h, y - .02 * h); c.lineTo(x + .14 * h, 0); c.stroke(); }
+      c.beginPath(); c.moveTo(-.5 * h, y - .08 * h); c.quadraticCurveTo(-.66 * h, -.72 * h, -.82 * h, -.74 * h); c.moveTo(-.46 * h, y - .1 * h); c.quadraticCurveTo(-.52 * h, -.8 * h, -.62 * h, -.86 * h); c.stroke();
+      c.beginPath(); c.ellipse(.03 * h, y, .42 * h, .25 * h, 0, 0, 7); c.fill();
+      c.beginPath(); c.arc(-.42 * h, y, .13 * h, 0, 7); c.fill();
+      eyes(c, -.47 * h, y - .03 * h, .04 * h, .025 * h, RED);
+      c.fillStyle = INK; c.beginPath(); c.arc(.05 * h, y, .15 * h, 0, 7); c.fill();
+      c.fillStyle = BLACK; c.font = POSTER(.09 * h); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('5:00', .05 * h, y); c.textBaseline = 'alphabetic';
+    },
+  };
+
+  /* ---- the card: scene 0 is the title, scene 10 the finale. weapons[] are real résumé items ---- */
+  const ROUNDS = [null,
+    { tag: 'ROUND 1', name: 'HOMEWORK MONSTER', draw: BOSS.homework, taunt: "Your dog can't help you now.", weapons: ['SHOWING UP', 'DOING THE WORK', 'NO EXCUSES'], counter: 'RED PEN!', result: '100%' },
+    { tag: 'ROUND 2', name: 'M.P.C. HYDRA', draw: BOSS.hydra, taunt: 'Solve for X. All of them.', weapons: ['MATHS!', 'PHYSICS!', 'CHEMISTRY!'], counter: 'SURPRISE TEST!', result: '91%' },
+    { tag: 'ROUND 3', name: 'THE 8 AM LECTURE', draw: BOSS.clock, taunt: 'Attendance is mandatory.', weapons: ['OPERATING SYSTEMS', 'COMPUTER NETWORKS', 'MACHINE LEARNING'], counter: '-1 HOUR OF SLEEP', result: 'CGPA 8.1/10' },
+    { tag: 'ROUND 4', name: 'OVERFIT, THE MIRROR DEMON', draw: BOSS.mirror, selfKo: true, taunt: 'I scored 100% on training!', weapons: ['CNN-VGG16', 'F1-SCORE', 'CONFUSION MATRIX'], counter: 'SAME MOVE, AGAIN!', result: '99%', sub: 'ON THE EVALUATED DATASET' },
+    { tag: 'ROUND 5', name: 'SYNTAX ERROR SWARM', draw: BOSS.swarm, selfKo: true, taunt: 'Missing semicolon, peasant.', weapons: ['SYNTAX VALIDATION', 'ERROR HANDLING', 'LIVE PREVIEWS'], counter: 'UNEXPECTED TOKEN!', result: 'PROMPT-TO-UI' },
+    { tag: 'ROUND 6', name: 'JOB LISTING HORDE', draw: BOSS.horde, selfKo: true, taunt: 'We require 10 years of FastAPI.', weapons: ['SPACY', 'SELENIUM', 'MONGODB'], counter: 'ENTRY LEVEL!', result: '1,000+ RANKED' },
+    { tag: 'ROUND 7', name: 'MALFORMED JSON NINJA', draw: BOSS.ninja, lift: .05, taunt: '{"oops":', weapons: ['JSON-SCHEMA VALIDATION', 'RETRY HANDLING', 'STRUCTURED OUTPUTS'], counter: 'TRAILING COMMA!', result: '12 ENDPOINTS' },
+    { tag: 'ROUND 8', name: 'THE HALLUCINATOR', draw: BOSS.ghost, taunt: 'Trust me. I made that up.', weapons: ['DOCUMENT CHUNKING', 'EMBEDDINGS', 'VECTOR SEARCH'], counter: 'FAKE CITATION!', result: 'SOURCE: ACTUAL DOCS' },
+    { tag: 'ROUND 9', name: 'PROD BUG, FRIDAY 5 PM', draw: BOSS.bug, flip: true, taunt: 'Did you have weekend plans?', weapons: ['RETRIES', 'EXCEPTION HANDLING', 'MONITORING'], counter: 'LATENCY SPIKE!', result: 'WEEKEND SAVED', sub: 'PROBABLY' },
+  ];
+  const WEIGHT = [.15, .8, 1, 1, 1, .8, .8, .8, 1, 1, .8], TOTAL = WEIGHT.reduce((a, b) => a + b), LAST = WEIGHT.length - 1;
+  const ORDER = ['h', 'h', 'b', 'h'], ATTACK = [POSE.punch, POSE.kick, null, POSE.upper];
+
+  /* ---- backdrops: misty gradient, far ridge, one prop per chapter, black ground. Cached per scene and size ---- */
+  const THEME = [
+    ['#d9542a', '#f29b45', '#ffd98a', '#a84a24', '#5a2412'], ['#f6a04d', '#f7c98a', '#ffe6bd', '#c9814a', '#6b3a22'],
+    ['#1f6f6b', '#7bbfa9', '#dff0d4', '#4f9284', '#1f4f4a'], ['#3b2a78', '#9a6fb0', '#f2c3a8', '#7a5a96', '#33245e'],
+    ['#0f3a5c', '#4f9fc2', '#d6f0f2', '#3b7da0', '#123650'], ['#2a1b3d', '#a0522d', '#f1a35c', '#7a4a35', '#2c1a2a'],
+    ['#1e3a5f', '#5f8fb0', '#f0dcb4', '#476f8c', '#1b3047'], ['#3d1f4f', '#b0568a', '#f8c8a0', '#84466f', '#301a3f'],
+    ['#3c2c55', '#7c7a9a', '#cfe0b8', '#6d6a85', '#332a4a'], ['#5c0f1c', '#c9382f', '#ffb27a', '#8c2a26', '#3a0c14'],
+    ['#f0b64d', '#fbe3a8', '#fff7e0', '#d9a85a', '#7a5a2a'],
+  ];
+  function sign(c, s, x, y, size, color) { c.font = POSTER(size); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = color; c.fillText(s, x, y); c.textBaseline = 'alphabetic'; }
+  const PROPS = [null,
+    (c, W, g, u, n, sky) => { // KKR Gowtham
+      const w = Math.min(W * .62, u * 62), h = g * .42, x = W / 2 - w / 2, y = g - h;
+      c.fillStyle = n; c.fillRect(x, y, w, h);
+      for (let i = 0; i < 7; i++) for (let j = 0; j < 2; j++) if (i !== 3) { c.fillStyle = sky; c.fillRect(x + w * (.05 + i * .135), y + h * (.36 + j * .32), w * .07, h * .17); }
+      sign(c, 'KKR GOWTHAM', W / 2, y + h * .17, Math.min(h * .2, w * .095), sky);
+    },
+    (c, W, g, u, n, sky) => { // ARKA: a chalkboard on posts
+      const w = Math.min(W * .66, u * 66), h = g * .36, x = W / 2 - w / 2, y = g * .48;
+      c.fillStyle = n; c.fillRect(x + w * .1, y, u * 1.2, g - y); c.fillRect(x + w * .88, y, u * 1.2, g - y); c.fillRect(x, y, w, h);
+      sign(c, 'ARKA JUNIOR COLLEGE', W / 2, y + h * .2, Math.min(h * .15, w * .06), sky);
+      ['E = mc²', 'F = ma', 'H₂O', 'PV = nRT'].forEach((s, i) => sign(c, s, x + w * (.2 + i * .2), y + h * (.55 + (i % 2) * .22), Math.min(h * .13, w * .05), sky));
+    },
+    (c, W, g, u, n, sky) => { // SRM gate
+      const w = Math.min(W * .72, u * 72), h = g * .56, x = W / 2 - w / 2, y = g - h, p = w * .09;
+      c.fillStyle = n; c.fillRect(x, y, w, h * .24); c.fillRect(x, y, p, h); c.fillRect(x + w - p, y, p, h);
+      sign(c, 'SRM UNIVERSITY–AP', W / 2, y + h * .12, Math.min(h * .13, w * .07), sky);
+    },
+    (c, W, g, u, n, sky) => { // research lab: MRI ring and a confusion matrix with a lit diagonal
+      const r = Math.min(g * .24, W * .16), m = Math.min(g * .4, W * .3), mx = W / 2 - m / 2, my = g * .2, cell = m / 8;
+      c.strokeStyle = n; c.lineWidth = r * .42; c.beginPath(); c.arc(W * .14, g - r * 1.1, r, 0, 7); c.stroke();
+      for (let a = 0; a < 8; a++) for (let b = 0; b < 8; b++) { c.fillStyle = a === b ? GREEN : n; c.fillRect(mx + b * cell + 1, my + a * cell + 1, cell - 2, cell - 2); }
+    },
+    (c, W, g, u, n, sky) => { // Prompt-to-UI: a giant generated interface
+      const w = Math.min(W * .6, u * 60), h = g * .5, x = W / 2 - w / 2, y = g * .28;
+      c.fillStyle = n; c.fillRect(x, y, w, h); c.fillStyle = sky; c.fillRect(x + w * .05, y + h * .12, w * .9, h * .1); c.fillRect(x + w * .05, y + h * .34, w * .55, h * .12); c.fillRect(x + w * .05, y + h * .54, w * .55, h * .12); c.fillRect(x + w * .05, y + h * .74, w * .28, h * .12);
+    },
+    (c, W, g, u, n, sky) => { // job board wall
+      const cols = W < g * 1.2 ? 4 : 7, cw = W * .86 / cols;
+      for (let i = 0; i < cols; i++) for (let j = 0; j < 3; j++) { c.fillStyle = n; c.fillRect(W * .07 + i * cw + cw * .08, g * .24 + j * g * .17, cw * .84, g * .14); c.fillStyle = sky; c.fillRect(W * .07 + i * cw + cw * .18, g * .27 + j * g * .17, cw * .5, g * .018); }
+    },
+    (c, W, g, u, n) => { sign(c, '{ }', W / 2, g * .55, Math.min(g * .7, W * .5), n); },
+    (c, W, g, u, n, sky) => { // floating documents in the fog
+      for (let i = 0; i < 7; i++) { const x = W * (.08 + rnd(i * 4 + 1) * .84), y = g * (.25 + rnd(i * 9 + 2) * .4), w = u * 7; c.save(); c.translate(x, y); c.rotate(rnd(i + 5) - .5); c.fillStyle = n; c.fillRect(-w / 2, -w * .65, w, w * 1.3); c.fillStyle = sky; for (let l = 0; l < 4; l++) c.fillRect(-w * .35, -w * .45 + l * w * .25, w * .7, w * .06); c.restore(); }
+    },
+    (c, W, g, u, n, sky) => { // office skyline, the clock reads Friday 5 PM
+      c.fillStyle = n; for (let i = 0; i < 14; i++) { const w = W / 14, h = g * (.25 + rnd(i * 7 + 3) * .35); c.fillRect(i * w, g - h, w + 1, h); }
+      const r = Math.min(g * .13, W * .1); c.beginPath(); c.arc(W / 2, g * .24, r, 0, 7); c.fill();
+      sign(c, 'FRI 5:00', W / 2, g * .24, r * .62, sky);
+    },
+    null,
+  ];
+  let bgs = {};
+  function backdrop(i, W, H, g) {
+    const key = i + '/' + W + '/' + H;
+    if (bgs[key]) return bgs[key];
+    const b = document.createElement('canvas'); b.width = W; b.height = H;
+    const c = b.getContext('2d'), [top, mid, low, far, near] = THEME[i], u = Math.min(W, H) / 100, sky = c.createLinearGradient(0, 0, 0, g);
+    sky.addColorStop(0, top); sky.addColorStop(.55, mid); sky.addColorStop(1, low);
+    c.fillStyle = sky; c.fillRect(0, 0, W, g);
+    const sun = c.createRadialGradient(W * .68, g * .42, 0, W * .68, g * .42, g * .55);
+    sun.addColorStop(0, 'rgba(255,245,215,.85)'); sun.addColorStop(.25, 'rgba(255,240,200,.35)'); sun.addColorStop(1, 'rgba(255,240,200,0)');
+    c.fillStyle = sun; c.fillRect(0, 0, W, g);
+    c.fillStyle = far; c.beginPath(); c.moveTo(0, g);
+    for (let x = 0; x <= W + 20; x += 20) c.lineTo(x, g * (.72 - Math.sin(x * .004 + i) * .1 - Math.sin(x * .013 + i * 2) * .035));
+    c.lineTo(W, g); c.fill();
+    const mist = c.createLinearGradient(0, g * .55, 0, g);
+    mist.addColorStop(0, 'rgba(255,255,255,0)'); mist.addColorStop(1, 'rgba(255,255,255,.3)');
+    c.fillStyle = mist; c.fillRect(0, g * .55, W, g * .45);
+    if (PROPS[i]) PROPS[i](c, W, g, u, near, low);
+    c.fillStyle = BLACK; c.fillRect(0, g, W, H - g);
+    for (let x = 0; x < W; x += u * 1.6) c.fillRect(x, g - rnd(x | 0) * u * 1.3, u * .5, u * 2); // grass along the ground line
+    return bgs[key] = b;
+  }
+
+  /* ---- text ---- */
+  function shout(c, s, x, y, size, color, W) {
+    c.font = POSTER(size);
+    const m = c.measureText(s).width, fit = m > W * .92 ? size * W * .92 / m : size;
+    c.font = POSTER(fit); c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineJoin = 'round';
+    c.lineWidth = fit * .14; c.strokeStyle = BLACK; c.strokeText(s, x, y);
+    c.fillStyle = color; c.fillText(s, x, y); c.textBaseline = 'alphabetic';
+  }
+  function bubble(c, s, x, y, W, u, side) {
+    const size = Math.max(u * 2.6, 13), pad = size * .7, maxW = Math.min(W * .56, size * 20);
+    c.font = `700 ${size}px Figtree, system-ui, sans-serif`;
+    const lines = []; let cur = '';
+    s.split(' ').forEach(w => { const t = cur ? cur + ' ' + w : w; if (c.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; });
+    lines.push(cur);
+    const w = Math.max(...lines.map(l => c.measureText(l).width)) + pad * 2, h = lines.length * size * 1.3 + pad * 1.4, bx = clamp(x - w / 2, u * 2, W - w - u * 2), by = y - h;
+    c.fillStyle = INK; c.strokeStyle = BLACK; c.lineWidth = Math.max(2, u * .35);
+    rr(c, bx, by, w, h, size * .5); c.fill(); c.stroke();
+    c.beginPath(); c.moveTo(x - size * .5, by + h - 1); c.lineTo(x + size * .5, by + h - 1); c.lineTo(x + side * size * .4, by + h + size * .9); c.closePath(); c.fill();
+    c.fillStyle = BLACK; c.textAlign = 'left'; c.textBaseline = 'top';
+    lines.forEach((l, k) => c.fillText(l, bx + pad, by + pad * .7 + k * size * 1.3));
+    c.textBaseline = 'alphabetic';
+  }
+  function hpBar(c, x, y, w, h, hp, color, name, alignRight, u) {
+    c.fillStyle = BLACK; c.fillRect(x - 2, y - 2, w + 4, h + 4);
+    c.fillStyle = '#3a1016'; c.fillRect(x, y, w, h);
+    const f = w * hp; c.fillStyle = color; c.fillRect(alignRight ? x + w - f : x, y, f, h);
+    c.font = POSTER(Math.max(u * 3, 15)); c.textAlign = alignRight ? 'right' : 'left'; c.textBaseline = 'top'; c.lineJoin = 'round'; c.lineWidth = Math.max(3, u * .6); c.strokeStyle = BLACK; c.fillStyle = INK;
+    c.strokeText(name, alignRight ? x + w : x, y + h + u * .5); c.fillText(name, alignRight ? x + w : x, y + h + u * .5); c.textBaseline = 'alphabetic';
+  }
+  function star(c, x, y, r, color) { c.fillStyle = color; c.beginPath(); for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8, d = i % 2 ? r * .42 : r; c[i ? 'lineTo' : 'moveTo'](x + Math.cos(a) * d, y + Math.sin(a) * d); } c.fill(); }
+
+  /* ---- the hero is drawn off-screen so dots earned from each win can be masked onto the silhouette ---- */
+  const off = document.createElement('canvas'), oc = off.getContext('2d'), patterns = {};
+  function dotPattern(level, h) {
+    const cell = Math.max(5, Math.round(h * .022)), key = level + '/' + cell;
+    if (patterns[key]) return patterns[key];
+    const t = document.createElement('canvas'); t.width = t.height = cell;
+    const g = t.getContext('2d'); g.fillStyle = INK; g.beginPath(); g.arc(cell / 2, cell / 2, cell * .5 * Math.min(.95, .22 + level * .08), 0, 7); g.fill();
+    return patterns[key] = oc.createPattern(t, 'repeat');
+  }
+  function hero(d, x, gy, h, pose, level, W, H) {
+    if (off.width !== W || off.height !== H) { off.width = W; off.height = H; }
+    const bx = Math.max(0, Math.round(x - h)), by = Math.max(0, Math.round(gy - h * 1.25)), bw = Math.min(W - bx, Math.round(h * 2)), bh = Math.min(H - by, Math.round(h * 1.3));
+    if (bw <= 0 || bh <= 0) return;
+    oc.clearRect(bx, by, bw, bh);
+    fighter(oc, x, gy, h, pose, 1, { hero: true });
+    if (level > 0) { oc.globalCompositeOperation = 'source-atop'; oc.fillStyle = dotPattern(level, h); oc.fillRect(bx, by, bw, bh); oc.globalCompositeOperation = 'source-over'; }
+    d.drawImage(off, bx, by, bw, bh, bx, by, bw, bh);
+  }
+
+  /* ---- the full name: fits a box ---- */
+  let sheets = {};
+  function nameSheet(w, h, color) {
+    const key = w + '/' + h + color;
+    if (sheets[key]) return sheets[key];
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'), wide = w / h > 1.6, lines = wide ? ['JAYA HAREESWAR', 'REDDY GUDISA'] : ['JAYA', 'HAREESWAR', 'REDDY', 'GUDISA'];
+    g.font = POSTER(100);
+    const m = lines.map(s => g.measureText(s)), maxW = Math.max(...m.map(x => x.width));
+    // wide box: two lines at one size. Tall box: each line justified to the full width, poster style.
+    const sizes = m.map(x => (wide ? w / maxW : w / x.width) * 100), asc = sizes.map((s, i) => s * m[i].actualBoundingBoxAscent / 100);
+    const scale = Math.min(1, h / (asc.reduce((a, b) => a + b) + (lines.length - 1) * w * .025));
+    let y = 0;
+    g.fillStyle = color;
+    lines.forEach((s, i) => { y += asc[i] * scale; g.font = POSTER(sizes[i] * scale); g.fillText(s, 0, y); y += w * .025 * scale; });
+    return sheets[key] = c;
+  }
+
+  /* ---- one frame: draws scene i at progress t. Used by the scroll player and by the still storyboard ---- */
+  function render(d, W, H, i, t, unit) {
+    const g = Math.round(H * (W < H ? .72 : .62)), u = Math.min(W, H) / 100, F = Math.min(g * .62, W * .4), bar = Math.round(unit * 60), gut = Math.round(Math.max(16 * unit, W * .04));
+    d.drawImage(backdrop(i, W, H, g), 0, 0);
+
+    if (i === 0) {
+      const top = bar, boxH = Math.round(g * (W < H ? .72 : .66)) - top;
+      d.drawImage(nameSheet(W - gut * 2, boxH, BLACK), gut, top);
+      hero(d, W * .84, g, g * .3, POSE.idle, 0, W, H);
+      shout(d, 'JAYA vs EVERYTHING', W * .42, g - u * 6, Math.min(u * 7, W * .07), GOLD, W * .8);
+      return;
+    }
+    if (i === LAST) return finale(d, W, H, g, u, F, t, bar, gut);
+
+    const r = ROUNDS[i], heroBase = W * .22, bossBase = W * .72;
+    const f = seg(t, .3, .72) * ORDER.length, k = Math.min(ORDER.length - 1, Math.floor(f)), q = f - k, fighting = t >= .3 && t < .72;
+    let heroHits = 0, counterHit = false;
+    ORDER.forEach((who, n) => { if (n < k || (n === k && q > .5) || t >= .72) { if (who === 'h') heroHits++; else counterHit = true; } });
+    const reachIn = q < .35 ? ease(q / .35) : q < .6 ? 1 : ease((1 - q) / .4), heroTurn = fighting && ORDER[k] === 'h', bossTurn = fighting && ORDER[k] === 'b';
+    const contact = fighting && q > .45 && q < .82, impact = contact ? Math.sin(seg(q, .45, .82) * Math.PI) : 0;
+    const walkIn = 1 - ease(seg(t, 0, .1));
+    let hx = heroBase - walkIn * W * .4, bx = bossBase + walkIn * W * .4;
+    if (heroTurn) { hx = lerp(heroBase, bossBase - F * .52, reachIn); bx += impact * F * .1; }
+    if (bossTurn) { bx = lerp(bossBase, heroBase + F * .52, reachIn); hx -= impact * F * .1; }
+
+    let pose = POSE.idle;
+    if (walkIn > 0) pose = Math.floor(t * 70) % 2 ? POSE.walkA : POSE.walkB;
+    if (heroTurn) pose = mixPose(POSE.idle, ATTACK[k], seg(q, .2, .4) * (1 - seg(q, .6, .85)));
+    if (bossTurn && contact) pose = mixPose(POSE.idle, POSE.hit, impact);
+    const ko = ease(seg(t, .72, .82));
+    if (t > .8) pose = mixPose(POSE.idle, POSE.win, ease(seg(t, .8, .88)));
+    const level = i - 1 + (t > .82 ? 1 : 0), bossLevel = 1 - heroHits / 3;
+
+    const shake = contact ? Math.sin(t * 900) * impact * u * .7 : 0;
+    d.save(); d.translate(shake, 0);
+    const s = { time: t * 24, hit: heroTurn ? impact : 0, ko, atk: bossTurn ? reachIn : 0 };
+    d.save(); d.beginPath(); d.rect(-W, 0, W * 3, g); d.clip(); // shards and falling bosses never cover the caption
+    d.translate(bx - ko * F * .35, g);
+    if (r.flip) { d.translate(0, -F * .34); d.scale(1, lerp(1, -1, ko)); d.translate(0, F * .34); } // legs in the air
+    else if (!r.selfKo) { d.translate(0, -ko * F * (r.lift ?? .3)); d.rotate(ko * 1.38 + s.hit * .16); }
+    r.draw(d, F, s); d.restore();
+    hero(d, hx, g, F, pose, level, W, H);
+    if (contact) star(d, heroTurn ? bx - F * .2 : hx + F * .2, g - F * .62, F * (.1 + impact * .1), heroTurn ? GOLD : RED);
+    d.restore();
+
+    const hpY = bar + u * .5, hpH = Math.max(u * 1.8, 10), hpW = W * .4;
+    hpBar(d, gut, hpY, hpW, hpH, counterHit ? .72 : 1, GOLD, 'JAYA', false, u);
+    hpBar(d, W - gut - hpW, hpY, hpW, hpH, clamp(bossLevel), RED, r.name, true, u);
+
+    const bigS = Math.min(u * 15, W * .16), bigY = hpY + hpH + Math.max(u * 3.2, 16 * unit) + bigS * .55;
+    if (t < .14) shout(d, r.tag, W / 2, bigY, bigS, INK, W);
+    if (t >= .14 && t < .3) bubble(d, r.taunt, bx, g - F * 1.08, W, u, -.6);
+    if (t >= .26 && t < .32) shout(d, 'FIGHT!', W / 2, bigY, bigS, GOLD, W);
+    if (heroTurn && q > .42) shout(d, r.weapons[[0, 1, null, 2][k]], W / 2, bigY, Math.min(u * 8, W * .09), GOLD, W);
+    if (bossTurn && q > .42) shout(d, r.counter, W / 2, bigY, Math.min(u * 8, W * .09), RED, W);
+    if (t >= .72) {
+      shout(d, 'K.O.', W / 2, bigY, bigS * lerp(1.6, 1, ease(seg(t, .72, .76))), GOLD, W);
+      if (t > .78) shout(d, r.result, W / 2, bigY + bigS * .95, Math.min(u * 10, W * .11), INK, W);
+      if (t > .82 && r.sub) shout(d, r.sub, W / 2, bigY + bigS * 1.6, Math.min(u * 4.5, W * .05), INK, W);
+    }
+  }
+
+  function finale(d, W, H, g, u, F, t, bar, gut) {
+    const walk = 1 - ease(seg(t, .04, .16)), rx = W * .72 + walk * W * .5, hx = W * .28;
+    const fade = seg(t, .48, .6);
+    if (fade < 1) {
+      hero(d, hx, g, F, POSE.idle, 9, W, H);
+      fighter(d, rx, g, F, walk > 0 ? (Math.floor(t * 70) % 2 ? POSE.walkA : POSE.walkB) : POSE.stand, -1, { tie: true, clipboard: true });
+      if (t < .1) shout(d, 'FINAL ROUND', W / 2, g * .36, Math.min(u * 13, W * .13), INK, W);
+      if (t >= .1 && t < .18) shout(d, 'THE RECRUITER', W / 2, g * .36, Math.min(u * 13, W * .13), GOLD, W);
+      if (t >= .18 && t < .32) bubble(d, 'Where do you see yourself in 5 years?', rx, g - F * 1.08, W, u, -.6);
+      if (t >= .3 && t < .48) bubble(d, 'Honestly? On your team.', hx, g - F * 1.12, W, u, .6);
+    }
+    if (fade > 0) { d.globalAlpha = fade; d.fillStyle = DARK; d.fillRect(0, 0, W, H); d.globalAlpha = 1; }
+    if (t > .55) { // the shadow finishes rendering: dot density climbs, then the portrait and name lock in
+      const S = Math.round(Math.min(H * .62 - bar, W * (W < H ? .5 : .42))), top = Math.min(340, Math.floor(S / (2.8 * bar / 60))); // 2.8 CSS px per dot on any screen density
+      const steps = [32, 48, 64, 96, 128, 160, 192, top], n = Math.min(7, Math.floor(seg(t, .55, .72) * 8));
+      const tl = tile(Math.min(steps[n], top), S), nx = gut + S + gut;
+      if (tl) d.drawImage(tl, gut, bar);
+      if (t > .66) { d.globalAlpha = seg(t, .66, .72); d.drawImage(nameSheet(W - nx - gut, S, INK), nx, bar); d.globalAlpha = 1; }
+    }
+  }
+
+  /* ---- still storyboard for visitors who turned animation off ---- */
+  function paintBoard() {
+    const W = 960, H = 480;
+    $$('.st-board li').forEach((li, i) => {
+      if (i === 0) return;
+      const c = $('canvas', li) || li.insertBefore(Object.assign(document.createElement('canvas'), { width: W, height: H }), li.firstChild);
+      c.setAttribute('aria-hidden', 'true');
+      render(c.getContext('2d'), W, H, i, i === LAST ? 1 : .9, 1);
+    });
+  }
+
+  /* ---- scroll-driven player ---- */
+  const d = cv.getContext('2d');
+  let dpr = 1, cssW = 0, cssH = 0, dirty = false, shown = -1;
+  const req = () => { if (!dirty) { dirty = true; requestAnimationFrame(frame); } };
+  function size() {
+    cssW = stage.clientWidth; cssH = stage.clientHeight; dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = Math.round(cssW * dpr); cv.height = Math.round(cssH * dpr);
+    tiles = {}; sheets = {}; bgs = {};
+  }
+  function frame() {
+    dirty = false;
+    const r = story.getBoundingClientRect();
+    if (r.bottom <= 0 || !cssW) return;
+    const p = clamp(-r.top / (r.height - cssH));
+    let s = p * TOTAL, i = 0;
+    while (i < LAST && s >= WEIGHT[i]) { s -= WEIGHT[i]; i++; }
+    const t = clamp(s / WEIGHT[i]);
+    render(d, cv.width, cv.height, i, t, dpr);
+    const fadeIn = i > 0 ? 1 - seg(t, 0, .04) : 0, fadeOut = i < LAST ? seg(t, .96, 1) : 0, fade = Math.max(fadeIn, fadeOut);
+    if (fade > 0) { d.globalAlpha = fade; d.fillStyle = DARK; d.fillRect(0, 0, cv.width, cv.height); d.globalAlpha = 1; }
+
+    if (i !== shown) { shown = i; $('#stWhen').textContent = BEATS[i].when; $('#stLine').textContent = BEATS[i].line; $('#stRes').textContent = i === 0 ? 'SCROLL TO FIGHT' : i === LAST ? 'FINAL ROUND' : ROUNDS[i].tag + ' OF 9'; }
+    $('#stCap').hidden = i === LAST && t > .5; // no fade-out ghost behind the finale
+    $('#stCap').classList.toggle('on', i === 0 || (t > .04 && t < .96));
+    $('#stFinal').hidden = !(i === LAST && t > .72);
+  }
+
+  if (reduce) { Promise.all([document.fonts.load('100px Anton'), document.fonts.load('700 14px Figtree')]).finally(paintBoard); }
+  else {
+    story.classList.add('play');
+    size();
+    new ResizeObserver(() => { size(); req(); }).observe(stage);
+    addEventListener('scroll', req, { passive: true });
+    Promise.all([document.fonts.load('100px Anton'), document.fonts.load('700 14px Figtree')]).finally(() => { sheets = {}; bgs = {}; req(); });
+    $('#stSkip').addEventListener('click', e => { e.preventDefault(); $('#about').scrollIntoView({ behavior: 'instant' }); });
+    req();
+  }
 }
 
 /* ---------- cheat code ---------- */
