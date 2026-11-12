@@ -1,0 +1,8 @@
+# Chat backend for the portfolio's "ask" box. Deploy from this folder:
+#   npx wrangler login
+#   npx wrangler secret put GROQ_API_KEY
+#   npx wrangler deploy
+# then paste the printed *.workers.dev URL into CHAT_ENDPOINT in ../index.html.
+name = "jaya-portfolio-chat"
+main = "src/index.js"
+compatibility_date = "2026-01-01"

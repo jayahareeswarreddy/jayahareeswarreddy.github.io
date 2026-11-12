@@ -3,3 +3,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+
+# Wrangler local cache
+.wrangler/
+node_modules/

@@ -133,7 +133,7 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .bar .fill{height:100%; background:repeating-linear-gradient(90deg, var(--f) 0 10px, transparent 10px 13px)}
 .bar span:last-child{text-align:right; color:var(--muted)}
 
-.hero h2{text-shadow:none; font:400 clamp(22px,3.6vw,40px)/1.35 var(--f-display); margin:14px 0 12px; text-wrap:balance}
+.hero h1{text-shadow:none; font:400 clamp(22px,3.6vw,40px)/1.35 var(--f-display); margin:14px 0 12px; text-wrap:balance}
 .role{font:400 clamp(12px,1.5vw,16px)/1.4 var(--f-display); color:var(--primary); margin:0 0 28px; text-transform:uppercase}
 .dialogue{position:relative; padding:28px 22px 22px; margin-bottom:32px; min-height:132px}
 .dialogue .speaker{position:absolute; top:-15px; left:18px; padding:6px 10px; font:400 10px/1 var(--f-display);
@@ -142,6 +142,42 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .next{position:absolute; right:10px; bottom:6px; width:44px; height:44px; padding:0; border:0; background:none; color:var(--primary);
   font:400 14px/1 var(--f-display); cursor:pointer; animation:nudge 1s steps(2) infinite}
 @keyframes nudge{50%{transform:translateY(3px)}}
+.bot{position:fixed; right:max(16px, env(safe-area-inset-right, 0px)); bottom:max(16px, env(safe-area-inset-bottom, 0px)); z-index:55;
+  display:grid; justify-items:end; gap:12px; pointer-events:none}
+.bot>*{pointer-events:auto}
+.bot-fab{width:76px; height:80px; padding:6px; background:var(--coin); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow);
+  cursor:pointer; transition:transform .12s steps(2), box-shadow .12s steps(2)}
+.bot-fab canvas{display:block; width:100%; height:100%}
+.bot-fab:not(:hover) canvas{animation:idle 1.6s steps(2) infinite}
+.bot-fab:hover{transform:translate(-2px,-2px) rotate(-5deg); box-shadow:7px 7px 0 var(--shadow)}
+.bot-fab:active{transform:translate(5px,5px); box-shadow:0 0 0 var(--shadow)}
+.bot-tip{position:relative; max-width:230px; padding:8px 12px; background:var(--card); color:var(--fg); border:3px solid var(--line); font:400 20px/1.1 var(--f-hud)}
+.bot-tip::after{content:""; position:absolute; right:28px; bottom:-11px; width:12px; height:12px; background:var(--card);
+  border-right:3px solid var(--line); border-bottom:3px solid var(--line); transform:rotate(45deg)}
+.bot-panel{width:min(360px, calc(100vw - 32px)); height:min(500px, calc(100vh - 150px)); height:min(500px, calc(100svh - 150px));
+  display:grid; grid-template-rows:auto 1fr auto auto auto; overflow:hidden}
+.bot-head{display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--coin); color:var(--band-ink); border-bottom:3px solid var(--line)}
+.bot-head canvas{flex:none; width:40px; height:42px}
+.bot-head div{flex:1; min-width:0; display:grid; gap:4px}
+.bot-head b{font:400 11px/1 var(--f-display)}
+.bot-head span{font:400 18px/1 var(--f-hud)}
+.bot-head .toggle{background:var(--card); color:var(--fg)}
+.bot-log{overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px; background:var(--bg)}
+.msg{max-width:85%; padding:8px 12px; border:2px solid var(--line); font:500 15px/1.45 var(--f-body); overflow-wrap:anywhere}
+.msg.ai{align-self:flex-start; background:var(--card)}
+.msg.me{align-self:flex-end; background:var(--primary); color:var(--primary-fg)}
+.msg.wait::after{content:"..."; animation:blink 1s steps(1) infinite}
+.bot-chips{display:flex; flex-wrap:wrap; gap:6px; padding:10px 12px 0}
+.bot-chips button{min-height:36px; padding:6px 10px; font:400 18px/1 var(--f-hud); background:var(--bg); color:var(--fg); border:2px solid var(--line); cursor:pointer}
+.bot-chips button:hover{background:var(--coin); color:var(--band-ink)}
+.bot-form{display:flex; gap:8px; padding:10px 12px}
+.bot-form input{flex:1; min-width:0; min-height:44px; padding:8px 10px}
+.bot-form .btn{min-height:44px; padding:8px 12px; box-shadow:3px 3px 0 var(--shadow)}
+.bot-note{margin:0; padding:0 12px 10px; font:400 16px/1.1 var(--f-hud); color:var(--muted)}
+.ask{display:flex; gap:10px; margin:-14px 0 8px; padding:0}
+.ask input{flex:1; min-width:0; min-height:48px; padding:10px 14px; font:500 16px/1.3 var(--f-body); color:var(--fg);
+  background:var(--card); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow)}
+.ask-note{margin:0 0 28px; font:400 18px/1.2 var(--f-hud); color:var(--muted)}
 .ctas{display:flex; flex-wrap:wrap; gap:16px}
 .hint{margin:24px 0 0; font:400 20px/1.2 var(--f-hud); color:var(--muted)}
 .hint b{color:var(--coin-dark); font-weight:400}
@@ -229,10 +265,15 @@ textarea{min-height:140px; resize:vertical}
 a.toggle{display:inline-flex; align-items:center; text-decoration:none}
 
 /* ---------- story: "Jaya vs Everything" (one deliberate world in both themes) ---------- */
+.story-gate{padding-block:72px; background:#0a0d14; color:#f3efe6}
+.story-gate .wrap{display:grid; justify-items:start; gap:18px}
+.story-gate .eyebrow{color:#f6c22e}
+.story-gate h2{font:400 clamp(30px,6vw,72px)/1.02 var(--f-poster); text-transform:uppercase; text-shadow:none}
+.story-gate :focus-visible{outline-color:#f6c22e}
 #story{--st-bg:#0a0d14; --st-ink:#f3efe6; --st-gold:#f6c22e; position:relative; background:var(--st-bg); color:var(--st-ink)}
 .st-stage{display:none}
 #story.play{height:915vh; height:915svh}
-#story.play .st-stage{display:block; position:sticky; top:0; height:100vh; height:100svh; overflow:hidden}
+#story.play .st-stage{display:block; position:sticky; top:var(--hud,0px); height:calc(100vh - var(--hud,0px)); height:calc(100svh - var(--hud,0px)); overflow:hidden}
 #stCanvas{display:block; width:100%; height:100%; max-width:none; image-rendering:auto}
 .st-bar span{padding:4px 8px; background:var(--st-bg)}
 .st-bar{position:absolute; inset:0 0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:8px var(--gutter);
@@ -251,7 +292,7 @@ a.toggle{display:inline-flex; align-items:center; text-decoration:none}
 .st-final-btns{display:flex; flex-wrap:wrap; gap:14px}
 .st-final .btn.coin{color:var(--band-ink)}
 .st-board{padding:64px var(--gutter)}
-.st-board h1{margin:0 0 40px; font:400 clamp(44px,11vw,140px)/1 var(--f-poster); text-transform:uppercase}
+.st-board h2{text-shadow:none; margin:0 0 40px; font:400 clamp(44px,11vw,140px)/1 var(--f-poster); text-transform:uppercase}
 .st-board ol{list-style:none; margin:0; padding:0; display:grid; gap:40px; max-width:1120px}
 .st-board li{display:grid; gap:10px; min-width:0}
 .st-board canvas{display:block; width:100%; max-width:640px; height:auto; image-rendering:auto; border:3px solid var(--st-ink)}
@@ -324,46 +365,16 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 </head>
 <body>
 
-<!-- ===== STORY : JAYA VS EVERYTHING ===== -->
-<div id="story">
-  <div class="st-stage">
-    <canvas id="stCanvas" aria-hidden="true"></canvas>
-    <div class="st-bar"><span id="stRes" aria-hidden="true">SCROLL TO FIGHT</span><a class="st-skip" id="stSkip" href="#about">Skip story</a></div>
-    <div class="st-cap" id="stCap" aria-hidden="true"><small id="stWhen"></small><p id="stLine"></p></div>
-    <div class="st-final" id="stFinal" hidden>
-      <a class="st-email" href="#contact">jayahareeswar2004@gmail.com</a>
-      <p>Still training. Player 2, press Hire.</p>
-      <div class="st-final-btns"><a class="btn coin" href="#contact">&#9654; Hire</a><a class="btn" href="#play">Play the bonus level</a></div>
-    </div>
-  </div>
-  <div class="st-board">
-    <h1>Jaya Hareeswar Reddy Gudisa</h1>
-    <ol>
-      <li><span class="st-when">9 rounds. 1 fighter.</span><p class="st-line">Scroll to fight.</p></li>
-      <li><span class="st-when">2020 &middot; KKR Gowtham, Guntur</span><p class="st-line">Round 1: The Homework Monster. Scored 100%.</p></li>
-      <li><span class="st-when">2020&ndash;2022 &middot; ARKA Junior College</span><p class="st-line">Round 2: The M.P.C. Hydra. Intermediate, MPC, 91%.</p></li>
-      <li><span class="st-when">2022&ndash;2026 &middot; SRM University&ndash;AP</span><p class="st-line">Round 3: The 8 AM Lecture. B.Tech CSE, CGPA 8.1/10.</p></li>
-      <li><span class="st-when">Jan&ndash;May 2025 &middot; Brain tumor research</span><p class="st-line">Round 4: Overfit, the Mirror Demon. 8 MRI classes, 99% on the evaluated dataset.</p></li>
-      <li><span class="st-when">Project &middot; Prompt-to-UI Generator</span><p class="st-line">Round 5: The Syntax Error Swarm. Text prompts in, React components out.</p></li>
-      <li><span class="st-when">Project &middot; AI Resume Analyzer &amp; Job Matcher</span><p class="st-line">Round 6: The Job Listing Horde. 1,000+ LinkedIn listings ranked.</p></li>
-      <li><span class="st-when">Project &middot; FutureTrackAI</span><p class="st-line">Round 7: The Malformed JSON Ninja. 12 FastAPI endpoints, JSON-schema validation.</p></li>
-      <li><span class="st-when">Apr 2026 &ndash; Oct 2026 &middot; Freelance</span><p class="st-line">Round 8: The Hallucinator. Freelance AI Engineer, Taskwin GmbH.</p></li>
-      <li><span class="st-when">Oct 2026 &ndash; Present &middot; Full-time</span><p class="st-line">Round 9: Prod Bug, Friday 5 PM. Junior Software Developer, TaskWin India Private Limited.</p></li>
-      <li><span class="st-when">Final round</span><p class="st-line">The Recruiter. Still training. Player 2, press Hire.</p></li>
-    </ol>
-  </div>
-</div>
-
 <header class="hud">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Back to top"><i>&lt;&gt;</i><span>JHR</span></a>
     <ul class="nav">
-      <li><a href="#story">Story</a></li>
-      <li><a href="#play">Play</a></li>
       <li><a href="#inventory">Skills</a></li>
       <li><a href="#quests">Experience</a></li>
       <li><a href="#games">Projects</a></li>
       <li><a href="#trophies">Awards</a></li>
+      <li><a href="#play">Play</a></li>
+      <li><a href="#storyGate" id="navStory">Story</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="hud-tools">
@@ -378,24 +389,6 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 </header>
 
 <main id="top">
-<!-- ===== BONUS STAGE : PLAYABLE RUNNER ===== -->
-<section id="play">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Bonus stage &middot; Playable</p>
-      <h2>SHIP IT!</h2>
-      <p>Help Jaya get to production. Jump the bugs, stay on the ground under the hallucinations, and grab the blue gems to collect skills. This is the only place to earn coins: gold coins are worth 1, gems are worth 5.</p>
-    </div>
-    <div class="arcade box">
-      <canvas id="game" tabindex="0" aria-label="Ship It runner game. Press Space, the Up arrow or tap to start and to jump."></canvas>
-      <div class="arcade-foot">
-        <p><kbd>Space</kbd> / <kbd>&uarr;</kbd> / tap to jump</p>
-        <div class="got"><span>Skills this run <b id="skillCount">0/12</b></span><ul class="chips" id="gotSkills"></ul></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== WORLD 1-1 : CHARACTER ===== -->
 <div class="hero" id="about">
   <div class="wrap hero-grid">
@@ -421,14 +414,20 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 
     <div>
       <p class="eyebrow">Player 1 &middot; Ready</p>
-      <h2>JAYA HAREESWAR<br>REDDY GUDISA</h2>
+      <h1>JAYA HAREESWAR<br>REDDY GUDISA</h1>
       <p class="role">Generative AI Engineer</p>
       <div class="dialogue box">
-        <span class="speaker">JAYA</span>
+        <span class="speaker" id="dlgWho">JAYA</span>
         <p id="dlgText" aria-hidden="true">Hey there, traveler! I'm Jaya, a Junior Software Developer at TaskWin.</p>
         <p class="sr" id="dlgLive" aria-live="polite">Hey there, traveler! I'm Jaya, a Junior Software Developer at TaskWin.</p>
         <button class="next" id="dlgNext" aria-label="Next line of dialogue">&#9660;</button>
       </div>
+      <form class="ask" id="askForm" hidden>
+        <label class="sr" for="askInput">Ask the AI sidekick a question about Jaya</label>
+        <input id="askInput" maxlength="300" autocomplete="off" required placeholder="Ask anything about Jaya...">
+        <button class="btn primary" type="submit">Ask</button>
+      </form>
+      <p class="ask-note" id="askNote" hidden>An AI answers from Jaya's resume. It can get things wrong.</p>
       <div class="ctas">
         <a class="btn primary" href="#play" id="playLink">&#9654; Play the game</a>
         <button class="btn coin" id="openTldr">10-sec summary</button>
@@ -457,7 +456,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
       <article class="slot box">
         <header><canvas data-sprite="db" style="color:var(--green)" aria-hidden="true"></canvas><h3>Vector DBs &amp; Retrieval</h3></header>
         <span class="tag r-epic">EPIC</span>
-        <ul class="chips"><li>Milvus</li><li>Supabase</li><li>MongoDB</li><li>Chunking Strategies</li><li>Embeddings</li><li>Semantic Search</li><li>Vector Search</li></ul>
+        <ul class="chips"><li>Vector DB</li><li>MongoDB</li><li>Chunking Strategies</li><li>Embeddings</li><li>Semantic Search</li><li>Vector Search</li></ul>
       </article>
       <article class="slot box">
         <header><canvas data-sprite="chip" style="color:var(--pink)" aria-hidden="true"></canvas><h3>Machine Learning &amp; NLP</h3></header>
@@ -635,6 +634,61 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
   </div>
 </section>
 
+<!-- ===== BONUS STAGE : PLAYABLE RUNNER ===== -->
+<section id="play">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Bonus stage &middot; Playable</p>
+      <h2>SHIP IT!</h2>
+      <p>Help Jaya get to production. Jump the bugs, stay on the ground under the hallucinations, and grab the blue gems to collect skills. This is the only place to earn coins: gold coins are worth 1, gems are worth 5.</p>
+    </div>
+    <div class="arcade box">
+      <canvas id="game" tabindex="0" aria-label="Ship It runner game. Press Space, the Up arrow or tap to start and to jump."></canvas>
+      <div class="arcade-foot">
+        <p><kbd>Space</kbd> / <kbd>&uarr;</kbd> / tap to jump</p>
+        <div class="got"><span>Skills this run <b id="skillCount">0/12</b></span><ul class="chips" id="gotSkills"></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STORY : JAYA VS EVERYTHING (closed until the visitor asks for it) ===== -->
+<div class="story-gate" id="storyGate">
+  <div class="wrap">
+    <p class="eyebrow">9 rounds &middot; 1 fighter</p>
+    <h2>Want to see the story of Jaya?</h2>
+    <button class="btn coin" id="storyToggle" aria-expanded="false" aria-controls="story">&#9654; Play the story</button>
+  </div>
+</div>
+<div id="story" hidden>
+  <div class="st-stage">
+    <canvas id="stCanvas" aria-hidden="true"></canvas>
+    <div class="st-bar"><span id="stRes" aria-hidden="true">SCROLL TO FIGHT</span><a class="st-skip" id="stSkip" href="#storyGate">Close story</a></div>
+    <div class="st-cap" id="stCap" aria-hidden="true"><small id="stWhen"></small><p id="stLine"></p></div>
+    <div class="st-final" id="stFinal" hidden>
+      <a class="st-email" href="#contact">jayahareeswar2004@gmail.com</a>
+      <p>Still training. Player 2, press Hire.</p>
+      <div class="st-final-btns"><a class="btn coin" href="#contact">&#9654; Hire</a><a class="btn" href="#play">Play the bonus level</a></div>
+    </div>
+  </div>
+  <div class="st-board">
+    <h2>Jaya Hareeswar Reddy Gudisa: the story</h2>
+    <ol>
+      <li><span class="st-when">9 rounds. 1 fighter.</span><p class="st-line">Scroll to fight.</p></li>
+      <li><span class="st-when">2020 &middot; KKR Gowtham, Guntur</span><p class="st-line">Round 1: The Homework Monster. Scored 100%.</p></li>
+      <li><span class="st-when">2020&ndash;2022 &middot; ARKA Junior College</span><p class="st-line">Round 2: The M.P.C. Hydra. Intermediate, MPC, 91%.</p></li>
+      <li><span class="st-when">2022&ndash;2026 &middot; SRM University&ndash;AP</span><p class="st-line">Round 3: The 8 AM Lecture. B.Tech CSE, CGPA 8.1/10.</p></li>
+      <li><span class="st-when">Jan&ndash;May 2025 &middot; Brain tumor research</span><p class="st-line">Round 4: Overfit, the Mirror Demon. 8 MRI classes, 99% on the evaluated dataset.</p></li>
+      <li><span class="st-when">Project &middot; Prompt-to-UI Generator</span><p class="st-line">Round 5: The Syntax Error Swarm. Text prompts in, React components out.</p></li>
+      <li><span class="st-when">Project &middot; AI Resume Analyzer &amp; Job Matcher</span><p class="st-line">Round 6: The Job Listing Horde. 1,000+ LinkedIn listings ranked.</p></li>
+      <li><span class="st-when">Project &middot; FutureTrackAI</span><p class="st-line">Round 7: The Malformed JSON Ninja. 12 FastAPI endpoints, JSON-schema validation.</p></li>
+      <li><span class="st-when">Apr 2026 &ndash; Oct 2026 &middot; Freelance</span><p class="st-line">Round 8: The Hallucinator. Freelance AI Engineer, Taskwin GmbH.</p></li>
+      <li><span class="st-when">Oct 2026 &ndash; Present &middot; Full-time</span><p class="st-line">Round 9: Prod Bug, Friday 5 PM. Junior Software Developer, TaskWin India Private Limited.</p></li>
+      <li><span class="st-when">Final round</span><p class="st-line">The Recruiter. Still training. Player 2, press Hire.</p></li>
+    </ol>
+  </div>
+</div>
+
 <!-- ===== WORLD 1-6 : CONTACT ===== -->
 <section id="contact">
   <div class="wrap">
@@ -680,7 +734,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
   <dl class="tldr">
     <div><dt>Who</dt><dd><strong>Jaya Hareeswar Reddy Gudisa</strong>, Generative AI Engineer, Guntur, India</dd></div>
     <div><dt>Now</dt><dd>Junior Software Developer at <strong>TaskWin India Private Limited</strong> since Oct 2026. Before that, Freelance AI Engineer at <strong>Taskwin GmbH</strong> (Apr 2026 &ndash; Oct 2026): backend services in Python and FastAPI, RAG pipelines, tool-calling workflows, REST API integration, latency, token usage and workflow monitoring.</dd></div>
-    <div><dt>Core stack</dt><dd>Python, OpenAI, FastAPI, RAG, AI agents and tool calling, embeddings and vector search (Milvus, Supabase), structured outputs, React, TensorFlow, Kafka, Docker</dd></div>
+    <div><dt>Core stack</dt><dd>Python, OpenAI, FastAPI, RAG, AI agents and tool calling, embeddings, vector search and vector DBs, structured outputs, React, TensorFlow, Kafka, Docker</dd></div>
     <div><dt>Highlights</dt><dd>99% accuracy on 8-class MRI classification &middot; 1,000+ job listings ranked &middot; 12-endpoint LLM career recommender</dd></div>
     <div><dt>Education</dt><dd>B.Tech CSE, SRM University&ndash;AP, 2022&ndash;2026, CGPA 8.1/10</dd></div>
     <div><dt>Certified</dt><dd>Claude Code in Action (Anthropic) &middot; MongoDB Associate Developer</dd></div>
@@ -695,6 +749,31 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
   </div>
 </dialog>
 
+<!-- ===== ROBO-JAYA : floating AI sidekick (hidden until CHAT_ENDPOINT is set) ===== -->
+<div class="bot" id="bot" hidden>
+  <div class="bot-panel box" id="botPanel" role="dialog" aria-label="Chat with Robo-Jaya, the AI sidekick" hidden>
+    <div class="bot-head">
+      <canvas data-sprite="bot" aria-hidden="true"></canvas>
+      <div><b>ROBO-JAYA</b><span>AI sidekick. Knows the resume by heart.</span></div>
+      <button class="toggle" id="botClose" aria-label="Close chat">X</button>
+    </div>
+    <div class="bot-log" id="botLog" role="log" aria-live="polite"></div>
+    <div class="bot-chips" id="botChips">
+      <button type="button">What does Jaya do?</button>
+      <button type="button">Which projects has Jaya built?</button>
+      <button type="button">How do I contact Jaya?</button>
+    </div>
+    <form class="bot-form" id="botForm">
+      <label class="sr" for="botInput">Your question for Robo-Jaya</label>
+      <input id="botInput" maxlength="300" autocomplete="off" required placeholder="Ask anything about Jaya...">
+      <button class="btn primary" type="submit">Send</button>
+    </form>
+    <p class="bot-note">An AI answers from Jaya's resume. It can get things wrong.</p>
+  </div>
+  <div class="bot-tip" id="botTip" hidden>Psst! I'm Robo-Jaya. Ask me anything.</div>
+  <button class="bot-fab" id="botFab" aria-expanded="false" aria-controls="botPanel" aria-label="Chat with Robo-Jaya, the AI sidekick"><canvas id="botFace" data-sprite="bot" aria-hidden="true"></canvas></button>
+</div>
+
 <div id="toasts" aria-live="polite"></div>
 <canvas id="rain" hidden aria-hidden="true"></canvas>
 
@@ -704,6 +783,10 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const EMAIL = 'jayahareeswar2004@gmail.com';
 const ls = { get: k => { try { return localStorage.getItem(k) } catch { return null } },
              set: (k, v) => { try { localStorage.setItem(k, v) } catch {} } };
+
+/* the sticky header's height, so the story stage can sit just under it */
+const hudEl = $('.hud'), setHud = () => document.documentElement.style.setProperty('--hud', hudEl.offsetHeight + 'px');
+setHud(); new ResizeObserver(setHud).observe(hudEl);
 
 /* ---------- pixel sprites: one char per pixel, X = the canvas's CSS color ---------- */
 const SPRITES = {
@@ -722,6 +805,13 @@ const SPRITES = {
   trophy:['.XXXXX..','XXXXXXX.','X.XXX.X.','.XXXXX..','..XXX...','...X....','..XXX...','.XXXXX..'],
   lock:  ['..XXX...','.X...X..','.X...X..','XXXXXXX.','XXX.XXX.','XXX.XXX.','XXXXXXX.','........'],
 };
+SPRITES.bot = [
+  '.......C........','.......G........','.....HHHHHHH....','...HHHHHHHHHH...','..HHHHHHHHHHHH..','..HHSSSSSSSSHH..',
+  '..HSSSSSSSSSSH..','..SGGGGSSGGGGS..','..SGWEGGGGWEGS..','..SGGGGSSGGGGS..','...SSSSSSSSSS...','...SSHHHHHHSS...',
+  '...SSSWWWWSSS...','....SSSSSSSS....','......SSSS......','..NNNNNSSNNNNN..','.NNNNNNNNNNNNNN.'];
+SPRITES.botBlink = SPRITES.bot.map((r, i) => i === 8 ? '..SGSSGGGGSSGS..' : r);
+SPRITES.botWink = SPRITES.bot.map((r, i) => i === 8 ? '..SGWEGGGGSSGS..' : r);
+SPRITES.botThink = SPRITES.bot.map((r, i) => i === 0 ? r.replace('C', 'r') : r);
 SPRITES.blink = SPRITES.hero.map((r, i) => i === 5 ? r.replace(/[EW]/g, 'S') : r);
 SPRITES.run = SPRITES.hero.slice(0, 16).concat(['..KPPPK..KPPPK..', '..KKKK....KKKK..']);
 Object.assign(SPRITES, {
@@ -730,7 +820,7 @@ Object.assign(SPRITES, {
   coin:  ['.yyyy.','yyyoyy','yyyoyy','yyyoyy','yyyoyy','.yyyy.'],
   gem:   ['...bb...','..bWbb..','.bWbbbb.','bbbbbbbd','.bbbbbd.','..bbdd..','...dd...'],
 });
-const PAL = { K:'#1b2633', H:'#241710', S:'#c68642', E:'#1b2633', W:'#ffffff', B:'#1288b8', Y:'#f6c22e', G:'#9aa9b8', C:'#5ef0ff', P:'#2c3e50',
+const PAL = { K:'#1b2633', H:'#241710', S:'#c68642', E:'#1b2633', W:'#ffffff', B:'#1288b8', Y:'#f6c22e', G:'#9aa9b8', C:'#5ef0ff', P:'#2c3e50', N:'#22357a',
               r:'#e0483e', g:'#9b6bff', y:'#f6c22e', o:'#b98300', b:'#41b4e2', d:'#0f6f93' };
 
 function draw(cv, name = cv.dataset.sprite, cur = getComputedStyle(cv).color) {
@@ -833,14 +923,90 @@ const LINES = [
   "Short on time? Hit the 10-second summary. Got a minute? Play Ship It! below and grab some coins.",
 ];
 let line = 0, typer;
-function say(i) {
+function type(text, who = 'JAYA', ms = 24) {
   const el = $('#dlgText'); clearInterval(typer);
-  $('#dlgLive').textContent = LINES[i];
-  if (reduce) { el.textContent = LINES[i]; return; }
+  $('#dlgWho').textContent = who; $('#dlgLive').textContent = text;
+  if (reduce) { el.textContent = text; return; }
   let n = 0; el.textContent = '';
-  typer = setInterval(() => { el.textContent = LINES[i].slice(0, ++n); if (n >= LINES[i].length) clearInterval(typer); }, 24);
+  typer = setInterval(() => { el.textContent = text.slice(0, ++n); if (n >= text.length) clearInterval(typer); }, ms);
 }
+const say = i => type(LINES[i]);
 $('#dlgNext').onclick = () => { line = (line + 1) % LINES.length; say(line); beep(660, .06); };
+
+/* ---------- ask the AI sidekick: answers come from the Cloudflare Worker in worker/ ---------- */
+const CHAT_ENDPOINT = 'https://jaya-portfolio-chat.jayahareeswar.workers.dev/'; // the deployed Worker URL; the ask box and Robo-Jaya stay hidden until this is set
+const chatLog = [];
+async function askAI(q) {
+  try {
+    const r = await fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: [...chatLog, { role: 'user', content: q }] }) });
+    if (r.status === 429) return `I've answered a lot of questions and need a short rest. Try again in a bit, or email ${EMAIL}.`;
+    const res = await r.json().catch(() => ({}));
+    if (!r.ok || !res.reply) throw new Error(res.error || `HTTP ${r.status}`);
+    chatLog.push({ role: 'user', content: q }, { role: 'assistant', content: res.reply.slice(0, 500) });
+    chatLog.splice(0, Math.max(0, chatLog.length - 10)); // the Worker accepts 12 messages; keep the last 5 exchanges
+    return res.reply;
+  } catch (err) {
+    console.error('Chat failed:', err.message);
+    return `My AI sidekick is resting right now. Email ${EMAIL} instead.`;
+  }
+}
+function addMsg(role, text) {
+  const log = $('#botLog'), m = document.createElement('div');
+  m.className = 'msg ' + role; m.textContent = text;
+  log.append(m); log.scrollTop = log.scrollHeight;
+  return m;
+}
+
+if (CHAT_ENDPOINT) { $('#askForm').hidden = false; $('#askNote').hidden = false; }
+$('#askForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const input = $('#askInput'), btn = $('button', e.target), q = input.value.trim();
+  if (!q) return;
+  btn.disabled = true; input.value = ''; type('Thinking...', 'JAYA.AI'); beep(660, .06);
+  const a = await askAI(q);
+  addMsg('me', q); addMsg('ai', a); // keep the floating chat's history complete
+  type(a, 'JAYA.AI', 12);
+  btn.disabled = false; input.focus();
+});
+
+/* ---------- Robo-Jaya: the floating chat ---------- */
+{
+  const fab = $('#botFab'), panel = $('#botPanel'), face = $('#botFace'), tip = $('#botTip'), input = $('#botInput'), chips = $('#botChips');
+  let busy = false;
+  function openBot(open) {
+    panel.hidden = !open; tip.hidden = true; fab.setAttribute('aria-expanded', open);
+    if (!open) { fab.focus(); return; }
+    if (!$('#botLog').children.length) addMsg('ai', "Beep boop. I'm Robo-Jaya. The real Jaya is busy fixing a prod bug, so ask me anything about Jaya's work.");
+    input.focus(); beep(880, .08);
+  }
+  async function send(q) {
+    if (busy || !q) return;
+    busy = true; chips.hidden = true; addMsg('me', q);
+    const wait = addMsg('ai wait', '');
+    let lit = false; // the antenna flashes red while the answer is on its way
+    const think = reduce ? 0 : setInterval(() => draw(face, (lit = !lit) ? 'botThink' : 'bot'), 260);
+    const a = await askAI(q);
+    clearInterval(think); draw(face, 'bot');
+    wait.classList.remove('wait'); wait.textContent = a; $('#botLog').scrollTop = $('#botLog').scrollHeight;
+    busy = false; beep(660, .06);
+  }
+  fab.onclick = () => openBot(panel.hidden);
+  $('#botClose').onclick = () => openBot(false);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) openBot(false); });
+  $('#botForm').addEventListener('submit', e => { e.preventDefault(); const q = input.value.trim(); input.value = ''; send(q); });
+  chips.addEventListener('click', e => { if (e.target.tagName === 'BUTTON') send(e.target.textContent); });
+
+  if (CHAT_ENDPOINT) {
+    $('#bot').hidden = false;
+    setTimeout(() => { if (panel.hidden) { tip.hidden = false; setTimeout(() => tip.hidden = true, 9000); } }, 4000);
+    if (!reduce) {
+      setInterval(() => { if (!busy) { draw(face, 'botBlink'); setTimeout(() => busy || draw(face), 140); } }, 3100);
+      fab.addEventListener('mouseenter', () => busy || draw(face, 'botWink'));
+      fab.addEventListener('mouseleave', () => busy || draw(face));
+    }
+  }
+}
 
 /* ---------- poke the avatar ---------- */
 const QUIPS = [
@@ -907,7 +1073,7 @@ $('#questForm').addEventListener('submit', async e => {
 {
   const cv = $('#game'), ctx = cv.getContext('2d'), W = 320, H = 120, GROUND = 100, STAND = GROUND - 18;
   cv.width = W; cv.height = H;
-  const SKILLS = ['Python', 'OpenAI', 'RAG', 'AI Agents', 'Tool Calling', 'Embeddings', 'Vector Search', 'Milvus', 'FastAPI', 'React', 'TensorFlow', 'Docker'];
+  const SKILLS = ['Python', 'OpenAI', 'RAG', 'AI Agents', 'Tool Calling', 'Embeddings', 'Vector Search', 'Vector DB', 'FastAPI', 'React', 'TensorFlow', 'Docker'];
   const DEATHS = ['SEGFAULT!', 'NULL POINTER!', 'RATE LIMITED!', 'MERGE CONFLICT!', 'FLAKY TEST!', 'TOKEN LIMIT!'];
   const GC = {}, img = {};
   let S, state = 'ready', last = 0, raf = 0, jumpAt = -1, overAt = 0, best = +ls.get('best') || 0;
@@ -1525,7 +1691,7 @@ $('#questForm').addEventListener('submit', async e => {
     dirty = false;
     const r = story.getBoundingClientRect();
     if (r.bottom <= 0 || !cssW) return;
-    const p = clamp(-r.top / (r.height - cssH));
+    const p = clamp((hudEl.offsetHeight - r.top) / (r.height - cssH)); // the stage sticks just under the header
     let s = p * TOTAL, i = 0;
     while (i < LAST && s >= WEIGHT[i]) { s -= WEIGHT[i]; i++; }
     const t = clamp(s / WEIGHT[i]);
@@ -1546,9 +1712,28 @@ $('#questForm').addEventListener('submit', async e => {
     new ResizeObserver(() => { size(); req(); }).observe(stage);
     addEventListener('scroll', req, { passive: true });
     Promise.all([document.fonts.load('100px Anton'), document.fonts.load('700 14px Figtree')]).finally(() => { sheets = {}; bgs = {}; req(); });
-    $('#stSkip').addEventListener('click', e => { e.preventDefault(); $('#about').scrollIntoView({ behavior: 'instant' }); });
     req();
   }
+}
+
+/* ---------- the story opens only when asked for ---------- */
+{
+  const story = $('#story'), gate = $('#storyGate'), toggle = $('#storyToggle');
+  function setStory(open) {
+    story.hidden = !open;
+    toggle.setAttribute('aria-expanded', open);
+    toggle.textContent = open ? 'Close the story' : '\u25B6 Play the story';
+    if (open) {
+      scrollTo({ top: story.getBoundingClientRect().top + scrollY - hudEl.offsetHeight, behavior: 'instant' });
+      $('#stSkip').focus({ preventScroll: true });
+    } else {
+      gate.scrollIntoView({ block: 'center', behavior: 'instant' });
+      toggle.focus({ preventScroll: true });
+    }
+  }
+  toggle.addEventListener('click', () => setStory(story.hidden));
+  $('#stSkip').addEventListener('click', e => { e.preventDefault(); setStory(false); });
+  $('#navStory').addEventListener('click', e => { e.preventDefault(); setStory(true); });
 }
 
 /* ---------- cheat code ---------- */
