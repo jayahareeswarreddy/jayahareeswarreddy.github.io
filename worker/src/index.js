@@ -54,6 +54,13 @@ export default {
     try { ({ messages } = await request.json()); } catch { return json({ error: 'bad json' }, 400); }
     if (!valid(messages)) return json({ error: 'bad messages' }, 400);
 
+    const question = messages[messages.length - 1].content;
+    const asksWhy = /\b(why|purpose|motivation|reason|goal|built|build|created|create|developed|develop)\b/i.test(question);
+    const asksRagEval = /\brag[\s-]*eval\b|\bretrieval[ -]augmented generation\b|\bretrieval evaluation\b/i.test(question);
+    if (asksWhy && asksRagEval) {
+      return json({ reply: 'Jaya built RAG Eval to measure retrieval quality instead of judging a RAG system by a few plausible answers. It compares chunking and retrieval strategies against labelled questions so search failures can be identified before they are mistaken for generation failures.' });
+    }
+
     let upstream;
     try {
       upstream = await fetch('https://api.groq.com/openai/v1/chat/completions', {

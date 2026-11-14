@@ -52,6 +52,9 @@ PROJECTS
   extractive answer path works without an API key. Stack: Python, FastAPI, NumPy. Live:
   https://rag-eval-7psf.onrender.com
   Code: https://github.com/jayahareeswarreddy/rag-eval
+  Why Jaya built it: to replace intuition and a few cherry-picked answers with a repeatable way
+  to measure retrieval quality, identify whether search or generation caused a RAG failure, and
+  choose chunking and retrieval settings using labelled evidence.
 - FutureTrackAI: career guidance platform with 14 FastAPI endpoints, structured JSON responses,
   that score skills against 24 career paths and provide learning roadmaps. Configurable Groq and
   OpenAI generation uses schema validation, corrective retries and deterministic fallbacks; 43
