@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jaya Hareeswar Reddy Gudisa</title>
-<meta name="description" content="Jaya Hareeswar Reddy Gudisa, Generative AI Engineer. LLM apps, RAG pipelines and tool-calling agents in Python and FastAPI.">
+<meta name="description" content="Jaya Hareeswar Reddy Gudisa: software engineering, infrastructure and LLM applications. Python, FastAPI, RAG, Kafka and data pipelines.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap">
@@ -221,6 +221,8 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .cart h3{margin:0; font:400 clamp(13px,1.6vw,16px)/1.5 var(--f-display)}
 .cart-body > p{margin:0; color:var(--muted)}
 .loot{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:12px}
+.cart-links{display:flex; flex-wrap:wrap; gap:12px; margin:0}
+.cart-links .btn{min-height:44px; padding:10px 14px; font-size:10px; box-shadow:4px 4px 0 var(--shadow)}
 .loot li{display:grid; padding:10px 14px; border:2px solid var(--line); background:var(--bg); min-width:120px}
 .loot b{font:400 15px/1.3 var(--f-display); color:var(--primary)}
 .loot span{font:400 19px/1.1 var(--f-hud); color:var(--muted)}
@@ -401,7 +403,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
         <div class="ground"></div>
       </div>
       <dl class="sheet">
-        <div><dt>Class</dt><dd>Generative AI Engineer</dd></div>
+        <div><dt>Class</dt><dd>Software Engineer</dd></div>
         <div><dt>Guild</dt><dd>TaskWin India Private Limited</dd></div>
         <div><dt>Spawn</dt><dd>Guntur, India</dd></div>
         <div><dt>Status</dt><dd class="status">Open to new quests</dd></div>
@@ -415,7 +417,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     <div>
       <p class="eyebrow">Player 1 &middot; Ready</p>
       <h1>JAYA HAREESWAR<br>REDDY GUDISA</h1>
-      <p class="role">Generative AI Engineer</p>
+      <p class="role">Software Engineering | Infrastructure | LLM Applications</p>
       <div class="dialogue box">
         <span class="speaker" id="dlgWho">JAYA</span>
         <p id="dlgText" aria-hidden="true">Hey there, traveler! I'm Jaya, a Junior Software Developer at TaskWin.</p>
@@ -471,13 +473,13 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
       <article class="slot box">
         <header><canvas data-sprite="bars" style="color:var(--primary)" aria-hidden="true"></canvas><h3>Data Engineering</h3></header>
         <span class="tag r-rare">RARE</span>
-        <ul class="chips"><li>Pandas</li><li>NumPy</li><li>Apache Kafka</li><li>Apache Airflow</li></ul>
+        <ul class="chips"><li>Apache Kafka</li><li>Change Data Capture</li><li>Apache Airflow DAGs</li></ul>
       </article>
       <article class="slot box wide">
         <header><canvas data-sprite="hammer" style="color:var(--muted)" aria-hidden="true"></canvas><h3>Programming &amp; Tools</h3></header>
         <span class="tag r-common">TRUSTY</span>
         <p>The crafting bench. Languages, containers, and the everyday kit for testing and shipping.</p>
-        <ul class="chips"><li>Java</li><li>C++</li><li>SQL</li><li>Git</li><li>GitHub</li><li>Postman</li><li>Selenium</li><li>Docker</li><li>Kubernetes</li><li>VS Code</li></ul>
+        <ul class="chips"><li>Java</li><li>C++</li><li>SQL</li><li>Git</li><li>GitHub</li><li>Postman</li><li>Docker</li><li>Kubernetes</li><li>VS Code</li></ul>
       </article>
     </div>
   </div>
@@ -548,34 +550,34 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     </div>
     <div class="carts">
       <article class="cart box" style="--band:var(--band-1)">
-        <div class="cart-top"><span>LLM APP</span></div>
+        <div class="cart-top"><span>PROMPT &middot; UI BUILDER</span></div>
         <div class="cart-body">
           <h3>Prompt-to-UI Generator</h3>
-          <p>Describe an interface in plain English and get a working React UI back, with a live preview.</p>
-          <ul class="loot"><li><b>Live</b><span>previews</span></li><li><b>Streamed</b><span>generation</span></li><li><b>Iterative</b><span>refinement</span></li></ul>
-          <ul class="chips"><li>Python</li><li>FastAPI</li><li>OpenAI API</li><li>React.js</li><li>Tailwind CSS</li></ul>
+          <p>A deterministic prompt-driven React UI builder: the same prompt produces the same interface.</p>
+          <ul class="loot"><li><b>Live</b><span>previews</span></li><li><b>Repeatable</b><span>output</span></li><li><b>Version</b><span>rollback</span></li></ul>
+          <ul class="chips"><li>React 18</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li><li>Node.js</li><li>Express</li></ul>
           <details><summary>Build notes</summary><ul>
-            <li>Converts text prompts into React components with live previews and streaming responses.</li>
-            <li>Integrated the FastAPI backend with the React frontend to deliver generated UI components and live previews.</li>
-            <li>Implemented syntax validation, error handling, and iterative editing.</li>
-            <li>Added component-level validation and preview rendering for generated interfaces.</li>
+            <li>Problem: free-form UI generation can produce inconsistent or invalid output.</li>
+            <li>Solution: a deterministic planner, validator and generator assembles React screens from an audited component library, with explanations and live previews.</li>
+            <li>Impact: repeatable output for the same prompt, with version rollback and no LLM calls or API keys.</li>
           </ul></details>
+          <p class="cart-links"><a class="btn" href="https://prompt2-ui-tau.vercel.app" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/Prompt2UI" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
         </div>
         <div class="ridges"></div>
       </article>
       <article class="cart box" style="--band:var(--band-2)">
-        <div class="cart-top"><span>NLP &middot; MATCHING</span></div>
+        <div class="cart-top"><span>RAG &middot; EVALUATION</span></div>
         <div class="cart-body">
-          <h3>AI Resume Analyzer &amp; Job Matcher</h3>
-          <p>Reads a resume, scrapes the job market, and ranks the roles that actually fit.</p>
-          <ul class="loot"><li><b>1,000+</b><span>LinkedIn listings ranked</span></li><li><b>spaCy</b><span>resume extraction</span></li></ul>
-          <ul class="chips"><li>Python</li><li>FastAPI</li><li>spaCy</li><li>Selenium</li><li>MongoDB</li></ul>
+          <h3>RAG Eval</h3>
+          <p>Measures retrieval quality against labelled questions instead of relying on intuition.</p>
+          <ul class="loot"><li><b>27</b><span>configurations evaluated</span></li><li><b>875</b><span>Python modules</span></li></ul>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>NumPy</li><li>RAG Evaluation</li></ul>
           <details><summary>Build notes</summary><ul>
-            <li>Developed resume parsing and job-matching workflows.</li>
-            <li>Scraped and ranked 1,000+ LinkedIn job listings by skills and role relevance.</li>
-            <li>Used NLP techniques to extract skills, identify job requirements, and calculate candidate-job relevance.</li>
-            <li>Integrated Selenium and MongoDB for automated job collection and structured data storage.</li>
+            <li>Problem: retrieval quality needs measurement against labelled data, not intuition.</li>
+            <li>Solution: benchmarked 27 configurations over 875 Python standard-library modules using Recall@k, MRR and nDCG; implemented fixed, recursive, Markdown and AST-aware chunking with keyword, dense and hybrid retrieval.</li>
+            <li>Impact: deployed a FastAPI app for document search, grounded question answering, evaluation and uploads.</li>
           </ul></details>
+          <p class="cart-links"><a class="btn" href="https://rag-eval-7psf.onrender.com" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/rag-eval" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
         </div>
         <div class="ridges"></div>
       </article>
@@ -583,15 +585,15 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
         <div class="cart-top"><span>LLM &middot; CAREER</span></div>
         <div class="cart-body">
           <h3>FutureTrackAI</h3>
-          <p>An LLM career advisor whose answers are schema-checked before anyone sees them.</p>
-          <ul class="loot"><li><b>12</b><span>FastAPI endpoints</span></li><li><b>JSON&nbsp;Schema</b><span>validated, with retries</span></li></ul>
-          <ul class="chips"><li>Python</li><li>FastAPI</li><li>OpenAI API</li><li>MongoDB</li><li>React.js</li></ul>
+          <p>Career guidance that maps skills to relevant roles and practical learning roadmaps.</p>
+          <ul class="loot"><li><b>14</b><span>FastAPI endpoints</span></li><li><b>24</b><span>career paths</span></li></ul>
+          <ul class="chips"><li>Python</li><li>FastAPI</li><li>Groq / OpenAI</li><li>MongoDB</li><li>React</li></ul>
           <details><summary>Build notes</summary><ul>
-            <li>Developed a career guidance platform with 12 FastAPI endpoints and structured JSON responses.</li>
-            <li>Integrated OpenAI API, MongoDB, and REST APIs to process user information and generate career recommendations.</li>
-            <li>Implemented JSON-schema validation, retry handling, and backend response processing.</li>
-            <li>Integrated AI-generated career recommendations with MongoDB and REST APIs to support personalized guidance.</li>
+            <li>Problem: career seekers need relevant skill-to-role matches and actionable learning guidance.</li>
+            <li>Solution: 14 FastAPI endpoints score skills against 24 career paths; configurable Groq and OpenAI generation is guarded by schema validation, retries and deterministic fallbacks.</li>
+            <li>Impact: returns structured matches and learning roadmaps; 43 API tests run without MongoDB or an API key.</li>
           </ul></details>
+          <p class="cart-links"><a class="btn" href="https://jayahareeswarreddy.github.io/FutureTrack-AI/" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/FutureTrack-AI" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
         </div>
         <div class="ridges"></div>
       </article>
@@ -626,8 +628,9 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     <div class="achs">
       <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Certification</span><h3>Claude Code in Action</h3><p>Anthropic</p></div></article>
       <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Certification</span><h3>MongoDB Associate Developer</h3><p>MongoDB</p></div></article>
+      <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Course</span><h3>Machine Learning with Python</h3><p>freeCodeCamp</p></div></article>
       <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Research</span><h3>Critical Hit</h3><p>99% accuracy across 8 MRI classes.</p></div></article>
-      <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Data</span><h3>Web Crawler</h3><p>1,000+ job listings scraped and ranked.</p></div></article>
+      <article class="ach box"><canvas data-sprite="trophy" aria-hidden="true"></canvas><div><span class="kind">Evaluation</span><h3>Benchmarker</h3><p>27 RAG configurations measured head to head.</p></div></article>
       <article class="ach box locked" data-ach="scout"><canvas data-sprite="lock" aria-hidden="true"></canvas><div><span class="kind">Locked</span><h3>Talent Scout</h3><p>Collect 100 coins in Ship It!</p></div></article>
       <article class="ach box locked" data-ach="coop"><canvas data-sprite="lock" aria-hidden="true"></canvas><div><span class="kind">Locked</span><h3>Co-op Mode</h3><p>Send Jaya a message.</p></div></article>
     </div>
@@ -680,8 +683,8 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
       <li><span class="st-when">2022&ndash;2026 &middot; SRM University&ndash;AP</span><p class="st-line">Round 3: The 8 AM Lecture. B.Tech CSE, CGPA 8.1/10.</p></li>
       <li><span class="st-when">Jan&ndash;May 2025 &middot; Brain tumor research</span><p class="st-line">Round 4: Overfit, the Mirror Demon. 8 MRI classes, 99% on the evaluated dataset.</p></li>
       <li><span class="st-when">Project &middot; Prompt-to-UI Generator</span><p class="st-line">Round 5: The Syntax Error Swarm. Text prompts in, React components out.</p></li>
-      <li><span class="st-when">Project &middot; AI Resume Analyzer &amp; Job Matcher</span><p class="st-line">Round 6: The Job Listing Horde. 1,000+ LinkedIn listings ranked.</p></li>
-      <li><span class="st-when">Project &middot; FutureTrackAI</span><p class="st-line">Round 7: The Malformed JSON Ninja. 12 FastAPI endpoints, JSON-schema validation.</p></li>
+      <li><span class="st-when">Project &middot; RAG Eval</span><p class="st-line">Round 6: The Bad Chunk Horde. 27 RAG configurations measured.</p></li>
+      <li><span class="st-when">Project &middot; FutureTrackAI</span><p class="st-line">Round 7: The Malformed JSON Ninja. 14 FastAPI endpoints, JSON-schema validation.</p></li>
       <li><span class="st-when">Apr 2026 &ndash; Oct 2026 &middot; Freelance</span><p class="st-line">Round 8: The Hallucinator. Freelance AI Engineer, Taskwin GmbH.</p></li>
       <li><span class="st-when">Oct 2026 &ndash; Present &middot; Full-time</span><p class="st-line">Round 9: Prod Bug, Friday 5 PM. Junior Software Developer, TaskWin India Private Limited.</p></li>
       <li><span class="st-when">Final round</span><p class="st-line">The Recruiter. Still training. Player 2, press Hire.</p></li>
@@ -732,12 +735,12 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 <dialog id="tldr" aria-labelledby="tldrTitle">
   <div class="dlg-head"><h2 id="tldrTitle">10-SECOND SUMMARY</h2><button class="toggle" id="closeTldr" aria-label="Close summary">X</button></div>
   <dl class="tldr">
-    <div><dt>Who</dt><dd><strong>Jaya Hareeswar Reddy Gudisa</strong>, Generative AI Engineer, Guntur, India</dd></div>
+    <div><dt>Who</dt><dd><strong>Jaya Hareeswar Reddy Gudisa</strong>, software engineering, infrastructure and LLM applications, Guntur, India</dd></div>
     <div><dt>Now</dt><dd>Junior Software Developer at <strong>TaskWin India Private Limited</strong> since Oct 2026. Before that, Freelance AI Engineer at <strong>Taskwin GmbH</strong> (Apr 2026 &ndash; Oct 2026): backend services in Python and FastAPI, RAG pipelines, tool-calling workflows, REST API integration, latency, token usage and workflow monitoring.</dd></div>
-    <div><dt>Core stack</dt><dd>Python, OpenAI, FastAPI, RAG, AI agents and tool calling, embeddings, vector search and vector DBs, structured outputs, React, TensorFlow, Kafka, Docker</dd></div>
-    <div><dt>Highlights</dt><dd>99% accuracy on 8-class MRI classification &middot; 1,000+ job listings ranked &middot; 12-endpoint LLM career recommender</dd></div>
+    <div><dt>Core stack</dt><dd>Python, FastAPI, LLM applications, RAG, embeddings, vector databases, React, TensorFlow, Kafka, CDC, Airflow DAGs, Docker and Kubernetes</dd></div>
+    <div><dt>Highlights</dt><dd>99% accuracy on 8-class MRI classification &middot; 27 RAG configurations benchmarked &middot; 14-endpoint LLM career recommender</dd></div>
     <div><dt>Education</dt><dd>B.Tech CSE, SRM University&ndash;AP, 2022&ndash;2026, CGPA 8.1/10</dd></div>
-    <div><dt>Certified</dt><dd>Claude Code in Action (Anthropic) &middot; MongoDB Associate Developer</dd></div>
+    <div><dt>Credentials</dt><dd>Claude Code in Action (Anthropic) &middot; MongoDB Associate Developer &middot; Machine Learning with Python course (freeCodeCamp)</dd></div>
     <div><dt>Email</dt><dd>jayahareeswar2004@gmail.com</dd></div>
     <div><dt>Phone</dt><dd>+91 6303673727</dd></div>
   </dl>
@@ -1397,7 +1400,7 @@ $('#questForm').addEventListener('submit', async e => {
         c.beginPath(); c.moveTo(-.05 * h, -.14 * h); c.lineTo(-.06 * h, 0); c.moveTo(.05 * h, -.14 * h); c.lineTo(.06 * h, 0); c.stroke();
         c.fillRect(-.13 * h, -z * h + bob, .26 * h, (z - .12) * h);
         c.fillStyle = INK; c.fillRect(-.1 * h, (.05 - z) * h + bob, .2 * h, .15 * h);
-        c.fillStyle = BLACK; c.font = POSTER(.058 * h); c.textAlign = 'center'; c.fillText('10 YRS', 0, (.115 - z) * h + bob); c.fillText('FASTAPI', 0, (.18 - z) * h + bob);
+        c.fillStyle = BLACK; c.font = POSTER(.058 * h); c.textAlign = 'center'; c.fillText('JUST USE', 0, (.115 - z) * h + bob); c.fillText('512', 0, (.18 - z) * h + bob);
         c.restore();
       });
     },
@@ -1433,8 +1436,8 @@ $('#questForm').addEventListener('submit', async e => {
     { tag: 'ROUND 3', name: 'THE 8 AM LECTURE', draw: BOSS.clock, taunt: 'Attendance is mandatory.', weapons: ['OPERATING SYSTEMS', 'COMPUTER NETWORKS', 'MACHINE LEARNING'], counter: '-1 HOUR OF SLEEP', result: 'CGPA 8.1/10' },
     { tag: 'ROUND 4', name: 'OVERFIT, THE MIRROR DEMON', draw: BOSS.mirror, selfKo: true, taunt: 'I scored 100% on training!', weapons: ['CNN-VGG16', 'F1-SCORE', 'CONFUSION MATRIX'], counter: 'SAME MOVE, AGAIN!', result: '99%', sub: 'ON THE EVALUATED DATASET' },
     { tag: 'ROUND 5', name: 'SYNTAX ERROR SWARM', draw: BOSS.swarm, selfKo: true, taunt: 'Missing semicolon, peasant.', weapons: ['SYNTAX VALIDATION', 'ERROR HANDLING', 'LIVE PREVIEWS'], counter: 'UNEXPECTED TOKEN!', result: 'PROMPT-TO-UI' },
-    { tag: 'ROUND 6', name: 'JOB LISTING HORDE', draw: BOSS.horde, selfKo: true, taunt: 'We require 10 years of FastAPI.', weapons: ['SPACY', 'SELENIUM', 'MONGODB'], counter: 'ENTRY LEVEL!', result: '1,000+ RANKED' },
-    { tag: 'ROUND 7', name: 'MALFORMED JSON NINJA', draw: BOSS.ninja, lift: .05, taunt: '{"oops":', weapons: ['JSON-SCHEMA VALIDATION', 'RETRY HANDLING', 'STRUCTURED OUTPUTS'], counter: 'TRAILING COMMA!', result: '12 ENDPOINTS' },
+    { tag: 'ROUND 6', name: 'BAD CHUNK HORDE', draw: BOSS.horde, selfKo: true, taunt: 'Just use 512. Everyone does.', weapons: ['RECALL@K', 'MRR', 'NDCG'], counter: 'COPIED FROM A TUTORIAL!', result: '27 CONFIGS MEASURED' },
+    { tag: 'ROUND 7', name: 'MALFORMED JSON NINJA', draw: BOSS.ninja, lift: .05, taunt: '{"oops":', weapons: ['JSON-SCHEMA VALIDATION', 'RETRY HANDLING', 'STRUCTURED OUTPUTS'], counter: 'TRAILING COMMA!', result: '14 ENDPOINTS' },
     { tag: 'ROUND 8', name: 'THE HALLUCINATOR', draw: BOSS.ghost, taunt: 'Trust me. I made that up.', weapons: ['DOCUMENT CHUNKING', 'EMBEDDINGS', 'VECTOR SEARCH'], counter: 'FAKE CITATION!', result: 'SOURCE: ACTUAL DOCS' },
     { tag: 'ROUND 9', name: 'PROD BUG, FRIDAY 5 PM', draw: BOSS.bug, flip: true, taunt: 'Did you have weekend plans?', weapons: ['RETRIES', 'EXCEPTION HANDLING', 'MONITORING'], counter: 'LATENCY SPIKE!', result: 'WEEKEND SAVED', sub: 'PROBABLY' },
   ];

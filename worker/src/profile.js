@@ -2,7 +2,8 @@
 // so anything missing here gets "I don't know, email Jaya". Edit freely and redeploy.
 export const PROFILE = `
 NAME: Jaya Hareeswar Reddy Gudisa
-ROLE: Generative AI Engineer
+HEADLINE: Software Engineering | Infrastructure | LLM Applications
+CURRENT ROLE: Junior Software Developer, TaskWin India Private Limited
 LOCATION: Guntur, India
 EMAIL: jayahareeswar2004@gmail.com
 PHONE: +91 6303673727
@@ -33,16 +34,22 @@ Pandas, trained in TensorFlow, evaluated with accuracy, precision, recall, F1-sc
 per-class confusion matrix. Stack: Python, TensorFlow, Pandas, Scikit-learn.
 
 PROJECTS
-- Prompt-to-UI Generator: describe an interface in plain English and get a working React UI
-  with a live preview. Includes validation, error handling, iterative editing and version
-  rollback. Live demo: https://prompt2-ui-tau.vercel.app
+- Prompt-to-UI Generator: deterministic planner, validator and generator builds React interfaces
+  from an audited component library. Includes explanations, live previews and version rollback;
+  same prompt produces repeatable output without LLM calls or API keys. Stack: React 18,
+  TypeScript, Vite, Tailwind CSS, Node.js and Express.
+  Live demo: https://prompt2-ui-tau.vercel.app
   Code: https://github.com/jayahareeswarreddy/Prompt2UI
-- AI Resume Analyzer & Job Matcher: parses a resume, scrapes LinkedIn job listings and ranks
-  them by skill and role relevance. Scraped and ranked 1,000+ listings. Uses NLP to extract
-  skills and job requirements. Stack: Python, spaCy, Selenium, MongoDB.
-  Code: https://github.com/jayahareeswarreddy/AI_Resume_Analyzer_Linkedin_JobScraper
-- FutureTrackAI: career guidance platform with 12 FastAPI endpoints, structured JSON responses,
-  JSON-schema validation and retry handling. Stack: Python, FastAPI, MongoDB, React, OpenAI API.
+- RAG Eval: measures retrieval quality instead of relying on intuition. Benchmarks 27
+  configurations across 875 Python standard-library modules using labelled questions and
+  Recall@k, MRR and nDCG; implements four chunking strategies and three retrieval modes. A
+  deployed FastAPI app supports search, grounded Q&A, evaluation and uploads. Stack: Python,
+  FastAPI and NumPy. Live: https://rag-eval-7psf.onrender.com
+  Code: https://github.com/jayahareeswarreddy/rag-eval
+- FutureTrackAI: career guidance platform with 14 FastAPI endpoints, structured JSON responses,
+  that score skills against 24 career paths and provide learning roadmaps. Configurable Groq and
+  OpenAI generation uses schema validation, corrective retries and deterministic fallbacks; 43
+  API tests run without MongoDB or an API key. Stack: Python, FastAPI, React, MongoDB, Groq/OpenAI.
   Live: https://jayahareeswarreddy.github.io/FutureTrack-AI/
   Code: https://github.com/jayahareeswarreddy/FutureTrack-AI
 
@@ -52,7 +59,7 @@ SKILLS
   structured outputs, LoRA, QLoRA
 - ML/DL: TensorFlow, Keras, Scikit-learn, spaCy, NumPy, Pandas, CNN, VGG16, NLP, named entity recognition
 - Backend and databases: FastAPI, REST APIs, React, MongoDB, MySQL, vector databases
-- Data engineering: Apache Kafka, Apache Airflow
+- Data engineering: Apache Kafka, Change Data Capture (CDC), Apache Airflow DAGs
 - Tools: Docker, Kubernetes, Git, GitHub, Postman, Selenium
 
 EDUCATION
@@ -65,6 +72,9 @@ EDUCATION
 CERTIFICATIONS
 - Claude Code in Action (Anthropic)
 - MongoDB Associate Developer (MongoDB)
+
+COURSE
+- Machine Learning with Python (freeCodeCamp)
 
 NOT COVERED HERE (tell the visitor to ask Jaya directly by email):
 salary expectations, notice period, relocation, visa status, exact availability dates,
