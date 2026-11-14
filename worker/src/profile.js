@@ -36,15 +36,21 @@ per-class confusion matrix. Stack: Python, TensorFlow, Pandas, Scikit-learn.
 PROJECTS
 - Prompt-to-UI Generator: deterministic planner, validator and generator builds React interfaces
   from an audited component library. Includes explanations, live previews and version rollback;
-  same prompt produces repeatable output without LLM calls or API keys. Stack: React 18,
+  same prompt produces repeatable output without LLM calls or API keys. Stack: React 19,
   TypeScript, Vite, Tailwind CSS, Node.js and Express.
   Live demo: https://prompt2-ui-tau.vercel.app
   Code: https://github.com/jayahareeswarreddy/Prompt2UI
-- RAG Eval: measures retrieval quality instead of relying on intuition. Benchmarks 27
-  configurations across 875 Python standard-library modules using labelled questions and
-  Recall@k, MRR and nDCG; implements four chunking strategies and three retrieval modes. A
-  deployed FastAPI app supports search, grounded Q&A, evaluation and uploads. Stack: Python,
-  FastAPI and NumPy. Live: https://rag-eval-7psf.onrender.com
+- RAG Eval: an evaluation-first retrieval system that measures whether search found the right
+  evidence before judging the generated answer. The benchmark covers 875 Python standard-library
+  modules and 930 docstring-derived questions; 27 configurations are scored on a 150-question
+  development split using Recall@k, MRR, nDCG, and latency percentiles. It compares fixed,
+  recursive, Markdown-aware, and Python AST chunking with BM25, dense, and reciprocal-rank-fusion
+  hybrid retrieval. AST chunking with BM25 reached 0.960 top-1 on this corpus. The questions are
+  derived from docstrings and share vocabulary with the source, so that result should not be
+  generalized to all user documents. The FastAPI app supports document search, uploads, grounded
+  question answering, and evaluation; citations are checked against retrieved passages, and an
+  extractive answer path works without an API key. Stack: Python, FastAPI, NumPy. Live:
+  https://rag-eval-7psf.onrender.com
   Code: https://github.com/jayahareeswarreddy/rag-eval
 - FutureTrackAI: career guidance platform with 14 FastAPI endpoints, structured JSON responses,
   that score skills against 24 career paths and provide learning roadmaps. Configurable Groq and
@@ -72,8 +78,6 @@ EDUCATION
 CERTIFICATIONS
 - Claude Code in Action (Anthropic)
 - MongoDB Associate Developer (MongoDB)
-
-COURSE
 - Machine Learning with Python (freeCodeCamp)
 
 NOT COVERED HERE (tell the visitor to ask Jaya directly by email):
