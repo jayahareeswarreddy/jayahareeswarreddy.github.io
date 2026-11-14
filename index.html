@@ -232,6 +232,17 @@ summary::-webkit-details-marker{display:none}
 summary::before{content:"\25B6"; margin-right:10px; transition:transform .12s steps(2)}
 details[open] summary::before{transform:rotate(90deg)}
 details ul{margin:6px 0 4px; padding-left:20px; display:grid; gap:8px}
+.case-study{margin:10px 0 18px; padding:clamp(16px,3vw,30px); background:var(--card); border:2px solid var(--line); color:var(--fg); display:grid; gap:24px}
+.case-study section{min-width:0}
+.case-study h4{display:flex; align-items:center; gap:12px; margin:0 0 10px; color:var(--primary); font:400 10px/1 var(--f-display); letter-spacing:.12em; text-transform:uppercase}
+.case-study h4::after{content:""; height:1px; flex:1; background:var(--line)}
+.case-study p{max-width:75ch; margin:0; line-height:1.7}
+.case-study ul{margin:0; padding-left:20px; display:grid; gap:8px; line-height:1.65}
+.case-study strong{color:var(--fg)}
+.case-architecture{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0; padding:14px; list-style:none; background:var(--bg); border:1px solid var(--line)}
+.case-architecture li{padding:9px 12px; border:1px solid var(--line); color:var(--fg); font:400 10px/1.4 var(--f-display)}
+.case-architecture li:not(:last-child)::after{content:"→"; margin-left:16px; color:var(--primary)}
+.case-caption{margin-top:10px!important; color:var(--muted); font:400 9px/1.5 var(--f-display)!important; letter-spacing:.1em; text-transform:uppercase}
 .ridges{height:22px; margin-top:22px; border-top:3px solid var(--line);
   background:repeating-linear-gradient(90deg, var(--band-5) 0 6px, var(--card) 6px 14px)}
 
@@ -555,12 +566,17 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <h3>Prompt-to-UI Generator</h3>
           <p>A deterministic prompt-driven React UI builder: the same prompt produces the same interface.</p>
           <ul class="loot"><li><b>Live</b><span>previews</span></li><li><b>Repeatable</b><span>output</span></li><li><b>Version</b><span>rollback</span></li></ul>
-          <ul class="chips"><li>React 18</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li><li>Node.js</li><li>Express</li></ul>
-          <details><summary>Build notes</summary><ul>
-            <li>Problem: free-form UI generation can produce inconsistent or invalid output.</li>
-            <li>Solution: a deterministic planner, validator and generator assembles React screens from an audited component library, with explanations and live previews.</li>
-            <li>Impact: repeatable output for the same prompt, with version rollback and no LLM calls or API keys.</li>
-          </ul></details>
+          <ul class="chips"><li>React 19</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li><li>Node.js</li><li>Express</li></ul>
+          <details><summary>Open case study</summary><div class="case-study">
+            <section><h4>Problem</h4><p>Free-form generation can return broken markup, drift away from a design system, and make it hard to explain how a screen was produced. A model call also adds latency, cost, and credentials to a demo.</p></section>
+            <section><h4>Approach</h4><ul>
+              <li><strong>Plan:</strong> convert the prompt into a typed UI plan for layout, tone, approved components, and content; carry the previous plan forward for incremental edits.</li>
+              <li><strong>Validate:</strong> reject missing fields and unapproved components before rendering.</li>
+              <li><strong>Generate and explain:</strong> compose JSX from the whitelisted library, explain structural choices, and save versions for comparison and rollback.</li>
+            </ul></section>
+            <section><h4>Architecture</h4><ul class="case-architecture"><li>Prompt</li><li>Typed planner</li><li>Validator</li><li>Whitelisted JSX</li><li>Preview + history</li></ul><p class="case-caption">The generation pipeline runs client-side as pure TypeScript functions; no model call or API key is needed.</p></section>
+            <section><h4>Outcome &amp; trade-off</h4><p>The same prompt and plan produce repeatable screens, invalid component requests fail before rendering, and users can inspect or roll back versions. The fixed component library intentionally limits the range of interfaces the tool can create.</p></section>
+          </div></details>
           <p class="cart-links"><a class="btn" href="https://prompt2-ui-tau.vercel.app" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/Prompt2UI" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
         </div>
         <div class="ridges"></div>
@@ -572,11 +588,17 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <p>Measures retrieval quality against labelled questions instead of relying on intuition.</p>
           <ul class="loot"><li><b>27</b><span>configurations evaluated</span></li><li><b>875</b><span>Python modules</span></li></ul>
           <ul class="chips"><li>Python</li><li>FastAPI</li><li>NumPy</li><li>RAG Evaluation</li></ul>
-          <details><summary>Build notes</summary><ul>
-            <li>Problem: retrieval quality needs measurement against labelled data, not intuition.</li>
-            <li>Solution: benchmarked 27 configurations over 875 Python standard-library modules using Recall@k, MRR and nDCG; implemented fixed, recursive, Markdown and AST-aware chunking with keyword, dense and hybrid retrieval.</li>
-            <li>Impact: deployed a FastAPI app for document search, grounded question answering, evaluation and uploads.</li>
-          </ul></details>
+          <details><summary>Open case study</summary><div class="case-study">
+            <section><h4>Problem</h4><p>A RAG answer can sound plausible even when retrieval missed the useful passage. Without labelled questions and ranking metrics, changing chunking or retrieval is guesswork—and generation can hide retrieval failures.</p></section>
+            <section><h4>Approach</h4><ul>
+              <li>Built a benchmark from <strong>875 Python standard-library modules</strong> and <strong>930 docstring-derived questions</strong>; evaluated 27 configurations on a 150-question development split.</li>
+              <li>Compared fixed, recursive, Markdown-aware, and Python AST chunking with BM25, dense, and reciprocal-rank-fusion hybrid retrieval.</li>
+              <li>Measured Recall@k, MRR, nDCG, and latency percentiles. Each generated sentence carries a citation checked against its source passage; without an LLM key, answers are extractive.</li>
+            </ul></section>
+            <section><h4>Architecture</h4><ul class="case-architecture"><li>Documents</li><li>Chunk strategies</li><li>BM25 / dense / hybrid</li><li>Ranked passages</li><li>Cited answer + metrics</li></ul><p class="case-caption">FastAPI serves search, upload, grounded Q&amp;A, and evaluation. Uploaded text is memory-resident, size-limited, and expires.</p></section>
+            <section><h4>Findings</h4><p>On this corpus, AST chunks with BM25 reached <strong>0.960 top-1</strong>; hybrid retrieval did not improve that result. The benchmark questions come from docstrings and share vocabulary with the source, so this describes this dataset—not every user's documents. Larger chunks also reduced dense retrieval quality.</p></section>
+            <section><h4>Engineering lesson</h4><p>An overnight-suspension outlier distorted an early latency mean. The harness now reports p50, p95, and maximum latency instead, making the measurement limit visible rather than hiding it in an average.</p></section>
+          </div></details>
           <p class="cart-links"><a class="btn" href="https://rag-eval-7psf.onrender.com" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/rag-eval" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
         </div>
         <div class="ridges"></div>
@@ -588,11 +610,16 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <p>Career guidance that maps skills to relevant roles and practical learning roadmaps.</p>
           <ul class="loot"><li><b>14</b><span>FastAPI endpoints</span></li><li><b>24</b><span>career paths</span></li></ul>
           <ul class="chips"><li>Python</li><li>FastAPI</li><li>Groq / OpenAI</li><li>MongoDB</li><li>React</li></ul>
-          <details><summary>Build notes</summary><ul>
-            <li>Problem: career seekers need relevant skill-to-role matches and actionable learning guidance.</li>
-            <li>Solution: 14 FastAPI endpoints score skills against 24 career paths; configurable Groq and OpenAI generation is guarded by schema validation, retries and deterministic fallbacks.</li>
-            <li>Impact: returns structured matches and learning roadmaps; 43 API tests run without MongoDB or an API key.</li>
-          </ul></details>
+          <details><summary>Open case study</summary><div class="case-study">
+            <section><h4>Problem</h4><p>Career suggestions are more useful when people can see how their current skills fit a role and what they could learn next. Model-only recommendations can be inconsistent, difficult to validate, or unavailable when a provider key is missing.</p></section>
+            <section><h4>Approach</h4><ul>
+              <li>Rank skills against a curated catalogue of <strong>24 career paths</strong> with deterministic weighted matching; keep role scores and skill-gap arithmetic outside the model.</li>
+              <li>Use Groq by default or configure OpenAI for explanations and roadmap detail. Validate generated JSON against schemas, retry with validation feedback, then fall back to rule-based responses.</li>
+              <li>Keep MongoDB optional: saved profiles persist when it is available, while the service remains usable with an in-memory store without it.</li>
+            </ul></section>
+            <section><h4>Architecture</h4><ul class="case-architecture"><li>React skills form</li><li>FastAPI</li><li>Deterministic role scoring</li><li>Optional LLM enrichment</li><li>Validated results</li></ul><p class="case-caption">Provider calls run off the async event loop; health reporting exposes retries, schema rejections, and fallback counts.</p></section>
+            <section><h4>Outcome</h4><p>The service returns structured role matches, skill gaps, and learning roadmaps through 14 endpoints. <strong>43 API tests</strong> run without MongoDB or an API key, exercising the fallback path as a supported configuration.</p></section>
+          </div></details>
           <p class="cart-links"><a class="btn" href="https://jayahareeswarreddy.github.io/FutureTrack-AI/" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/FutureTrack-AI" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
         </div>
         <div class="ridges"></div>
@@ -604,12 +631,14 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
           <p>A CNN&ndash;VGG16 hybrid that sorts brain MRI scans into eight classes.</p>
           <ul class="loot"><li><b>99%</b><span>accuracy</span></li><li><b>8</b><span>MRI classes</span></li></ul>
           <ul class="chips"><li>Python</li><li>TensorFlow</li><li>Pandas</li><li>Scikit-learn</li><li>CNN</li><li>VGG16</li></ul>
-          <details><summary>Build notes</summary><ul>
-            <li>Developed a hybrid CNN&ndash;VGG16 image-classification model to categorize brain MRI images across 8 classes.</li>
-            <li>Prepared and processed image datasets using Pandas and implemented the deep-learning workflow with TensorFlow.</li>
-            <li>Evaluated model performance using accuracy, precision, recall, F1-score, and a confusion matrix.</li>
-            <li>Achieved 99% classification accuracy on the evaluated dataset.</li>
-          </ul></details>
+          <details><summary>Open case study</summary><div class="case-study">
+            <section><h4>Problem</h4><p>Brain MRI classification needs to distinguish multiple tumor classes, and evaluation should show more than one aggregate score when checking model behavior across those classes.</p></section>
+            <section><h4>Approach</h4><ul>
+              <li>Prepared the MRI image dataset and trained a hybrid CNN–VGG16 classifier with TensorFlow.</li>
+              <li>Reviewed performance using accuracy, precision, recall, F1-score, and a confusion matrix.</li>
+            </ul></section>
+            <section><h4>Outcome &amp; scope</h4><p>The project reports <strong>99% accuracy across eight classes</strong> on its evaluated dataset. This is an experimental model result, not a clinical diagnostic system.</p></section>
+          </div></details>
         </div>
         <div class="ridges"></div>
       </article>
