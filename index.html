@@ -112,10 +112,10 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .ground::before{content:""; position:absolute; inset:-8px 0 auto; height:8px;
   background:repeating-linear-gradient(90deg, var(--grass) 0 8px, transparent 8px 24px)}
 .avatar{position:absolute; left:50%; bottom:40px; translate:-50% 0; padding:0; border:0; background:none; cursor:pointer}
-.avatar canvas{display:block; width:160px; height:180px}
-.avatar:not(.jump) canvas{animation:idle 1.6s steps(2) infinite}
+.avatar img{display:block; width:156px; height:180px; object-fit:cover; object-position:center 24%; border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow); background:var(--card)}
+.avatar:not(.jump) img{animation:idle 1.6s steps(2) infinite}
 @keyframes idle{50%{transform:translateY(-4px)}}
-.avatar.jump canvas{animation:jump .5s steps(5)}
+.avatar.jump img{animation:jump .5s steps(5)}
 @keyframes jump{40%{transform:translateY(-40px)}}
 .bubble{position:absolute; top:16px; left:16px; right:16px; padding:10px 12px; background:var(--card); color:var(--fg);
   border:3px solid var(--line); font:500 15px/1.4 var(--f-body); z-index:2}
@@ -147,8 +147,8 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .bot>*{pointer-events:auto}
 .bot-fab{width:76px; height:80px; padding:6px; background:var(--coin); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow);
   cursor:pointer; transition:transform .12s steps(2), box-shadow .12s steps(2)}
-.bot-fab canvas{display:block; width:100%; height:100%}
-.bot-fab:not(:hover) canvas{animation:idle 1.6s steps(2) infinite}
+.bot-fab .luffy-mark{display:block; width:100%; height:100%; object-fit:contain; image-rendering:pixelated}
+.bot-fab:not(:hover) .luffy-mark{animation:idle 1.6s steps(2) infinite}
 .bot-fab:hover{transform:translate(-2px,-2px) rotate(-5deg); box-shadow:7px 7px 0 var(--shadow)}
 .bot-fab:active{transform:translate(5px,5px); box-shadow:0 0 0 var(--shadow)}
 .bot-tip{position:relative; max-width:230px; padding:8px 12px; background:var(--card); color:var(--fg); border:3px solid var(--line); font:400 20px/1.1 var(--f-hud)}
@@ -157,7 +157,7 @@ h2{font:400 clamp(20px,3.2vw,32px)/1.3 var(--f-display); margin:0; text-wrap:bal
 .bot-panel{width:min(360px, calc(100vw - 32px)); height:min(500px, calc(100vh - 150px)); height:min(500px, calc(100svh - 150px));
   display:grid; grid-template-rows:auto 1fr auto auto auto; overflow:hidden}
 .bot-head{display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--coin); color:var(--band-ink); border-bottom:3px solid var(--line)}
-.bot-head canvas{flex:none; width:40px; height:42px}
+.bot-head .luffy-mark{flex:none; width:42px; height:42px; image-rendering:pixelated}
 .bot-head div{flex:1; min-width:0; display:grid; gap:4px}
 .bot-head b{font:400 11px/1 var(--f-display)}
 .bot-head span{font:400 18px/1 var(--f-hud)}
@@ -410,7 +410,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
         <canvas class="cloud c1" data-sprite="cloud" aria-hidden="true"></canvas>
         <canvas class="cloud c2" data-sprite="cloud" aria-hidden="true"></canvas>
         <div class="bubble" id="bubble" role="status" hidden></div>
-        <button class="avatar" id="avatar" aria-label="Poke Jaya's pixel avatar"><canvas id="heroSprite" data-sprite="hero"></canvas></button>
+        <button class="avatar" id="avatar" aria-label="Jaya's portrait; click for a message"><img src="jaya.jpg" alt="Portrait of Jaya Hareeswar Reddy Gudisa" fetchpriority="high"></button>
         <div class="ground"></div>
       </div>
       <dl class="sheet">
@@ -785,7 +785,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 <div class="bot" id="bot" hidden>
   <div class="bot-panel box" id="botPanel" role="dialog" aria-label="Chat with Luffy, the AI sidekick" hidden>
     <div class="bot-head">
-      <canvas data-sprite="bot" aria-hidden="true"></canvas>
+      <img class="luffy-mark" src="luffy-logo.svg" alt="">
       <div><b>LUFFY</b><span>Jaya's AI sidekick. Ready for an adventure.</span></div>
       <button class="toggle" id="botClose" aria-label="Close chat">X</button>
     </div>
@@ -803,7 +803,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     <p class="bot-note">An AI answers from Jaya's resume. It can get things wrong.</p>
   </div>
   <div class="bot-tip" id="botTip" hidden>Psst! I'm Luffy, Jaya's AI sidekick. Ask me anything.</div>
-  <button class="bot-fab" id="botFab" aria-expanded="false" aria-controls="botPanel" aria-label="Chat with Luffy, the AI sidekick"><canvas id="botFace" data-sprite="bot" aria-hidden="true"></canvas></button>
+  <button class="bot-fab" id="botFab" aria-expanded="false" aria-controls="botPanel" aria-label="Chat with Luffy, the AI sidekick"><img class="luffy-mark" src="luffy-logo.svg" alt=""></button>
 </div>
 
 <div id="toasts" aria-live="polite"></div>
@@ -837,13 +837,6 @@ const SPRITES = {
   trophy:['.XXXXX..','XXXXXXX.','X.XXX.X.','.XXXXX..','..XXX...','...X....','..XXX...','.XXXXX..'],
   lock:  ['..XXX...','.X...X..','.X...X..','XXXXXXX.','XXX.XXX.','XXX.XXX.','XXXXXXX.','........'],
 };
-SPRITES.bot = [
-  '....YYYYCYYY....','...YYYYYYYYYY...','..YYYYrrrrYYYY..','.KKKKKKKKKKKKKK.','.KHHHHHHHHHHHHK.',
-  '.KHHHHHHHHHHHHK.','.KSSSSSSSSSSSSK.','.KSEWSSSSWEWSSK.','.KSSKKSSSSKKSSK.','.KSSSSSSSSSSSSK.',
-  '..KKSSSSSSSSKK..','...KrrrrrrrrK...','..KrrrrrrrrrrK..','..KrrrrrrrrrrK..','...KKKKKKKKKK...','....KK....KK....'];
-SPRITES.botBlink = SPRITES.bot.map((r, i) => i === 7 ? '.KSSSSSSSSSSSSK.' : r);
-SPRITES.botWink = SPRITES.bot.map((r, i) => i === 7 ? '.KSEWSSSSSSESSK.' : r);
-SPRITES.botThink = SPRITES.bot.map((r, i) => i === 0 ? r.replace('C', 'r') : r);
 SPRITES.blink = SPRITES.hero.map((r, i) => i === 5 ? r.replace(/[EW]/g, 'S') : r);
 SPRITES.run = SPRITES.hero.slice(0, 16).concat(['..KPPPK..KPPPK..', '..KKKK....KKKK..']);
 Object.assign(SPRITES, {
@@ -866,9 +859,6 @@ function draw(cv, name = cv.dataset.sprite, cur = getComputedStyle(cv).color) {
 }
 const drawAll = () => $$('canvas[data-sprite]').forEach(c => draw(c));
 drawAll();
-
-const hero = $('#heroSprite');
-if (!reduce) setInterval(() => { draw(hero, 'blink'); setTimeout(() => draw(hero), 140); }, 3400);
 
 /* ---------- theme (day / night) ---------- */
 const root = document.documentElement, themeBtn = $('#theme');
@@ -1004,7 +994,7 @@ $('#askForm').addEventListener('submit', async e => {
 
 /* ---------- Luffy: the floating chat ---------- */
 {
-  const fab = $('#botFab'), panel = $('#botPanel'), face = $('#botFace'), tip = $('#botTip'), input = $('#botInput'), chips = $('#botChips');
+  const fab = $('#botFab'), panel = $('#botPanel'), tip = $('#botTip'), input = $('#botInput'), chips = $('#botChips');
   let busy = false;
   function openBot(open) {
     panel.hidden = !open; tip.hidden = true; fab.setAttribute('aria-expanded', open);
@@ -1016,10 +1006,7 @@ $('#askForm').addEventListener('submit', async e => {
     if (busy || !q) return;
     busy = true; chips.hidden = true; addMsg('me', q);
     const wait = addMsg('ai wait', '');
-    let lit = false; // the antenna flashes red while the answer is on its way
-    const think = reduce ? 0 : setInterval(() => draw(face, (lit = !lit) ? 'botThink' : 'bot'), 260);
     const a = await askAI(q);
-    clearInterval(think); draw(face, 'bot');
     wait.classList.remove('wait'); wait.textContent = a; $('#botLog').scrollTop = $('#botLog').scrollHeight;
     busy = false; beep(660, .06);
   }
@@ -1032,11 +1019,6 @@ $('#askForm').addEventListener('submit', async e => {
   if (CHAT_ENDPOINT) {
     $('#bot').hidden = false;
     setTimeout(() => { if (panel.hidden) { tip.hidden = false; setTimeout(() => tip.hidden = true, 9000); } }, 4000);
-    if (!reduce) {
-      setInterval(() => { if (!busy) { draw(face, 'botBlink'); setTimeout(() => busy || draw(face), 140); } }, 3100);
-      fab.addEventListener('mouseenter', () => busy || draw(face, 'botWink'));
-      fab.addEventListener('mouseleave', () => busy || draw(face));
-    }
   }
 }
 
@@ -1046,7 +1028,7 @@ const QUIPS = [
   "I don't hallucinate. My retrieval step makes sure of it.",
   "Favourite data structure? A well-chunked document.",
   "tool_call: hire_jaya(). Status: waiting for your approval.",
-  "Fun fact: this avatar is 16 by 18 pixels of pure ambition.",
+  "The portrait is right here; the story is optional.",
 ];
 let pokes = 0, bubbleTimer;
 $('#avatar').onclick = e => {
