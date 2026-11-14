@@ -781,12 +781,12 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
   </div>
 </dialog>
 
-<!-- ===== ROBO-JAYA : floating AI sidekick (hidden until CHAT_ENDPOINT is set) ===== -->
+<!-- ===== LUFFY : floating AI sidekick (hidden until CHAT_ENDPOINT is set) ===== -->
 <div class="bot" id="bot" hidden>
-  <div class="bot-panel box" id="botPanel" role="dialog" aria-label="Chat with Robo-Jaya, the AI sidekick" hidden>
+  <div class="bot-panel box" id="botPanel" role="dialog" aria-label="Chat with Luffy, the AI sidekick" hidden>
     <div class="bot-head">
       <canvas data-sprite="bot" aria-hidden="true"></canvas>
-      <div><b>ROBO-JAYA</b><span>AI sidekick. Knows the resume by heart.</span></div>
+      <div><b>LUFFY</b><span>Jaya's AI sidekick. Ready for an adventure.</span></div>
       <button class="toggle" id="botClose" aria-label="Close chat">X</button>
     </div>
     <div class="bot-log" id="botLog" role="log" aria-live="polite"></div>
@@ -796,14 +796,14 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
       <button type="button">How do I contact Jaya?</button>
     </div>
     <form class="bot-form" id="botForm">
-      <label class="sr" for="botInput">Your question for Robo-Jaya</label>
+      <label class="sr" for="botInput">Your question for Luffy</label>
       <input id="botInput" maxlength="300" autocomplete="off" required placeholder="Ask anything about Jaya...">
       <button class="btn primary" type="submit">Send</button>
     </form>
     <p class="bot-note">An AI answers from Jaya's resume. It can get things wrong.</p>
   </div>
-  <div class="bot-tip" id="botTip" hidden>Psst! I'm Robo-Jaya. Ask me anything.</div>
-  <button class="bot-fab" id="botFab" aria-expanded="false" aria-controls="botPanel" aria-label="Chat with Robo-Jaya, the AI sidekick"><canvas id="botFace" data-sprite="bot" aria-hidden="true"></canvas></button>
+  <div class="bot-tip" id="botTip" hidden>Psst! I'm Luffy, Jaya's AI sidekick. Ask me anything.</div>
+  <button class="bot-fab" id="botFab" aria-expanded="false" aria-controls="botPanel" aria-label="Chat with Luffy, the AI sidekick"><canvas id="botFace" data-sprite="bot" aria-hidden="true"></canvas></button>
 </div>
 
 <div id="toasts" aria-live="polite"></div>
@@ -838,11 +838,11 @@ const SPRITES = {
   lock:  ['..XXX...','.X...X..','.X...X..','XXXXXXX.','XXX.XXX.','XXX.XXX.','XXXXXXX.','........'],
 };
 SPRITES.bot = [
-  '.......C........','.......G........','.....HHHHHHH....','...HHHHHHHHHH...','..HHHHHHHHHHHH..','..HHSSSSSSSSHH..',
-  '..HSSSSSSSSSSH..','..SGGGGSSGGGGS..','..SGWEGGGGWEGS..','..SGGGGSSGGGGS..','...SSSSSSSSSS...','...SSHHHHHHSS...',
-  '...SSSWWWWSSS...','....SSSSSSSS....','......SSSS......','..NNNNNSSNNNNN..','.NNNNNNNNNNNNNN.'];
-SPRITES.botBlink = SPRITES.bot.map((r, i) => i === 8 ? '..SGSSGGGGSSGS..' : r);
-SPRITES.botWink = SPRITES.bot.map((r, i) => i === 8 ? '..SGWEGGGGSSGS..' : r);
+  '....YYYYCYYY....','...YYYYYYYYYY...','..YYYYrrrrYYYY..','.KKKKKKKKKKKKKK.','.KHHHHHHHHHHHHK.',
+  '.KHHHHHHHHHHHHK.','.KSSSSSSSSSSSSK.','.KSEWSSSSWEWSSK.','.KSSKKSSSSKKSSK.','.KSSSSSSSSSSSSK.',
+  '..KKSSSSSSSSKK..','...KrrrrrrrrK...','..KrrrrrrrrrrK..','..KrrrrrrrrrrK..','...KKKKKKKKKK...','....KK....KK....'];
+SPRITES.botBlink = SPRITES.bot.map((r, i) => i === 7 ? '.KSSSSSSSSSSSSK.' : r);
+SPRITES.botWink = SPRITES.bot.map((r, i) => i === 7 ? '.KSEWSSSSSSESSK.' : r);
 SPRITES.botThink = SPRITES.bot.map((r, i) => i === 0 ? r.replace('C', 'r') : r);
 SPRITES.blink = SPRITES.hero.map((r, i) => i === 5 ? r.replace(/[EW]/g, 'S') : r);
 SPRITES.run = SPRITES.hero.slice(0, 16).concat(['..KPPPK..KPPPK..', '..KKKK....KKKK..']);
@@ -966,7 +966,7 @@ const say = i => type(LINES[i]);
 $('#dlgNext').onclick = () => { line = (line + 1) % LINES.length; say(line); beep(660, .06); };
 
 /* ---------- ask the AI sidekick: answers come from the Cloudflare Worker in worker/ ---------- */
-const CHAT_ENDPOINT = 'https://jaya-portfolio-chat.jayahareeswar.workers.dev/'; // the deployed Worker URL; the ask box and Robo-Jaya stay hidden until this is set
+const CHAT_ENDPOINT = 'https://jaya-portfolio-chat.jayahareeswar.workers.dev/'; // the deployed Worker URL; the ask box and Luffy stay hidden until this is set
 const chatLog = [];
 async function askAI(q) {
   try {
@@ -1002,14 +1002,14 @@ $('#askForm').addEventListener('submit', async e => {
   btn.disabled = false; input.focus();
 });
 
-/* ---------- Robo-Jaya: the floating chat ---------- */
+/* ---------- Luffy: the floating chat ---------- */
 {
   const fab = $('#botFab'), panel = $('#botPanel'), face = $('#botFace'), tip = $('#botTip'), input = $('#botInput'), chips = $('#botChips');
   let busy = false;
   function openBot(open) {
     panel.hidden = !open; tip.hidden = true; fab.setAttribute('aria-expanded', open);
     if (!open) { fab.focus(); return; }
-    if (!$('#botLog').children.length) addMsg('ai', "Beep boop. I'm Robo-Jaya. The real Jaya is busy fixing a prod bug, so ask me anything about Jaya's work.");
+    if (!$('#botLog').children.length) addMsg('ai', "I'm Luffy, Jaya's AI sidekick. Ask me anything about Jaya's work.");
     input.focus(); beep(880, .08);
   }
   async function send(q) {
