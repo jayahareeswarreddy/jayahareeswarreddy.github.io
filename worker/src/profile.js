@@ -34,12 +34,6 @@ Pandas, trained in TensorFlow, evaluated with accuracy, precision, recall, F1-sc
 per-class confusion matrix. Stack: Python, TensorFlow, Pandas, Scikit-learn.
 
 PROJECTS
-- Prompt-to-UI Generator: deterministic planner, validator and generator builds React interfaces
-  from an audited component library. Includes explanations, live previews and version rollback;
-  same prompt produces repeatable output without LLM calls or API keys. Stack: React 19,
-  TypeScript, Vite, Tailwind CSS, Node.js and Express.
-  Live demo: https://prompt2-ui-tau.vercel.app
-  Code: https://github.com/jayahareeswarreddy/Prompt2UI
 - RAG Eval: an evaluation-first retrieval system that measures whether search found the right
   evidence before judging the generated answer. The benchmark covers 875 Python standard-library
   modules and 930 docstring-derived questions; 27 configurations are scored on a 150-question
@@ -61,6 +55,20 @@ PROJECTS
   API tests run without MongoDB or an API key. Stack: Python, FastAPI, React, MongoDB, Groq/OpenAI.
   Live: https://jayahareeswarreddy.github.io/FutureTrack-AI/
   Code: https://github.com/jayahareeswarreddy/FutureTrack-AI
+- ChangeStream (local demo): demonstrates PostgreSQL CDC with Debezium and Kafka.
+  A Python consumer applies create, update, and delete events to a separate PostgreSQL read model;
+  FastAPI reports consumer health, Kafka lag, processed events, and quarantined records. The local
+  Docker Compose pipeline has been exercised end to end, including insert, update, and delete.
+  Its responsive dashboard follows the device's light or dark appearance and visualizes pipeline
+  stages with live health checks for PostgreSQL, Debezium/Kafka Connect, Kafka, the consumer, and
+  the read model; it also shows metrics, read-model rows, event history, and dead-letter records.
+  The connector state is inspectable through Kafka Connect's REST endpoint, and raw Kafka records
+  can be read with the bundled Kafka console consumer. A separate /guide page explains the flow,
+  local setup, how to make and observe changes, event operation codes, and the local-demo scope.
+  Delivery is at least once, with database replay protection by Kafka topic, partition, and offset.
+  A browser control panel drives the pipeline (insert, update, delete, and a malformed event)
+  without a terminal. Stack: PostgreSQL, Debezium, Kafka, Python, FastAPI, Docker Compose.
+  Code: https://github.com/jayahareeswarreddy/ChangeStream
 
 SKILLS
 - Programming: Python, SQL, JavaScript, Java, C++

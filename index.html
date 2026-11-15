@@ -565,23 +565,23 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     </div>
     <div class="carts">
       <article class="cart box" style="--band:var(--band-1)">
-        <div class="cart-top"><span>PROMPT &middot; UI BUILDER</span></div>
+        <div class="cart-top"><span>POSTGRES &middot; CDC PIPELINE</span></div>
         <div class="cart-body">
-          <h3>Prompt-to-UI Generator</h3>
-          <p>A deterministic prompt-driven React UI builder: the same prompt produces the same interface.</p>
-          <ul class="loot"><li><b>Live</b><span>previews</span></li><li><b>Repeatable</b><span>output</span></li><li><b>Version</b><span>rollback</span></li></ul>
-          <ul class="chips"><li>React 19</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li><li>Node.js</li><li>Express</li></ul>
+          <h3>ChangeStream</h3>
+          <p>A local-first change-data-capture pipeline: PostgreSQL row changes stream through Debezium and Kafka into a separate read model, with replay-safe processing.</p>
+          <ul class="loot"><li><b>At-least-once</b><span>delivery</span></li><li><b>Idempotent</b><span>replays</span></li><li><b>Dead-letter</b><span>queue</span></li></ul>
+          <ul class="chips"><li>PostgreSQL</li><li>Debezium</li><li>Kafka</li><li>Python</li><li>FastAPI</li><li>Docker</li></ul>
           <details><summary>Open case study</summary><div class="case-study">
-            <section><h4>Problem</h4><p>Free-form generation can return broken markup, drift away from a design system, and make it hard to explain how a screen was produced. A model call also adds latency, cost, and credentials to a demo.</p></section>
+            <section><h4>Problem</h4><p>Downstream systems need committed database changes in near real time. Polling the source is slow and lossy, and a naive consumer can drop or double-apply events when it restarts.</p></section>
             <section><h4>Approach</h4><ul>
-              <li><strong>Plan:</strong> convert the prompt into a typed UI plan for layout, tone, approved components, and content; carry the previous plan forward for incremental edits.</li>
-              <li><strong>Validate:</strong> reject missing fields and unapproved components before rendering.</li>
-              <li><strong>Generate and explain:</strong> compose JSX from the whitelisted library, explain structural choices, and save versions for comparison and rollback.</li>
+              <li><strong>Capture:</strong> Debezium reads committed changes from PostgreSQL's write-ahead log and publishes create, update, and delete events to Kafka.</li>
+              <li><strong>Project:</strong> a Python consumer applies each event to a separate read model and commits the Kafka offset only after the database transaction succeeds.</li>
+              <li><strong>Protect:</strong> malformed or unsupported messages go to a dead-letter queue instead of blocking the partition.</li>
             </ul></section>
-            <section><h4>Architecture</h4><ul class="case-architecture"><li>Prompt</li><li>Typed planner</li><li>Validator</li><li>Whitelisted JSX</li><li>Preview + history</li></ul><p class="case-caption">The generation pipeline runs client-side as pure TypeScript functions; no model call or API key is needed.</p></section>
-            <section><h4>Outcome &amp; trade-off</h4><p>The same prompt and plan produce repeatable screens, invalid component requests fail before rendering, and users can inspect or roll back versions. The fixed component library intentionally limits the range of interfaces the tool can create.</p></section>
+            <section><h4>Architecture</h4><ul class="case-architecture"><li>PostgreSQL WAL</li><li>Debezium</li><li>Kafka</li><li>Python consumer</li><li>Read model</li></ul><p class="case-caption">Offsets are committed after the read-model write, and projections are idempotent on topic/partition/offset, so replays are safe.</p></section>
+            <section><h4>Outcome &amp; trade-off</h4><p>Delivers at-least-once, replay-safe CDC with a browser dashboard for consumer lag, component health, event history, and quarantined records, plus a control panel that drives the pipeline without a terminal. As a single-node local demo it runs one broker and one partition, not a production high-availability setup.</p></section>
           </div></details>
-          <p class="cart-links"><a class="btn" href="https://prompt2-ui-tau.vercel.app" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/Prompt2UI" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
+          <p class="cart-links"><a class="btn" href="https://github.com/jayahareeswarreddy/ChangeStream" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
         </div>
         <div class="ridges"></div>
       </article>
