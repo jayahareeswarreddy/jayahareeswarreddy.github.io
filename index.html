@@ -18,7 +18,7 @@
   --grass:#5cbf4a; --grass-2:#47a637; --dirt:#8a5a2b; --stage:#bfe6f6; --cloud:#ffffff; --hill:#9ad49a;
   --footer:#1d2733; --footer-fg:#e7eef6;
   /* label bands keep dark ink in both themes, so they stay fixed */
-  --band-ink:#1d2733; --band-1:#8fd3f0; --band-2:#f6a8c3; --band-3:#93e2b8; --band-4:#ffd86b; --band-5:#d5dce4;
+  --band-ink:#1d2733; --band-1:#8fd3f0; --band-2:#f6a8c3; --band-3:#93e2b8; --band-4:#ffd86b; --band-5:#d5dce4;--band-6:#c3a7f5;
   --f-display:"Press Start 2P", ui-monospace, "Courier New", monospace;
   --f-hud:"VT323", ui-monospace, "Courier New", monospace;
   --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -432,7 +432,7 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
     <div>
       <p class="eyebrow">Player 1 &middot; Ready</p>
       <h1>JAYA HAREESWAR<br>REDDY GUDISA</h1>
-      <p class="role">Software Engineering | Infrastructure | LLM Applications</p>
+      <p class="role">Software Engineering | AI Infrastructure | LLM Applications</p>
       <div class="dialogue box">
         <span class="speaker" id="dlgWho">JAYA</span>
         <p id="dlgText" aria-hidden="true">Hey there, traveler! I'm Jaya, a Junior Software Developer at TaskWin.</p>
@@ -559,11 +559,53 @@ dialog::backdrop{background:rgb(10 15 22 / .6)}
 <section id="games">
   <div class="wrap">
     <div class="sec-head">
-  <p class="eyebrow">World 1-4 &middot; Game library</p>
+  <p class="eyebrow">World 1-6 &middot; Game library</p>
       <h2>PROJECTS</h2>
-      <p>Four cartridges. Open any one for the build notes.</p>
+      <p>Six cartridges. Open any one for the build notes.</p>
     </div>
     <div class="carts">
+      <article class="cart box" style="--band:var(--band-6)">
+        <div class="cart-top"><span>LLM &middot; FINE-TUNING</span></div>
+        <div class="cart-body">
+          <h3>NL2SQL</h3>
+          <p>A fine-tuned Qwen2.5-Coder-1.5B that turns an English question plus a table schema into a SQL query.</p>
+          <ul class="loot"><li><b>66.7&rarr;71.5%</b><span>execution accuracy</span></li><li><b>QLoRA</b><span>4-bit fine-tune</span></li></ul>
+          <ul class="chips"><li>Python</li><li>PyTorch</li><li>QLoRA</li><li>PEFT</li><li>Hugging Face</li></ul>
+          <details><summary>Open case study</summary><div class="case-study">
+            <section><h4>Problem</h4><p>Small general-purpose LLMs produce unreliable SQL from natural-language questions without task-specific adaptation.</p></section>
+            <section><h4>Approach</h4><ul>
+              <li><strong>Fine-tune:</strong> 4-bit QLoRA on the GretelAI synthetic Text-to-SQL dataset, trained on a single free T4 GPU.</li>
+              <li><strong>Evaluate:</strong> a harness compares the fine-tuned model against the base model with exact-match and SQLite execution accuracy.</li>
+              <li><strong>Ship:</strong> the LoRA adapter is published to the Hugging Face Hub with a live Gradio demo.</li>
+            </ul></section>
+            <section><h4>Architecture</h4><ul class="case-architecture"><li>Schema + question</li><li>Qwen2.5-Coder-1.5B + LoRA</li><li>Generated SQL</li><li>SQLite execution check</li></ul><p class="case-caption">Trained with PEFT/QLoRA; evaluated on a held-out test split with both exact-match and execution metrics.</p></section>
+            <section><h4>Outcome</h4><p>Execution accuracy improved from <strong>66.7% to 71.5%</strong> and exact-match from <strong>23.5% to 31.0%</strong> on a held-out test set, from a single ~30-minute training run.</p></section>
+          </div></details>
+          <p class="cart-links"><a class="btn" href="https://huggingface.co/spaces/JayaHareeswarReddy/nl2sql" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/nl2sql" target="_blank" rel="noopener">Code on GitHub &#8599;</a><a class="btn" href="https://huggingface.co/JayaHareeswarReddy/nl2sql-qlora" target="_blank" rel="noopener">Model &#8599;</a></p>
+        </div>
+        <div class="ridges"></div>
+      </article>
+      <article class="cart box" style="--band:var(--band-5)">
+        <div class="cart-top"><span>AI AGENT &middot; CODE</span></div>
+        <div class="cart-body">
+          <h3>Repo Explainer Agent</h3>
+          <p>Load any public GitHub repo and ask questions about its code; a tool-calling agent answers with file:line citations.</p>
+          <ul class="loot"><li><b>Tool-calling</b><span>agent loop</span></li><li><b>Cited</b><span>answers</span></li></ul>
+          <ul class="chips"><li>FastAPI</li><li>Groq</li><li>Embeddings</li><li>Vector search</li><li>GitHub API</li></ul>
+          <details><summary>Open case study</summary><div class="case-study">
+            <section><h4>Problem</h4><p>Understanding an unfamiliar codebase is slow, and you want answers grounded in the actual code rather than a model's guesses.</p></section>
+            <section><h4>Approach</h4><ul>
+              <li><strong>Index:</strong> fetch the repo, chunk it by line windows, and embed the chunks for semantic search.</li>
+              <li><strong>Agent:</strong> a Groq LLM retrieves the most relevant code and can call tools (search, read file, list files) to gather more context before answering.</li>
+              <li><strong>Ground:</strong> every answer cites file:line ranges that link straight to GitHub, and the model says "not found" instead of guessing.</li>
+            </ul></section>
+            <section><h4>Architecture</h4><ul class="case-architecture"><li>Repo zip</li><li>Chunk + embed</li><li>Retrieve top code</li><li>LLM answer + citations</li></ul><p class="case-caption">Lightweight (API embeddings, in-memory cosine search) so it runs on a free instance; deployed on Render.</p></section>
+            <section><h4>Outcome</h4><p>A web app that explains repositories with verifiable citations, plus architecture-overview and Mermaid-diagram generation.</p></section>
+          </div></details>
+          <p class="cart-links"><a class="btn" href="https://repo-explainer-agent.onrender.com/" target="_blank" rel="noopener">Live demo &#8599;</a><a class="btn" href="https://github.com/jayahareeswarreddy/repo-explainer-agent" target="_blank" rel="noopener">Code on GitHub &#8599;</a></p>
+        </div>
+        <div class="ridges"></div>
+      </article>
       <article class="cart box" style="--band:var(--band-1)">
         <div class="cart-top"><span>POSTGRES &middot; CDC PIPELINE</span></div>
         <div class="cart-body">
